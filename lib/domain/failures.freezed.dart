@@ -18,44 +18,32 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() cancelledByUser,
-    required TResult Function() wrongFileFormat,
     required TResult Function() serverError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
     TResult Function()? serverError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
     TResult Function()? serverError,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(CancelledByUser value) cancelledByUser,
-    required TResult Function(WrongFileFormat value) wrongFileFormat,
     required TResult Function(ServerError value) serverError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
     TResult Function(ServerError value)? serverError,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
     TResult Function(ServerError value)? serverError,
     required TResult orElse(),
   }) =>
@@ -75,226 +63,6 @@ class _$FailureCopyWithImpl<$Res> implements $FailureCopyWith<$Res> {
   final Failure _value;
   // ignore: unused_field
   final $Res Function(Failure) _then;
-}
-
-/// @nodoc
-abstract class _$$CancelledByUserCopyWith<$Res> {
-  factory _$$CancelledByUserCopyWith(
-          _$CancelledByUser value, $Res Function(_$CancelledByUser) then) =
-      __$$CancelledByUserCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CancelledByUserCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
-    implements _$$CancelledByUserCopyWith<$Res> {
-  __$$CancelledByUserCopyWithImpl(
-      _$CancelledByUser _value, $Res Function(_$CancelledByUser) _then)
-      : super(_value, (v) => _then(v as _$CancelledByUser));
-
-  @override
-  _$CancelledByUser get _value => super._value as _$CancelledByUser;
-}
-
-/// @nodoc
-
-class _$CancelledByUser implements CancelledByUser {
-  const _$CancelledByUser();
-
-  @override
-  String toString() {
-    return 'Failure.cancelledByUser()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CancelledByUser);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() cancelledByUser,
-    required TResult Function() wrongFileFormat,
-    required TResult Function() serverError,
-  }) {
-    return cancelledByUser();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
-    TResult Function()? serverError,
-  }) {
-    return cancelledByUser?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
-    TResult Function()? serverError,
-    required TResult orElse(),
-  }) {
-    if (cancelledByUser != null) {
-      return cancelledByUser();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CancelledByUser value) cancelledByUser,
-    required TResult Function(WrongFileFormat value) wrongFileFormat,
-    required TResult Function(ServerError value) serverError,
-  }) {
-    return cancelledByUser(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
-    TResult Function(ServerError value)? serverError,
-  }) {
-    return cancelledByUser?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
-    TResult Function(ServerError value)? serverError,
-    required TResult orElse(),
-  }) {
-    if (cancelledByUser != null) {
-      return cancelledByUser(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class CancelledByUser implements Failure {
-  const factory CancelledByUser() = _$CancelledByUser;
-}
-
-/// @nodoc
-abstract class _$$WrongFileFormatCopyWith<$Res> {
-  factory _$$WrongFileFormatCopyWith(
-          _$WrongFileFormat value, $Res Function(_$WrongFileFormat) then) =
-      __$$WrongFileFormatCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$WrongFileFormatCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
-    implements _$$WrongFileFormatCopyWith<$Res> {
-  __$$WrongFileFormatCopyWithImpl(
-      _$WrongFileFormat _value, $Res Function(_$WrongFileFormat) _then)
-      : super(_value, (v) => _then(v as _$WrongFileFormat));
-
-  @override
-  _$WrongFileFormat get _value => super._value as _$WrongFileFormat;
-}
-
-/// @nodoc
-
-class _$WrongFileFormat implements WrongFileFormat {
-  const _$WrongFileFormat();
-
-  @override
-  String toString() {
-    return 'Failure.wrongFileFormat()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$WrongFileFormat);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() cancelledByUser,
-    required TResult Function() wrongFileFormat,
-    required TResult Function() serverError,
-  }) {
-    return wrongFileFormat();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
-    TResult Function()? serverError,
-  }) {
-    return wrongFileFormat?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
-    TResult Function()? serverError,
-    required TResult orElse(),
-  }) {
-    if (wrongFileFormat != null) {
-      return wrongFileFormat();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CancelledByUser value) cancelledByUser,
-    required TResult Function(WrongFileFormat value) wrongFileFormat,
-    required TResult Function(ServerError value) serverError,
-  }) {
-    return wrongFileFormat(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
-    TResult Function(ServerError value)? serverError,
-  }) {
-    return wrongFileFormat?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
-    TResult Function(ServerError value)? serverError,
-    required TResult orElse(),
-  }) {
-    if (wrongFileFormat != null) {
-      return wrongFileFormat(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class WrongFileFormat implements Failure {
-  const factory WrongFileFormat() = _$WrongFileFormat;
 }
 
 /// @nodoc
@@ -337,8 +105,6 @@ class _$ServerError implements ServerError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() cancelledByUser,
-    required TResult Function() wrongFileFormat,
     required TResult Function() serverError,
   }) {
     return serverError();
@@ -347,8 +113,6 @@ class _$ServerError implements ServerError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
     TResult Function()? serverError,
   }) {
     return serverError?.call();
@@ -357,8 +121,6 @@ class _$ServerError implements ServerError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? cancelledByUser,
-    TResult Function()? wrongFileFormat,
     TResult Function()? serverError,
     required TResult orElse(),
   }) {
@@ -371,8 +133,6 @@ class _$ServerError implements ServerError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(CancelledByUser value) cancelledByUser,
-    required TResult Function(WrongFileFormat value) wrongFileFormat,
     required TResult Function(ServerError value) serverError,
   }) {
     return serverError(this);
@@ -381,8 +141,6 @@ class _$ServerError implements ServerError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
     TResult Function(ServerError value)? serverError,
   }) {
     return serverError?.call(this);
@@ -391,8 +149,6 @@ class _$ServerError implements ServerError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(CancelledByUser value)? cancelledByUser,
-    TResult Function(WrongFileFormat value)? wrongFileFormat,
     TResult Function(ServerError value)? serverError,
     required TResult orElse(),
   }) {

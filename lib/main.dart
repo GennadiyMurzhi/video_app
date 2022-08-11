@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:video_app/application/realtime_subscription.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/app.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  configureInjection(Environment.prod);
+  await configureInjection(Environment.prod);
+
+  realtimeSubscription();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),

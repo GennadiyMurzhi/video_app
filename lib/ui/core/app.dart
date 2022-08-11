@@ -7,7 +7,7 @@ class VideoApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Video App',
-      home: const VideoListScreen(),
+      home: VideoListScreen(),
       theme: ThemeData(primarySwatch: Colors.deepPurple),
     );
   }

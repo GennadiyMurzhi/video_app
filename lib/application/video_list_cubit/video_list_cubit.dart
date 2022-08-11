@@ -2,7 +2,6 @@ import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
@@ -10,9 +9,9 @@ import 'package:video_app/domain/failures.dart';
 import 'package:video_app/domain/i_video_repository.dart';
 import 'package:video_app/domain/video.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
-import 'package:video_app/ui/video_list/video_list_screen.dart';
 
 part 'video_list_cubit.freezed.dart';
+
 part 'video_list_state.dart';
 
 ///VideoListCubit is needed to control the VideoListScreen view
@@ -31,9 +30,8 @@ class VideoListCubit extends Cubit<VideoListState> {
     final Either<Failure, VideoDataList> videoListOrFailure = await _repository.getVideoList();
 
     videoListOrFailure.fold(
-      (Failure l) => l.maybeWhen(
+      (Failure l) => l.when(
         serverError: () => _serverErrorShowMessage(),
-        orElse: () {},
       ),
       (VideoDataList newVideoDataList) {
         _videoDataListReceiver.getVideoDataList(newVideoDataList);
@@ -60,34 +58,20 @@ class VideoListCubit extends Cubit<VideoListState> {
 
       await _account.createAnonymousSession();
 
-      final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(filePickerResult);
+      final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(filePickerResult.files.first.path!);
       resultOrFailure.fold(
         (Failure failure) => failure.when(
-          cancelledByUser: () {
-            //TODO: do anything with it
-            print('cancelledByUser');
-          },
-          wrongFileFormat: () {
-            //TODO: do anything with it
-            print('wrongFileFormat');
-          },
           serverError: () => _serverErrorShowMessage(),
         ),
         (Unit r) {
-          ScaffoldMessenger.of(videoListScreenLayoutKey.currentContext!).showSnackBar(
-            SnackBarCustom(text: 'File uploaded to the server'),
-          );
+          showSnackWithText('File uploaded to the server');
         },
       );
       await _account.deleteSessions();
-
-      await updateList();
 
       emit(VideoListState.listDisplayed());
     }
   }
 }
 
-void _serverErrorShowMessage() => ScaffoldMessenger.of(videoListScreenLayoutKey.currentContext!).showSnackBar(
-      SnackBarCustom(text: 'Server Error'),
-    );
+void _serverErrorShowMessage() => showSnackWithText('Server Error');

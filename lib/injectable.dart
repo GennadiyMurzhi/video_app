@@ -10,7 +10,7 @@ final GetIt getIt = GetIt.instance;
 
 ///This method needed for configure GetIt
 @injectableInit
-void configureInjection(String env) {
+Future<void> configureInjection(String env) async {
   $initGetIt(getIt, environment: env);
 
   getIt.registerLazySingleton<Client>(
@@ -21,11 +21,14 @@ void configureInjection(String env) {
       ..setSelfSigned(),
   );
 
-  getIt.registerLazySingleton<Account>(() => Account(getIt<Client>()));
+  final Account account = Account(getIt<Client>());
+  getIt.registerLazySingleton<Account>(() => account);
 
   getIt.registerLazySingleton<Storage>(() => Storage(getIt<Client>()));
 
+  await account.createAnonymousSession();
   getIt.registerLazySingleton<Realtime>(() => Realtime(getIt<Client>()));
+  await account.deleteSessions();
 
   getIt.registerLazySingleton<VideoDataListReceiver>(() => VideoDataListReceiver(VideoDataList.empty()));
 }

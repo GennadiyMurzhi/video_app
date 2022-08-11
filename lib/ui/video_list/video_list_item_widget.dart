@@ -36,6 +36,7 @@ class VideoListItemWidget extends StatelessWidget {
                 id: id,
                 directoryPath: directory.path,
               ),
+              maintainState: false,
             ),
           );
         },

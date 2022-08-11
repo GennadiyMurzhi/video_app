@@ -17,8 +17,8 @@ class PlayerWidget extends StatefulWidget {
 }
 
 class _StatePlayerWidget extends State<PlayerWidget> {
-  VideoPlayerController? _playerController;
-  ChewieController? _chewieController;
+  late VideoPlayerController? _playerController;
+  late ChewieController? _chewieController;
 
   @override
   void initState() {
