@@ -47,7 +47,7 @@ class VideoListScreen extends StatelessWidget {
                         return ListView.builder(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           shrinkWrap: true,
-                          itemCount: snapshot.data!.files.reversed.length,
+                          itemCount: snapshot.data!.files.length,
                           itemBuilder: (BuildContext context, int index) => VideoListItemWidget(
                             name: snapshot.data!.files[index].name,
                             id: snapshot.data!.files[index].id,

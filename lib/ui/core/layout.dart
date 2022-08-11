@@ -35,7 +35,7 @@ class Layout extends StatelessWidget {
           title,
           style: Theme.of(context).textTheme.titleLarge!.copyWith(color: const Color(0xFFFFFFFF)),
         ),
-        leading: functionOnPop == null
+        leading: functionOnPop != null
             ? IconButton(
                 icon: const Icon(Icons.arrow_back_rounded),
                 onPressed: () => functionOnPop!(),

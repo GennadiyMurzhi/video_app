@@ -32,7 +32,7 @@ dependencies:
   rxdart: 0.27.5
   injectable: 1.5.3
   get_it: 7.2.0
-  appwrite: ^6.0.0
+  appwrite: 6.0.0
   chewie: 1.3.4
   video_player: 2.4.5
   file_picker: 4.6.1
