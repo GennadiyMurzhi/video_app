@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:video_app/ui/core/app.dart';
 import 'package:video_app/ui/video_list/video_list_screen.dart';
-
-import 'layout.dart';
-
 
 ///Custom snack bar for show message
 class SnackBarCustom extends SnackBar {
-
   ///takes text for displaying on screen
   SnackBarCustom({
     super.key,
@@ -26,5 +21,5 @@ class SnackBarCustom extends SnackBar {
 
 ///method for easy show snack bar
 void showSnackWithText(String text) => ScaffoldMessenger.of(videoListScreenLayoutKey.currentContext!).showSnackBar(
-  SnackBarCustom(text: text),
-);
+      SnackBarCustom(text: text),
+    );

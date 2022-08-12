@@ -58,7 +58,7 @@ class VideoListCubit extends Cubit<VideoListState> {
 
       await _account.createAnonymousSession();
 
-      final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(filePickerResult.files.first.path!);
+      final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(filePickerResult);
       resultOrFailure.fold(
         (Failure failure) => failure.when(
           serverError: () => _serverErrorShowMessage(),

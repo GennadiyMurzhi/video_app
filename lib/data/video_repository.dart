@@ -1,8 +1,9 @@
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:dartz/dartz.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:path/path.dart' as p;
 import 'package:video_app/domain/failures.dart';
 import 'package:video_app/domain/i_video_repository.dart';
 import 'package:video_app/domain/video.dart';
@@ -32,20 +33,33 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> uploadVideoOnServer(String path) async {
+  Future<Either<Failure, Unit>> uploadVideoOnServer(FilePickerResult filePickerResult) async {
+    /*final InputFile inputFile;
+    if(kIsWeb) {
+      inputFile = InputFile(
+        bytes: filePickerResult.files.first.bytes,
+        filename: filePickerResult.files.first.name,
+      );
+    } else {
+      inputFile = InputFile(
+        path: filePickerResult.files.first.path,
+        filename: filePickerResult.files.first.name,
+      );
+    }*/
+
     try {
       await _videosStorage.createFile(
         bucketId: '62e3f62d96bf680e817c',
         fileId: 'unique()',
         file: InputFile(
-          path: path,
-          filename: p.basename(
-            path,
-          ),
+          filename: filePickerResult.files.first.name,
+          bytes: filePickerResult.files.first.bytes,
         ),
       );
+
       return const Right(unit);
     } catch (e) {
+      print(e);
       return const Left(Failure.serverError());
     }
   }

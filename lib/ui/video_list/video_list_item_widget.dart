@@ -1,9 +1,7 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/video/video_screen.dart';
 
@@ -28,16 +26,10 @@ class VideoListItemWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: InkWell(
         onTap: () async {
-          final Directory directory = await getApplicationDocumentsDirectory();
-          Navigator.of(context).push(
-            MaterialPageRoute<Widget>(
-              builder: (BuildContext context) => VideoScreen(
-                name: name,
-                id: id,
-                directoryPath: directory.path,
-              ),
-              maintainState: false,
-            ),
+          //final Directory directory = await getApplicationDocumentsDirectory();
+          Navigator.of(context).pushNamed(
+            '/video_screen',
+            arguments: VideoParams(name: name, id: id, directoryPath: 'directory.path',)
           );
         },
         child: DecoratedBox(
