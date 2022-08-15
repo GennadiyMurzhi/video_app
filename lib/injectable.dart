@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/video.dart';
 import 'package:video_app/injectable.config.dart';
+import 'package:video_player/video_player.dart';
 
 ///instance of GetIt
 final GetIt getIt = GetIt.instance;
@@ -26,7 +27,6 @@ Future<void> configureInjection(String env) async {
   getIt.registerLazySingleton<Account>(() => account);
 
   if (kIsWeb) {
-    print('web');
     getIt<Client>().setEndpoint('https://localhost/v1');
 
     account.createOAuth2Session(provider: 'auth0', success: 'http://localhost:33677/auth.html');

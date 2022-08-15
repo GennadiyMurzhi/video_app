@@ -46,16 +46,16 @@ class Layout extends StatelessWidget {
       floatingActionButton: functionFab != null
           ? ElevatedButton(
               style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
-                fixedSize: MaterialStateProperty.all<Size>(const Size(56, 56)),
-                shape: MaterialStateProperty.all<OutlinedBorder>(
-                  const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(18),
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+                  fixedSize: MaterialStateProperty.all<Size>(const Size(56, 56)),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(18),
+                      ),
                     ),
                   ),
-                ),
-              ),
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF673AB7))),
               onPressed: () async => functionFab!(),
               child: const Icon(
                 Icons.add,

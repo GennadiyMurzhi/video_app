@@ -8,14 +8,16 @@ class SnackBarCustom extends SnackBar {
     super.key,
     required this.text,
   }) : super(
+          behavior: SnackBarBehavior.floating,
           content: Text(text),
+          margin: const EdgeInsets.fromLTRB(5, 0, 5, 8),
           duration: const Duration(
             seconds: 2,
             microseconds: 500,
           ),
         );
 
-  ///realtime event name
+  ///event name
   final String text;
 }
 

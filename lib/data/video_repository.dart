@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
 import 'package:dartz/dartz.dart';
@@ -18,9 +20,11 @@ class VideoRepository implements IVideoRepository {
 
   @override
   Future<Either<Failure, VideoDataList>> getVideoList() async {
-    final FileList fileList;
     try {
-      fileList = await _videosStorage.listFiles(bucketId: '62e3f62d96bf680e817c');
+      final FileList fileList = await _videosStorage.listFiles(
+        bucketId: '62e3f62d96bf680e817c',
+        limit: 90,
+      );
       return Right(
         VideoDataList.fromJson(<String, dynamic>{
           'total': fileList.total,
@@ -33,9 +37,22 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
+  Future<Either<Failure, Uint8List>> getVideoFromTheServer(String fileId) async {
+    try {
+      final Uint8List fileBytes = await _videosStorage.getFileView(
+        bucketId: '62e3f62d96bf680e817c',
+        fileId: fileId,
+      );
+      return Right(fileBytes);
+    } catch (e) {
+      return const Left(Failure.serverError());
+    }
+  }
+
+  @override
   Future<Either<Failure, Unit>> uploadVideoOnServer(FilePickerResult filePickerResult) async {
-    /*final InputFile inputFile;
-    if(kIsWeb) {
+    final InputFile inputFile;
+    if (kIsWeb) {
       inputFile = InputFile(
         bytes: filePickerResult.files.first.bytes,
         filename: filePickerResult.files.first.name,
@@ -45,16 +62,65 @@ class VideoRepository implements IVideoRepository {
         path: filePickerResult.files.first.path,
         filename: filePickerResult.files.first.name,
       );
-    }*/
+    }
 
     try {
       await _videosStorage.createFile(
         bucketId: '62e3f62d96bf680e817c',
         fileId: 'unique()',
-        file: InputFile(
-          filename: filePickerResult.files.first.name,
-          bytes: filePickerResult.files.first.bytes,
-        ),
+        file: inputFile,
+      );
+
+      return const Right(unit);
+    } catch (e) {
+      print(e);
+      return const Left(Failure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> replaceVideoOnServer({
+    required String fileId,
+    required String fileName,
+    required FilePickerResult filePickerResult,
+  }) async {
+    final InputFile inputFile;
+    if (kIsWeb) {
+      inputFile = InputFile(
+        bytes: filePickerResult.files.first.bytes,
+        filename: fileName,
+      );
+    } else {
+      inputFile = InputFile(
+        path: filePickerResult.files.first.path,
+        filename: fileName,
+      );
+    }
+
+    try {
+      await _videosStorage.deleteFile(
+        bucketId: '62e3f62d96bf680e817c',
+        fileId: fileId,
+      );
+      await _videosStorage.createFile(
+        bucketId: '62e3f62d96bf680e817c',
+        fileId: fileId,
+        file: inputFile,
+      );
+
+      return const Right(unit);
+    } catch (e) {
+      print(e);
+      return const Left(Failure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteVideoOnServer(String fileId) async {
+    try {
+      await _videosStorage.deleteFile(
+        bucketId: '62e3f62d96bf680e817c',
+        fileId: fileId,
       );
 
       return const Right(unit);
