@@ -65,6 +65,8 @@ class VideoCubit extends Cubit<VideoState> {
         },
       );
     }
+
+    _crutchLinkVideo = _linkVideo(id);
   }
 
   ///needed to return the state when return to the video_list_screen
@@ -126,9 +128,8 @@ class VideoCubit extends Cubit<VideoState> {
       }
 
       if (kIsWeb && resultOrFailure.isRight()) {
-        await state.chewieController!.videoPlayerController.dispose();
-
-        final VideoPlayerController videoPlayerController = VideoPlayerController.network(_linkVideo(fileId));
+        _crutchLinkVideo = '$_crutchLinkVideo/';
+        final VideoPlayerController videoPlayerController = VideoPlayerController.network(_crutchLinkVideo)..initialize();
         
         emit(
           state.copyWith(
@@ -165,6 +166,8 @@ class VideoCubit extends Cubit<VideoState> {
 }
 
 void _serverErrorShowMessage() => showSnackWithText('Server Error');
+
+String _crutchLinkVideo = '';
 
 String _linkVideo(String id) =>
     'http://localhost/v1/storage/buckets/62e3f62d96bf680e817c/files/$id/view?project=62e3e3500061cd4fb81d&mode=admin';
