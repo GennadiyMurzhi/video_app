@@ -17,8 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$VideoState {
   VideoStatus get videoStatus => throw _privateConstructorUsedError;
-  String? get directoryPath => throw _privateConstructorUsedError;
-  String? get linkVideo => throw _privateConstructorUsedError;
+  ChewieController? get chewieController => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VideoStateCopyWith<VideoState> get copyWith =>
@@ -30,8 +29,7 @@ abstract class $VideoStateCopyWith<$Res> {
   factory $VideoStateCopyWith(
           VideoState value, $Res Function(VideoState) then) =
       _$VideoStateCopyWithImpl<$Res>;
-  $Res call(
-      {VideoStatus videoStatus, String? directoryPath, String? linkVideo});
+  $Res call({VideoStatus videoStatus, ChewieController? chewieController});
 }
 
 /// @nodoc
@@ -45,22 +43,17 @@ class _$VideoStateCopyWithImpl<$Res> implements $VideoStateCopyWith<$Res> {
   @override
   $Res call({
     Object? videoStatus = freezed,
-    Object? directoryPath = freezed,
-    Object? linkVideo = freezed,
+    Object? chewieController = freezed,
   }) {
     return _then(_value.copyWith(
       videoStatus: videoStatus == freezed
           ? _value.videoStatus
           : videoStatus // ignore: cast_nullable_to_non_nullable
               as VideoStatus,
-      directoryPath: directoryPath == freezed
-          ? _value.directoryPath
-          : directoryPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      linkVideo: linkVideo == freezed
-          ? _value.linkVideo
-          : linkVideo // ignore: cast_nullable_to_non_nullable
-              as String?,
+      chewieController: chewieController == freezed
+          ? _value.chewieController
+          : chewieController // ignore: cast_nullable_to_non_nullable
+              as ChewieController?,
     ));
   }
 }
@@ -72,8 +65,7 @@ abstract class _$$_VideoStateCopyWith<$Res>
           _$_VideoState value, $Res Function(_$_VideoState) then) =
       __$$_VideoStateCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {VideoStatus videoStatus, String? directoryPath, String? linkVideo});
+  $Res call({VideoStatus videoStatus, ChewieController? chewieController});
 }
 
 /// @nodoc
@@ -89,44 +81,44 @@ class __$$_VideoStateCopyWithImpl<$Res> extends _$VideoStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? videoStatus = freezed,
-    Object? directoryPath = freezed,
-    Object? linkVideo = freezed,
+    Object? chewieController = freezed,
   }) {
     return _then(_$_VideoState(
       videoStatus: videoStatus == freezed
           ? _value.videoStatus
           : videoStatus // ignore: cast_nullable_to_non_nullable
               as VideoStatus,
-      directoryPath: directoryPath == freezed
-          ? _value.directoryPath
-          : directoryPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      linkVideo: linkVideo == freezed
-          ? _value.linkVideo
-          : linkVideo // ignore: cast_nullable_to_non_nullable
-              as String?,
+      chewieController: chewieController == freezed
+          ? _value.chewieController
+          : chewieController // ignore: cast_nullable_to_non_nullable
+              as ChewieController?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_VideoState implements _VideoState {
+class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
   const _$_VideoState(
-      {required this.videoStatus,
-      required this.directoryPath,
-      required this.linkVideo});
+      {required this.videoStatus, required this.chewieController});
 
   @override
   final VideoStatus videoStatus;
   @override
-  final String? directoryPath;
-  @override
-  final String? linkVideo;
+  final ChewieController? chewieController;
 
   @override
-  String toString() {
-    return 'VideoState(videoStatus: $videoStatus, directoryPath: $directoryPath, linkVideo: $linkVideo)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'VideoState(videoStatus: $videoStatus, chewieController: $chewieController)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'VideoState'))
+      ..add(DiagnosticsProperty('videoStatus', videoStatus))
+      ..add(DiagnosticsProperty('chewieController', chewieController));
   }
 
   @override
@@ -137,16 +129,14 @@ class _$_VideoState implements _VideoState {
             const DeepCollectionEquality()
                 .equals(other.videoStatus, videoStatus) &&
             const DeepCollectionEquality()
-                .equals(other.directoryPath, directoryPath) &&
-            const DeepCollectionEquality().equals(other.linkVideo, linkVideo));
+                .equals(other.chewieController, chewieController));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(videoStatus),
-      const DeepCollectionEquality().hash(directoryPath),
-      const DeepCollectionEquality().hash(linkVideo));
+      const DeepCollectionEquality().hash(chewieController));
 
   @JsonKey(ignore: true)
   @override
@@ -157,15 +147,12 @@ class _$_VideoState implements _VideoState {
 abstract class _VideoState implements VideoState {
   const factory _VideoState(
       {required final VideoStatus videoStatus,
-      required final String? directoryPath,
-      required final String? linkVideo}) = _$_VideoState;
+      required final ChewieController? chewieController}) = _$_VideoState;
 
   @override
   VideoStatus get videoStatus;
   @override
-  String? get directoryPath;
-  @override
-  String? get linkVideo;
+  ChewieController? get chewieController;
   @override
   @JsonKey(ignore: true)
   _$$_VideoStateCopyWith<_$_VideoState> get copyWith =>

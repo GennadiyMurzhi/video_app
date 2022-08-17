@@ -5,8 +5,14 @@ enum VideoStatus {
   ///use to indicate when video is loading
   loading,
 
+  ///use to indicate when video is loading
+  replacing,
+
+  ///use to indicate when video is loading
+  deleting,
+
   ///use to indicate when video loaded
-  loaded,
+  display,
 
   ///use to indicate when video deleted
   deleted,
@@ -18,15 +24,13 @@ abstract class VideoState with _$VideoState {
   ///loading need to indicate when video is updating
   const factory VideoState({
     required VideoStatus videoStatus,
-    required String? directoryPath,
-    required String? linkVideo,
+    required ChewieController? chewieController,
   }) = _VideoState;
 
   ///this state is need to create cubit
   factory VideoState.initial() => const VideoState(
-        videoStatus: VideoStatus.loaded,
-        directoryPath: null,
-        linkVideo: null,
+        videoStatus: VideoStatus.display,
+        chewieController: null,
       );
 
 /*

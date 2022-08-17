@@ -25,6 +25,7 @@ class LoadingWidget extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             text,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
         ],

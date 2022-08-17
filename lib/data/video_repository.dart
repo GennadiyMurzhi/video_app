@@ -10,6 +10,8 @@ import 'package:video_app/domain/failures.dart';
 import 'package:video_app/domain/i_video_repository.dart';
 import 'package:video_app/domain/video.dart';
 
+const String _bucketId = '62e3f62d96bf680e817c';
+
 ///Repository for video
 @Injectable(as: IVideoRepository)
 class VideoRepository implements IVideoRepository {
@@ -22,7 +24,7 @@ class VideoRepository implements IVideoRepository {
   Future<Either<Failure, VideoDataList>> getVideoList() async {
     try {
       final FileList fileList = await _videosStorage.listFiles(
-        bucketId: '62e3f62d96bf680e817c',
+        bucketId: _bucketId,
         limit: 90,
       );
       return Right(
@@ -40,7 +42,7 @@ class VideoRepository implements IVideoRepository {
   Future<Either<Failure, Uint8List>> getVideoFromTheServer(String fileId) async {
     try {
       final Uint8List fileBytes = await _videosStorage.getFileView(
-        bucketId: '62e3f62d96bf680e817c',
+        bucketId: _bucketId,
         fileId: fileId,
       );
       return Right(fileBytes);
@@ -66,7 +68,7 @@ class VideoRepository implements IVideoRepository {
 
     try {
       await _videosStorage.createFile(
-        bucketId: '62e3f62d96bf680e817c',
+        bucketId: _bucketId,
         fileId: 'unique()',
         file: inputFile,
       );
@@ -99,11 +101,11 @@ class VideoRepository implements IVideoRepository {
 
     try {
       await _videosStorage.deleteFile(
-        bucketId: '62e3f62d96bf680e817c',
+        bucketId: _bucketId,
         fileId: fileId,
       );
       await _videosStorage.createFile(
-        bucketId: '62e3f62d96bf680e817c',
+        bucketId: _bucketId,
         fileId: fileId,
         file: inputFile,
       );
@@ -119,7 +121,7 @@ class VideoRepository implements IVideoRepository {
   Future<Either<Failure, Unit>> deleteVideoOnServer(String fileId) async {
     try {
       await _videosStorage.deleteFile(
-        bucketId: '62e3f62d96bf680e817c',
+        bucketId: _bucketId,
         fileId: fileId,
       );
 

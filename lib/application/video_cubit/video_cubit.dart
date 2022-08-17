@@ -14,7 +14,6 @@ import 'package:video_app/application/pick_file.dart';
 import 'package:video_app/domain/failures.dart';
 import 'package:video_app/domain/i_video_repository.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
-import 'package:video_app/ui/video/player_widget.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_cubit.freezed.dart';
@@ -31,43 +30,46 @@ class VideoCubit extends Cubit<VideoState> {
   final Account _account;
 
   ///need to init video on create screen
-  void init(String? id) {
+  Future<void> init(String name, String id) async {
     if (kIsWeb) {
+      final VideoPlayerController videoPlayerController = VideoPlayerController.network(_linkVideo(id));
       emit(
         state.copyWith(
-          linkVideo:
-              'http://localhost/v1/storage/buckets/62e3f62d96bf680e817c/files/$id/view?project=62e3e3500061cd4fb81d&mode=admin',
+          chewieController: ChewieController(videoPlayerController: videoPlayerController)..videoPlayerController.initialize(),
         ),
+      );
+    } else {
+      emit(
+        state.copyWith(videoStatus: VideoStatus.loading),
+      );
+      final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(id);
+      Directory? directory;
+      File videoFile;
+      if (fileBytesOrFailure.isRight()) {
+        directory = await getApplicationDocumentsDirectory();
+      }
+
+      fileBytesOrFailure.fold(
+        (Failure l) => _serverErrorShowMessage(),
+        (Uint8List r) {
+          videoFile = File('${directory!.path}/$name.mp4');
+          videoFile.writeAsBytesSync(r as List<int>);
+          final VideoPlayerController videoPlayerController = VideoPlayerController.file(videoFile);
+          emit(
+            state.copyWith(
+              videoStatus: VideoStatus.display,
+              chewieController: ChewieController(videoPlayerController: videoPlayerController)
+                ..videoPlayerController.initialize(),
+            ),
+          );
+        },
       );
     }
   }
 
   ///needed to return the state when return to the video_list_screen
   void displayVideo() {
-    emit(state.copyWith(videoStatus: VideoStatus.loaded));
-  }
-
-  ///method to get video from the server and write as bytes
-  Future<File> getVideoFile(String fileId) async {
-    final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(fileId);
-    Directory? directory;
-    late File videoFile;
-    if (fileBytesOrFailure.isRight()) {
-      directory = await getApplicationDocumentsDirectory();
-    } else {
-      videoFile = File('${directory!.path}/$fileId.mp4');
-      videoFile.writeAsBytesSync(<int>[] as List<int>);
-    }
-
-    fileBytesOrFailure.fold(
-      (Failure l) => _serverErrorShowMessage(),
-      (Uint8List r) {
-        videoFile = File('${directory!.path}/$fileId.mp4');
-        videoFile.writeAsBytesSync(r as List<int>);
-      },
-    );
-
-    return videoFile;
+    emit(state.copyWith(videoStatus: VideoStatus.display));
   }
 
   ///method to update video on the server
@@ -78,7 +80,7 @@ class VideoCubit extends Cubit<VideoState> {
     final FilePickerResult? filePickerResult = await pickFile();
 
     if (filePickerResult != null) {
-      emit(state.copyWith(videoStatus: VideoStatus.loading));
+      emit(state.copyWith(videoStatus: VideoStatus.replacing));
 
       await _account.createAnonymousSession();
 
@@ -98,18 +100,49 @@ class VideoCubit extends Cubit<VideoState> {
 
       await _account.deleteSessions();
 
-      emit(
-        state.copyWith(
-          linkVideo: '${state.linkVideo}  ',
-          videoStatus: VideoStatus.loaded,
-        ),
-      );
+      if (!kIsWeb && resultOrFailure.isRight()) {
+        File? videoFile;
+        final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(fileId);
+        if (fileBytesOrFailure.isRight()) {
+          Directory directory = await getApplicationDocumentsDirectory();
+          videoFile = File('${directory.path}/$fileName.mp4');
+        }
+        fileBytesOrFailure.fold(
+          (Failure l) => _serverErrorShowMessage(),
+          (Uint8List r) {
+            videoFile!.writeAsBytesSync(r as List<int>);
+
+            final VideoPlayerController videoPlayerController = VideoPlayerController.file(videoFile);
+
+            emit(
+              state.copyWith(
+                videoStatus: VideoStatus.display,
+                chewieController: ChewieController(videoPlayerController: videoPlayerController)
+                  ..videoPlayerController.initialize(),
+              ),
+            );
+          },
+        );
+      }
+
+      if (kIsWeb && resultOrFailure.isRight()) {
+        await state.chewieController!.videoPlayerController.dispose();
+
+        final VideoPlayerController videoPlayerController = VideoPlayerController.network(_linkVideo(fileId));
+        
+        emit(
+          state.copyWith(
+            videoStatus: VideoStatus.display,
+            chewieController: ChewieController(videoPlayerController: videoPlayerController),
+          ),
+        );
+      }
     }
   }
 
   ///method to delete video on the server
   Future<void> deleteVideo(String fileId) async {
-    emit(state.copyWith(videoStatus: VideoStatus.loading));
+    emit(state.copyWith(videoStatus: VideoStatus.deleting));
 
     await _account.createAnonymousSession();
 
@@ -125,10 +158,13 @@ class VideoCubit extends Cubit<VideoState> {
 
     await _account.deleteSessions();
 
-    emit(state.copyWith(videoStatus: VideoStatus.loaded));
+    emit(state.copyWith(videoStatus: VideoStatus.deleted));
 
     await Future<void>.delayed(const Duration(seconds: 1));
   }
 }
 
 void _serverErrorShowMessage() => showSnackWithText('Server Error');
+
+String _linkVideo(String id) =>
+    'http://localhost/v1/storage/buckets/62e3f62d96bf680e817c/files/$id/view?project=62e3e3500061cd4fb81d&mode=admin';
