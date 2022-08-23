@@ -8,12 +8,22 @@ import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
 import 'package:video_app/ui/video/loading_widget.dart';
 import 'package:video_app/ui/video/player_widget.dart';
+import 'package:video_app/ui/video/widgets/comment_widget.dart';
 
 ///Screen to watch video
 class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final VideoParams videoParams = ModalRoute.of(context)!.settings.arguments as VideoParams;
+
+    final List<Map<String, dynamic>> comments = List<Map<String, dynamic>>.generate(
+      10,
+      (index) => <String, dynamic>{
+        'main_comment':
+            'main comment $index On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue',
+        'sub_comments': List.generate(3, (index) => 'Test sub comment $index On the other hand, we denounce with righteous...'),
+      },
+    );
 
     return BlocProvider<VideoCubit>(
       create: (BuildContext context) => getIt<VideoCubit>()..init(videoParams.name, videoParams.id),
@@ -94,6 +104,14 @@ class VideoScreen extends StatelessWidget {
                                           style: Theme.of(context).textTheme.labelLarge,
                                         ),
                                       ),
+                                      ListView.builder(
+                                            shrinkWrap: true,
+                                            itemCount: comments.length,
+                                            itemBuilder: (BuildContext context, int index) => CommentWidget(
+                                              mainComment: comments[index]['main_comment'] as String,
+                                              subComments: comments[index]['sub_comments'] as List<String>,
+                                            ),
+                                          ),
                                     ],
                                   ),
                                 ),
