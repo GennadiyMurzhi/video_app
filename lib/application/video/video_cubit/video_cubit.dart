@@ -11,8 +11,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_app/application/pick_file.dart';
-import 'package:video_app/domain/failures.dart';
-import 'package:video_app/domain/i_video_repository.dart';
+import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/video/i_video_repository.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
 import 'package:video_player/video_player.dart';
 

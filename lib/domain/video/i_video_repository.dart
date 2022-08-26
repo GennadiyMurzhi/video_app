@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:video_app/domain/failures.dart';
-import 'package:video_app/domain/video.dart';
+import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/video/video.dart';
 
 ///Interface for the video repository
 abstract class IVideoRepository {

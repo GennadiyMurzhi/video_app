@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/application/video_list_cubit/video_list_cubit.dart';
-import 'package:video_app/domain/video.dart';
+import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
 import 'package:video_app/ui/video_list/video_list_item_widget.dart';

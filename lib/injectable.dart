@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
-import 'package:video_app/domain/video.dart';
+import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/injectable.config.dart';
 import 'package:video_player/video_player.dart';
 

@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:video_app/domain/video.dart';
+import 'package:video_app/domain/video/video.dart';
 
 ///This receiver is needed for convenient VideoDataList to VideoListScreen transfer
 class VideoDataListReceiver {

@@ -6,9 +6,9 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:video_app/domain/failures.dart';
-import 'package:video_app/domain/i_video_repository.dart';
-import 'package:video_app/domain/video.dart';
+import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/video/i_video_repository.dart';
+import 'package:video_app/domain/video/video.dart';
 
 const String _bucketId = '62e3f62d96bf680e817c';
 

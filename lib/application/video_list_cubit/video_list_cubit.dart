@@ -6,9 +6,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/application/pick_file.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
-import 'package:video_app/domain/failures.dart';
-import 'package:video_app/domain/i_video_repository.dart';
-import 'package:video_app/domain/video.dart';
+import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/video/i_video_repository.dart';
+import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
 
 part 'video_list_cubit.freezed.dart';
