@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
+import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/injectable.config.dart';
-import 'package:video_player/video_player.dart';
 
 ///instance of GetIt
 final GetIt getIt = GetIt.instance;
@@ -35,10 +35,12 @@ Future<void> configureInjection(String env) async {
   } else {
     getIt<Client>().setEndpoint('https://10.0.2.2/v1');
 
-    await account.createAnonymousSession();
+    //await account.createAnonymousSession();
     getIt.registerLazySingleton<Realtime>(() => Realtime(getIt<Client>()));
-    await account.deleteSessions();
+    //await account.deleteSessions();
   }
 
   getIt.registerLazySingleton<VideoDataListReceiver>(() => VideoDataListReceiver(VideoDataList.empty()));
+  getIt.registerLazySingleton<DataListReceiver<Comments>>(() => DataListReceiver<Comments>(Comments.empty()));
+  getIt.registerLazySingleton<DataListReceiver<SubComments>>(() => DataListReceiver<SubComments>(SubComments.empty()));
 }

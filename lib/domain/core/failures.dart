@@ -16,3 +16,14 @@ abstract class AuthValueFailure<T> with _$AuthValueFailure<T> {
     required String failedValue,
   }) = ShortPassword<T>;
 }
+
+@freezed
+abstract class CommentValueFailure<T> with _$CommentValueFailure<T> {
+  const factory CommentValueFailure.emptyStringComment({
+    required String failedValue,
+  }) = EmptyStringComment<T>;
+
+  const factory CommentValueFailure.longStringComment({
+    required String failedValue,
+  }) = LongStringComment<T>;
+}

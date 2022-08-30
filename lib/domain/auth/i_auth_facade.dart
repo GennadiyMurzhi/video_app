@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:video_app/domain/auth/auth_failure.dart';
 import 'package:video_app/domain/auth/user.dart';
-import 'package:video_app/domain/auth/valua_objects.dart';
+import 'package:video_app/domain/auth/value_objects.dart';
 
 abstract class IAuthFacade{
-  Future<Either<AuthFailure, User>> getSignedInUser();
+  Future<Option<User>> getSignedInUser();
 
   Future<Either<AuthFailure, Unit>> register({
     required Name name,
@@ -16,7 +16,6 @@ abstract class IAuthFacade{
     required EmailAddress emailAddress,
     required Password password,
   });
-
 
   Future<void> signOut();
 }

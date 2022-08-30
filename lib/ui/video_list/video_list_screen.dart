@@ -1,7 +1,12 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_app/application/auth/auth_cubit/auth_cubit.dart';
+import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/application/video_list_cubit/video_list_cubit.dart';
+import 'package:video_app/domain/auth/i_auth_facade.dart';
+import 'package:video_app/domain/auth/user.dart';
 import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
@@ -14,11 +19,18 @@ final GlobalKey<ScaffoldState> videoListScreenLayoutKey = GlobalKey<ScaffoldStat
 class VideoListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<UserCubit>(context).loadUserData();
+
+    return BlocBuilder<UserCubit, UserState>(
+  builder: (BuildContext context, UserState userState) {
     return BlocProvider<VideoListCubit>(
       create: (BuildContext context) => getIt<VideoListCubit>()..initialList(),
       child: BlocBuilder<VideoListCubit, VideoListState>(
         builder: (BuildContext context, VideoListState state) {
           return Layout(
+            id: userState.id,
+            name: userState.name,
+            emailAddress: userState.emailAddress,
             layOutKey: videoListScreenLayoutKey,
             title: 'Video List',
             functionFab: BlocProvider.of<VideoListCubit>(context).pickAndUploadVideo,
@@ -62,5 +74,7 @@ class VideoListScreen extends StatelessWidget {
         },
       ),
     );
+  },
+);
   }
 }

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:video_app/domain/core/failures.dart';
 
 Either<AuthValueFailure<String>, String> validateName(String input) {
+  print('right $input');
   return _regExpValidate(
     input: input,
     regex: r"""\w*""",

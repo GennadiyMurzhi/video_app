@@ -533,3 +533,362 @@ abstract class ShortPassword<T> implements AuthValueFailure<T> {
   _$$ShortPasswordCopyWith<T, _$ShortPassword<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$CommentValueFailure<T> {
+  String get failedValue => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringComment,
+    required TResult Function(String failedValue) longStringComment,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringComment,
+    TResult Function(String failedValue)? longStringComment,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringComment,
+    TResult Function(String failedValue)? longStringComment,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringComment<T> value) emptyStringComment,
+    required TResult Function(LongStringComment<T> value) longStringComment,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringComment<T> value)? emptyStringComment,
+    TResult Function(LongStringComment<T> value)? longStringComment,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringComment<T> value)? emptyStringComment,
+    TResult Function(LongStringComment<T> value)? longStringComment,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $CommentValueFailureCopyWith<T, CommentValueFailure<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CommentValueFailureCopyWith<T, $Res> {
+  factory $CommentValueFailureCopyWith(CommentValueFailure<T> value,
+          $Res Function(CommentValueFailure<T>) then) =
+      _$CommentValueFailureCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class _$CommentValueFailureCopyWithImpl<T, $Res>
+    implements $CommentValueFailureCopyWith<T, $Res> {
+  _$CommentValueFailureCopyWithImpl(this._value, this._then);
+
+  final CommentValueFailure<T> _value;
+  // ignore: unused_field
+  final $Res Function(CommentValueFailure<T>) _then;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_value.copyWith(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$EmptyStringCommentCopyWith<T, $Res>
+    implements $CommentValueFailureCopyWith<T, $Res> {
+  factory _$$EmptyStringCommentCopyWith(_$EmptyStringComment<T> value,
+          $Res Function(_$EmptyStringComment<T>) then) =
+      __$$EmptyStringCommentCopyWithImpl<T, $Res>;
+  @override
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$$EmptyStringCommentCopyWithImpl<T, $Res>
+    extends _$CommentValueFailureCopyWithImpl<T, $Res>
+    implements _$$EmptyStringCommentCopyWith<T, $Res> {
+  __$$EmptyStringCommentCopyWithImpl(_$EmptyStringComment<T> _value,
+      $Res Function(_$EmptyStringComment<T>) _then)
+      : super(_value, (v) => _then(v as _$EmptyStringComment<T>));
+
+  @override
+  _$EmptyStringComment<T> get _value => super._value as _$EmptyStringComment<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$EmptyStringComment<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EmptyStringComment<T> implements EmptyStringComment<T> {
+  const _$EmptyStringComment({required this.failedValue});
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'CommentValueFailure<$T>.emptyStringComment(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmptyStringComment<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$EmptyStringCommentCopyWith<T, _$EmptyStringComment<T>> get copyWith =>
+      __$$EmptyStringCommentCopyWithImpl<T, _$EmptyStringComment<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringComment,
+    required TResult Function(String failedValue) longStringComment,
+  }) {
+    return emptyStringComment(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringComment,
+    TResult Function(String failedValue)? longStringComment,
+  }) {
+    return emptyStringComment?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringComment,
+    TResult Function(String failedValue)? longStringComment,
+    required TResult orElse(),
+  }) {
+    if (emptyStringComment != null) {
+      return emptyStringComment(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringComment<T> value) emptyStringComment,
+    required TResult Function(LongStringComment<T> value) longStringComment,
+  }) {
+    return emptyStringComment(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringComment<T> value)? emptyStringComment,
+    TResult Function(LongStringComment<T> value)? longStringComment,
+  }) {
+    return emptyStringComment?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringComment<T> value)? emptyStringComment,
+    TResult Function(LongStringComment<T> value)? longStringComment,
+    required TResult orElse(),
+  }) {
+    if (emptyStringComment != null) {
+      return emptyStringComment(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmptyStringComment<T> implements CommentValueFailure<T> {
+  const factory EmptyStringComment({required final String failedValue}) =
+      _$EmptyStringComment<T>;
+
+  @override
+  String get failedValue;
+  @override
+  @JsonKey(ignore: true)
+  _$$EmptyStringCommentCopyWith<T, _$EmptyStringComment<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LongStringCommentCopyWith<T, $Res>
+    implements $CommentValueFailureCopyWith<T, $Res> {
+  factory _$$LongStringCommentCopyWith(_$LongStringComment<T> value,
+          $Res Function(_$LongStringComment<T>) then) =
+      __$$LongStringCommentCopyWithImpl<T, $Res>;
+  @override
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$$LongStringCommentCopyWithImpl<T, $Res>
+    extends _$CommentValueFailureCopyWithImpl<T, $Res>
+    implements _$$LongStringCommentCopyWith<T, $Res> {
+  __$$LongStringCommentCopyWithImpl(_$LongStringComment<T> _value,
+      $Res Function(_$LongStringComment<T>) _then)
+      : super(_value, (v) => _then(v as _$LongStringComment<T>));
+
+  @override
+  _$LongStringComment<T> get _value => super._value as _$LongStringComment<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$LongStringComment<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LongStringComment<T> implements LongStringComment<T> {
+  const _$LongStringComment({required this.failedValue});
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'CommentValueFailure<$T>.longStringComment(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LongStringComment<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LongStringCommentCopyWith<T, _$LongStringComment<T>> get copyWith =>
+      __$$LongStringCommentCopyWithImpl<T, _$LongStringComment<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringComment,
+    required TResult Function(String failedValue) longStringComment,
+  }) {
+    return longStringComment(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringComment,
+    TResult Function(String failedValue)? longStringComment,
+  }) {
+    return longStringComment?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringComment,
+    TResult Function(String failedValue)? longStringComment,
+    required TResult orElse(),
+  }) {
+    if (longStringComment != null) {
+      return longStringComment(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringComment<T> value) emptyStringComment,
+    required TResult Function(LongStringComment<T> value) longStringComment,
+  }) {
+    return longStringComment(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringComment<T> value)? emptyStringComment,
+    TResult Function(LongStringComment<T> value)? longStringComment,
+  }) {
+    return longStringComment?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringComment<T> value)? emptyStringComment,
+    TResult Function(LongStringComment<T> value)? longStringComment,
+    required TResult orElse(),
+  }) {
+    if (longStringComment != null) {
+      return longStringComment(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LongStringComment<T> implements CommentValueFailure<T> {
+  const factory LongStringComment({required final String failedValue}) =
+      _$LongStringComment<T>;
+
+  @override
+  String get failedValue;
+  @override
+  @JsonKey(ignore: true)
+  _$$LongStringCommentCopyWith<T, _$LongStringComment<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}

@@ -5,7 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:video_app/domain/auth/auth_failure.dart';
 import 'package:video_app/domain/auth/i_auth_facade.dart';
 import 'package:video_app/domain/auth/user.dart' as video;
-import 'package:video_app/domain/auth/valua_objects.dart';
+import 'package:video_app/domain/auth/value_objects.dart';
 
 @LazySingleton(as: IAuthFacade)
 class AuthFacade extends IAuthFacade {
@@ -14,10 +14,10 @@ class AuthFacade extends IAuthFacade {
   Account _account;
 
   @override
-  Future<Either<AuthFailure, video.User>> getSignedInUser() async {
+  Future<Option<video.User>> getSignedInUser() async {
     try {
       final User user = await _account.get();
-      return Right(
+      return optionOf(
         video.User(
           id: user.$id,
           name: user.name,
@@ -25,7 +25,8 @@ class AuthFacade extends IAuthFacade {
         ),
       );
     } catch (e) {
-      return Left(AuthFailure.serverError());
+      print(e);
+      return optionOf(null);
     }
   }
 
@@ -52,23 +53,29 @@ class AuthFacade extends IAuthFacade {
       if (e.type! == 'user_email_already_exists') {
         return Left(AuthFailure.emailAlreadyInUsed());
       } else {
+        print(e);
         return Left(AuthFailure.serverError());
       }
     }
-
   }
 
   @override
-  Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword({required EmailAddress emailAddress, required Password password,}) async {
+  Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword({
+    required EmailAddress emailAddress,
+    required Password password,
+  }) async {
     final String emailAddressStr = emailAddress.getOrCrash();
     final String passwordStr = password.getOrCrash();
 
     try {
-      await _account.createEmailSession(email: emailAddressStr, password: passwordStr,);
+      await _account.createEmailSession(
+        email: emailAddressStr,
+        password: passwordStr,
+      );
 
       return Right(unit);
     } on AppwriteException catch (e) {
-      if(e.type! == 'user_invalid_credentials') {
+      if (e.type! == 'user_invalid_credentials') {
         return Left(AuthFailure.invalidEmailAndPasswordCombination());
       } else {
         return Left(AuthFailure.serverError());
@@ -78,8 +85,6 @@ class AuthFacade extends IAuthFacade {
 
   @override
   Future<void> signOut() {
-    return Future.wait([
-      _account.deleteSessions()
-    ]);
+    return Future.wait([_account.deleteSessions()]);
   }
 }

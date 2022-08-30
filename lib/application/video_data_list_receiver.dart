@@ -16,3 +16,19 @@ class VideoDataListReceiver {
     videoDataListStream.add(_videoDataList = newVideoDataList);
   }
 }
+
+///This receiver is needed for convenient DataList to UI List transfer
+class DataListReceiver<L> {
+  ///When initializing the DataListReceiver object, pass an empty DataList in the constructor parameters
+  DataListReceiver(this._videoDataList) : dataListStream = BehaviorSubject<L>.seeded(_videoDataList);
+
+  L _videoDataList;
+
+  ///Stream through which updated DataList will arrive
+  final BehaviorSubject<L> dataListStream;
+
+  ///add new DataList in stream
+  Future<void> getDataList(L dataList) async {
+    dataListStream.add(_videoDataList = dataList);
+  }
+}

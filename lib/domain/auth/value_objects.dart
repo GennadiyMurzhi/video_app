@@ -5,7 +5,7 @@ import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/core/value_objects.dart';
 
 @immutable
-class Name extends ValueObject<String>{
+class Name extends ValueObject<AuthValueFailure<String>, String>{
   @override
   final Either<AuthValueFailure<String>, String> value;
 
@@ -19,7 +19,7 @@ class Name extends ValueObject<String>{
 }
 
 @immutable
-class EmailAddress extends ValueObject<String>{
+class EmailAddress extends ValueObject<AuthValueFailure<String>, String>{
   @override
   final Either<AuthValueFailure<String>, String> value;
 
@@ -33,7 +33,7 @@ class EmailAddress extends ValueObject<String>{
 }
 
 @immutable
-class Password extends ValueObject<String>{
+class Password extends ValueObject<AuthValueFailure<String>, String>{
   @override
   final Either<AuthValueFailure<String>, String> value;
 

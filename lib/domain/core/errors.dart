@@ -1,7 +1,7 @@
 import 'package:video_app/domain/core/failures.dart';
 
-class UnexpectedValueError extends Error {
-  final AuthValueFailure authValueFailure;
+class UnexpectedValueError<F> extends Error {
+  final F authValueFailure;
 
   UnexpectedValueError(this.authValueFailure);
 
