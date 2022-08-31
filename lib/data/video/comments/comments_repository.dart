@@ -73,7 +73,6 @@ class CommentsRepository extends ICommentsRepository {
       );
       return Right(unit);
     } catch (e) {
-      print(e);
       return const Left(CommentsFailure.serverError());
     }
   }
@@ -87,13 +86,14 @@ class CommentsRepository extends ICommentsRepository {
   }) async {
     try {
       await _database.createDocument(
-        collectionId: _commentsCollectionId,
+        collectionId: _subCommentsCollectionId,
         documentId: 'unique()',
         data: <dynamic, dynamic>{
           'user_id': userId,
           'user_name': userName,
           'comment_id': commentId,
-          'subComment': subComment,
+          'sub_comment': subComment,
+          'date': DateTime.now().millisecondsSinceEpoch,
         },
       );
       return Right(unit);

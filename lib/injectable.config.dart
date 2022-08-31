@@ -35,7 +35,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i7.CommentsRepository(get<_i5.Client>()));
   gh.factory<_i8.IVideoRepository>(
       () => _i9.VideoRepository(get<_i5.Storage>()));
-  gh.factory<_i10.SubCommentsCubit>(() => _i10.SubCommentsCubit());
+  gh.factory<_i10.SubCommentsCubit>(
+      () => _i10.SubCommentsCubit(get<_i6.ICommentsRepository>()));
   gh.factory<_i11.UserCubit>(() => _i11.UserCubit(get<_i3.IAuthFacade>()));
   gh.factory<_i12.VideoCubit>(
       () => _i12.VideoCubit(get<_i8.IVideoRepository>(), get<_i5.Account>()));

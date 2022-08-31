@@ -16,6 +16,7 @@ import 'package:video_app/ui/video/widgets/loading_widget.dart';
 import 'package:video_app/ui/video/widgets/player_widget.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+final GlobalKey<FormState> _subCommentFormKey = GlobalKey<FormState>();
 
 ///Screen to watch video
 class VideoScreen extends StatelessWidget {
@@ -134,6 +135,9 @@ class VideoScreen extends StatelessWidget {
                                                                           padding: const EdgeInsets.only(top: 10, bottom: 15),
                                                                           child: Form(
                                                                             key: _formKey,
+                                                                            autovalidateMode: commentsState.showErrorMessage
+                                                                                ? AutovalidateMode.always
+                                                                                : AutovalidateMode.disabled,
                                                                             child: Column(
                                                                               crossAxisAlignment: CrossAxisAlignment.end,
                                                                               children: <Widget>[
@@ -184,17 +188,18 @@ class VideoScreen extends StatelessWidget {
                                                                           ),
                                                                         );
                                                                       } else {
+                                                                        final Comment comment =
+                                                                            snapshot.data!.comments[index - 1];
                                                                         return CommentWidget(
-                                                                          userName: snapshot.data!.comments[index - 1].userName,
-                                                                          mainComment: snapshot.data!.comments[index - 1].comment,
+                                                                          userName: comment.userName,
+                                                                          mainComment: comment.comment,
                                                                           commentDate: DateTime.fromMillisecondsSinceEpoch(
-                                                                            snapshot.data!.comments[index - 1].date,
+                                                                            comment.date,
                                                                           ),
-                                                                          subCommentCount:
-                                                                              snapshot.data!.comments[index - 1].subCommentCount,
+                                                                          subCommentCount: comment.subCommentCount,
                                                                           onPressed: () =>
                                                                               BlocProvider.of<SubCommentsCubit>(context)
-                                                                                  .openOrClose(),
+                                                                                  .onOpenSubComments(comment.commentId),
                                                                         );
                                                                       }
                                                                     },
@@ -210,7 +215,11 @@ class VideoScreen extends StatelessWidget {
                                                                 }
                                                               },
                                                             ),
-                                                          if (subCommentsState.isOpen) SubCommentsWidget(),
+                                                          if (subCommentsState.isOpen)
+                                                            SubCommentsWidget(
+                                                              subCommentsCubit: BlocProvider.of<SubCommentsCubit>(context),
+                                                              subCommentsState: subCommentsState,
+                                                            ),
                                                         ],
                                                       );
                                                     },
@@ -306,6 +315,15 @@ class PageInfo extends StatelessWidget {
 }
 
 class SubCommentsWidget extends StatelessWidget {
+  const SubCommentsWidget({
+    super.key,
+    required this.subCommentsCubit,
+    required this.subCommentsState,
+  });
+
+  final SubCommentsCubit subCommentsCubit;
+  final SubCommentsState subCommentsState;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -317,9 +335,98 @@ class SubCommentsWidget extends StatelessWidget {
           top: Radius.circular(20),
         ),
       ),
-      child: Column(
-        children: [],
-      ),
+      child: subCommentsState.loading
+          ? const Center(
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(),
+              ),
+            )
+          : StreamBuilder<SubComments>(
+              stream: getIt<DataListReceiver<SubComments>>().dataListStream,
+              builder: (BuildContext context, AsyncSnapshot<SubComments> snapshot) {
+                if (snapshot.data != null) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    shrinkWrap: true,
+                    itemCount: snapshot.data!.subComments.length + 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 15),
+                          child: Form(
+                            key: _subCommentFormKey,
+                            autovalidateMode:
+                                subCommentsState.showErrorMessage ? AutovalidateMode.always : AutovalidateMode.disabled,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    IconButton(onPressed: () => subCommentsCubit.openOrClose(), icon: Icon(Icons.arrow_back_rounded),),
+                                    Expanded(
+                                      child: TextFormField(
+                                        onChanged: (String value) => subCommentsCubit.editSubComment(value),
+                                        validator: (String? value) => subCommentsState.subComment.value.fold(
+                                          (CommentValueFailure<String> l) => l.when(
+                                            emptyStringComment: (_) => 'Enter answer',
+                                            longStringComment: (_) => 'Long answer',
+                                          ),
+                                          (String r) {
+                                            return null;
+                                          },
+                                        ),
+                                        decoration: const InputDecoration(
+                                          isDense: true,
+                                          hintText: 'Enter answer...',
+                                          border: InputBorder.none,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    final String userId = BlocProvider.of<UserCubit>(context).state.id;
+                                    final String userName = BlocProvider.of<UserCubit>(context).state.name;
+                                    BlocProvider.of<SubCommentsCubit>(context).leaveSubComment(
+                                      userId: userId,
+                                      userName: userName,
+                                    );
+                                  },
+                                  child: Text(
+                                    'Leave Answer',
+                                    style: Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      } else {
+                        final SubComment comment = snapshot.data!.subComments[index - 1];
+                        return SubCommentWidget(
+                          userName: comment.userName,
+                          subComment: comment.subComment,
+                          subCommentDate: DateTime.fromMillisecondsSinceEpoch(
+                            comment.date,
+                          ),
+                        );
+                      }
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+              },
+            ),
     );
   }
 }

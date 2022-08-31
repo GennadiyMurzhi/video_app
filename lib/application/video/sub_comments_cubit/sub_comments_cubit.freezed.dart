@@ -16,13 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SubCommentsState {
-  String get mainCommentId => throw _privateConstructorUsedError;
   bool get isOpen => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   bool get showErrorMessage => throw _privateConstructorUsedError;
   CommentObject get subComment => throw _privateConstructorUsedError;
-  Option<Either<CommentsFailure, Unit>> get subCommentsFailureOrSuccessOption =>
-      throw _privateConstructorUsedError;
+  String get commentId => throw _privateConstructorUsedError;
+  Option<Either<CommentsFailure, dynamic>>
+      get subCommentsFailureOrSuccessOption =>
+          throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SubCommentsStateCopyWith<SubCommentsState> get copyWith =>
@@ -35,12 +36,13 @@ abstract class $SubCommentsStateCopyWith<$Res> {
           SubCommentsState value, $Res Function(SubCommentsState) then) =
       _$SubCommentsStateCopyWithImpl<$Res>;
   $Res call(
-      {String mainCommentId,
-      bool isOpen,
+      {bool isOpen,
       bool loading,
       bool showErrorMessage,
       CommentObject subComment,
-      Option<Either<CommentsFailure, Unit>> subCommentsFailureOrSuccessOption});
+      String commentId,
+      Option<Either<CommentsFailure, dynamic>>
+          subCommentsFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -54,18 +56,14 @@ class _$SubCommentsStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? mainCommentId = freezed,
     Object? isOpen = freezed,
     Object? loading = freezed,
     Object? showErrorMessage = freezed,
     Object? subComment = freezed,
+    Object? commentId = freezed,
     Object? subCommentsFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
-      mainCommentId: mainCommentId == freezed
-          ? _value.mainCommentId
-          : mainCommentId // ignore: cast_nullable_to_non_nullable
-              as String,
       isOpen: isOpen == freezed
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
@@ -82,11 +80,15 @@ class _$SubCommentsStateCopyWithImpl<$Res>
           ? _value.subComment
           : subComment // ignore: cast_nullable_to_non_nullable
               as CommentObject,
+      commentId: commentId == freezed
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
+              as String,
       subCommentsFailureOrSuccessOption: subCommentsFailureOrSuccessOption ==
               freezed
           ? _value.subCommentsFailureOrSuccessOption
           : subCommentsFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<CommentsFailure, Unit>>,
+              as Option<Either<CommentsFailure, dynamic>>,
     ));
   }
 }
@@ -99,12 +101,13 @@ abstract class _$$_SubCommentsStateCopyWith<$Res>
       __$$_SubCommentsStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String mainCommentId,
-      bool isOpen,
+      {bool isOpen,
       bool loading,
       bool showErrorMessage,
       CommentObject subComment,
-      Option<Either<CommentsFailure, Unit>> subCommentsFailureOrSuccessOption});
+      String commentId,
+      Option<Either<CommentsFailure, dynamic>>
+          subCommentsFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -120,18 +123,14 @@ class __$$_SubCommentsStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? mainCommentId = freezed,
     Object? isOpen = freezed,
     Object? loading = freezed,
     Object? showErrorMessage = freezed,
     Object? subComment = freezed,
+    Object? commentId = freezed,
     Object? subCommentsFailureOrSuccessOption = freezed,
   }) {
     return _then(_$_SubCommentsState(
-      mainCommentId: mainCommentId == freezed
-          ? _value.mainCommentId
-          : mainCommentId // ignore: cast_nullable_to_non_nullable
-              as String,
       isOpen: isOpen == freezed
           ? _value.isOpen
           : isOpen // ignore: cast_nullable_to_non_nullable
@@ -148,11 +147,15 @@ class __$$_SubCommentsStateCopyWithImpl<$Res>
           ? _value.subComment
           : subComment // ignore: cast_nullable_to_non_nullable
               as CommentObject,
+      commentId: commentId == freezed
+          ? _value.commentId
+          : commentId // ignore: cast_nullable_to_non_nullable
+              as String,
       subCommentsFailureOrSuccessOption: subCommentsFailureOrSuccessOption ==
               freezed
           ? _value.subCommentsFailureOrSuccessOption
           : subCommentsFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<CommentsFailure, Unit>>,
+              as Option<Either<CommentsFailure, dynamic>>,
     ));
   }
 }
@@ -161,15 +164,13 @@ class __$$_SubCommentsStateCopyWithImpl<$Res>
 
 class _$_SubCommentsState implements _SubCommentsState {
   const _$_SubCommentsState(
-      {required this.mainCommentId,
-      required this.isOpen,
+      {required this.isOpen,
       required this.loading,
       required this.showErrorMessage,
       required this.subComment,
+      required this.commentId,
       required this.subCommentsFailureOrSuccessOption});
 
-  @override
-  final String mainCommentId;
   @override
   final bool isOpen;
   @override
@@ -179,11 +180,14 @@ class _$_SubCommentsState implements _SubCommentsState {
   @override
   final CommentObject subComment;
   @override
-  final Option<Either<CommentsFailure, Unit>> subCommentsFailureOrSuccessOption;
+  final String commentId;
+  @override
+  final Option<Either<CommentsFailure, dynamic>>
+      subCommentsFailureOrSuccessOption;
 
   @override
   String toString() {
-    return 'SubCommentsState(mainCommentId: $mainCommentId, isOpen: $isOpen, loading: $loading, showErrorMessage: $showErrorMessage, subComment: $subComment, subCommentsFailureOrSuccessOption: $subCommentsFailureOrSuccessOption)';
+    return 'SubCommentsState(isOpen: $isOpen, loading: $loading, showErrorMessage: $showErrorMessage, subComment: $subComment, commentId: $commentId, subCommentsFailureOrSuccessOption: $subCommentsFailureOrSuccessOption)';
   }
 
   @override
@@ -191,14 +195,13 @@ class _$_SubCommentsState implements _SubCommentsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SubCommentsState &&
-            const DeepCollectionEquality()
-                .equals(other.mainCommentId, mainCommentId) &&
             const DeepCollectionEquality().equals(other.isOpen, isOpen) &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality()
                 .equals(other.showErrorMessage, showErrorMessage) &&
             const DeepCollectionEquality()
                 .equals(other.subComment, subComment) &&
+            const DeepCollectionEquality().equals(other.commentId, commentId) &&
             const DeepCollectionEquality().equals(
                 other.subCommentsFailureOrSuccessOption,
                 subCommentsFailureOrSuccessOption));
@@ -207,11 +210,11 @@ class _$_SubCommentsState implements _SubCommentsState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(mainCommentId),
       const DeepCollectionEquality().hash(isOpen),
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(showErrorMessage),
       const DeepCollectionEquality().hash(subComment),
+      const DeepCollectionEquality().hash(commentId),
       const DeepCollectionEquality().hash(subCommentsFailureOrSuccessOption));
 
   @JsonKey(ignore: true)
@@ -222,16 +225,14 @@ class _$_SubCommentsState implements _SubCommentsState {
 
 abstract class _SubCommentsState implements SubCommentsState {
   const factory _SubCommentsState(
-      {required final String mainCommentId,
-      required final bool isOpen,
+      {required final bool isOpen,
       required final bool loading,
       required final bool showErrorMessage,
       required final CommentObject subComment,
-      required final Option<Either<CommentsFailure, Unit>>
+      required final String commentId,
+      required final Option<Either<CommentsFailure, dynamic>>
           subCommentsFailureOrSuccessOption}) = _$_SubCommentsState;
 
-  @override
-  String get mainCommentId;
   @override
   bool get isOpen;
   @override
@@ -241,7 +242,10 @@ abstract class _SubCommentsState implements SubCommentsState {
   @override
   CommentObject get subComment;
   @override
-  Option<Either<CommentsFailure, Unit>> get subCommentsFailureOrSuccessOption;
+  String get commentId;
+  @override
+  Option<Either<CommentsFailure, dynamic>>
+      get subCommentsFailureOrSuccessOption;
   @override
   @JsonKey(ignore: true)
   _$$_SubCommentsStateCopyWith<_$_SubCommentsState> get copyWith =>
