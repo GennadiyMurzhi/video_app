@@ -17,6 +17,16 @@ abstract class ICommentsRepository {
     required String subComment,
   });
 
+  Future<Either<CommentsFailure, Unit>> updateMainComment({
+    required String commentId,
+    required String comment,
+  });
+
+  Future<Either<CommentsFailure, Unit>> updateSubComment({
+    required String subCommentId,
+    required String subComment,
+  });
+
   Future<Either<CommentsFailure, Comments>> getVideoComments(String videoId);
 
   Future<Either<CommentsFailure, SubComments>> getSubComments(String commentId);

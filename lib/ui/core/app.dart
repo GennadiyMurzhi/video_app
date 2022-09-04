@@ -22,7 +22,7 @@ class VideoApp extends StatelessWidget {
           create: (BuildContext context) => getIt<AuthFormCubit>(),
         ),
         BlocProvider(
-          create: (BuildContext context) => getIt<UserCubit>(),
+          create: (BuildContext context) => getIt<UserCubit>()..loadUserData(),
         ),
       ],
       child: MaterialApp(

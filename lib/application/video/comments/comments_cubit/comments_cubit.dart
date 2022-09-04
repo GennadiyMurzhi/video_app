@@ -19,7 +19,7 @@ class CommentsCubit extends Cubit<CommentsState> {
 
   CommentsCubit(this._commentRepository) : super(CommentsState.initial());
 
-  void editComment(String comment) {
+  void editNewComment(String comment) {
     emit(
       state.copyWith(
         comment: CommentObject(comment),

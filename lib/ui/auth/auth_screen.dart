@@ -8,8 +8,5 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       body: AuthForm(),
     );
-
-
   }
-
 }

@@ -1,3 +1,4 @@
+import 'package:appwrite/models.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'video.freezed.dart';
@@ -11,14 +12,22 @@ class VideoDataList with _$VideoDataList {
   ///files variable is list of files presented in the form of VideoData
   const factory VideoDataList ({
     required int total,
-    required List<VideoData> files,
+    required List<VideoData> documents,
   }) = _VideoDataList;
 
   ///Empty VideoDataList
-  factory VideoDataList.empty () => const VideoDataList(total: 0, files: <VideoData>[]);
+  factory VideoDataList.empty () => const VideoDataList(total: 0, documents: <VideoData>[]);
 
   ///standard serialization method
   factory VideoDataList.fromJson(Map<String, Object?> json) => _$VideoDataListFromJson(json);
+
+  factory VideoDataList.fromDocumentList(List<Document> documentList) => VideoDataList(
+    total: documentList.length,
+    documents: List<VideoData>.generate(
+      documentList.length,
+          (index) => VideoData.fromDocument(documentList[index]),
+    ),
+  );
 }
 
 ///VideoData is needed to represent video data
@@ -29,8 +38,15 @@ class VideoData with _$VideoData{
   ///id variable is file id on the server. Needed for receives video file from the server
   const factory VideoData ({
     required String name,
-    @JsonKey(name: '\$id') required String id,
+    required String videoId,
+    required String userId,
   }) = _VideoData;
+
+  factory VideoData.fromDocument(Document document) => VideoData(
+    name: document.data['name'] as String,
+    videoId: document.data['video_id'] as String,
+    userId: document.data['user_id'] as String,
+  );
 
   ///standard serialization method
   factory VideoData.fromJson(Map<String, Object?> json) => _$VideoDataFromJson(json);

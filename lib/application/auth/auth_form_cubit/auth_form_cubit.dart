@@ -15,6 +15,10 @@ class AuthFormCubit extends Cubit<AuthFormState> {
   AuthFormCubit(this._authFacade) : super(AuthFormState.initial());
   final IAuthFacade _authFacade;
 
+  void init() {
+    emit(AuthFormState.initial());
+  }
+
   void editName(String name) {
     emit(
       state.copyWith(
@@ -77,9 +81,6 @@ class AuthFormCubit extends Cubit<AuthFormState> {
           );
         },
       );
-
-      print('state.isLoading');
-      print(state.isLoading);
     } else {
       emit(
         state.copyWith(
@@ -88,7 +89,6 @@ class AuthFormCubit extends Cubit<AuthFormState> {
           authFailureOrSuccessOption: optionOf(failureOrSuccess),
         ),
       );
-      print(state.showErrorMessage);
     }
   }
 
@@ -106,6 +106,26 @@ class AuthFormCubit extends Cubit<AuthFormState> {
         emailAddress: state.emailAddress,
         password: state.password,
       );
+      failureOrSuccess.fold(
+        (AuthFailure l) {
+          emit(
+            state.copyWith(
+              isLoading: false,
+              showErrorMessage: true,
+              authFailureOrSuccessOption: optionOf(failureOrSuccess),
+            ),
+          );
+        },
+        (Unit r) {
+          emit(
+            state.copyWith(
+              isLoading: false,
+              showErrorMessage: false,
+              authFailureOrSuccessOption: optionOf(failureOrSuccess),
+            ),
+          );
+        },
+      );
     } else {
       emit(
         state.copyWith(
@@ -118,7 +138,23 @@ class AuthFormCubit extends Cubit<AuthFormState> {
   }
 
   void switchForm() {
-    emit(state.copyWith(isSignUp: !state.isSignUp));
+    emit(
+      state.copyWith(
+        isSignUp: !state.isSignUp,
+        showErrorMessage: false,
+      ),
+    );
+  }
+
+  Future<void> onSuccess({
+    required Future<void> Function() loadUserFun,
+  }) async {
+    if(state.isSignUp) {
+      await signInWithEmailAndPassword();
+      await loadUserFun();
+    } else {
+      await loadUserFun();
+    }
   }
 
   bool _isFieldsValid({required bool withName}) {

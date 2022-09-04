@@ -16,12 +16,13 @@ class SplashScreen extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
+              const SizedBox(height: 30),
               Text(
                 'Video App',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.headlineLarge,
               ),
               const CircularProgressIndicator(),
               const SizedBox(height: 30),

@@ -16,22 +16,27 @@ const String _bucketId = '62e3f62d96bf680e817c';
 @Injectable(as: IVideoRepository)
 class VideoRepository implements IVideoRepository {
   ///Repository constructor receives the videos [storage] to manipulate files on the servers
-  const VideoRepository(this._videosStorage);
+  VideoRepository(this._videosStorage, this._client) {
+    _database = Databases(
+      _client,
+      databaseId: '62e3faba8623b7647567',
+    );
+  }
 
+  late final Databases _database;
+  final Client _client;
   final Storage _videosStorage;
 
   @override
   Future<Either<Failure, VideoDataList>> getVideoList() async {
     try {
-      final FileList fileList = await _videosStorage.listFiles(
-        bucketId: _bucketId,
-        limit: 90,
+      final DocumentList documentList = await _database.listDocuments(
+        collectionId: '63149b1a760e860f01a9',
+        orderAttributes: ['\$createdAt'],
+        orderTypes: ['DESC'],
       );
       return Right(
-        VideoDataList.fromJson(<String, dynamic>{
-          'total': fileList.total,
-          'files': List<Map<String, dynamic>>.generate(fileList.files.length, (int index) => fileList.files[index].toMap()),
-        }),
+        VideoDataList.fromDocumentList(documentList.documents),
       );
     } catch (e) {
       return const Left(Failure.serverError());
@@ -52,7 +57,10 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> uploadVideoOnServer(FilePickerResult filePickerResult) async {
+  Future<Either<Failure, Unit>> uploadVideoOnServer({
+    required FilePickerResult filePickerResult,
+    required String userId,
+  }) async {
     final InputFile inputFile;
     if (kIsWeb) {
       inputFile = InputFile(
@@ -71,11 +79,12 @@ class VideoRepository implements IVideoRepository {
         bucketId: _bucketId,
         fileId: 'unique()',
         file: inputFile,
+        read: <dynamic>['role:all'],
+        write: <dynamic>['user:$userId'],
       );
 
       return const Right(unit);
     } catch (e) {
-      print(e);
       return const Left(Failure.serverError());
     }
   }
@@ -112,7 +121,6 @@ class VideoRepository implements IVideoRepository {
 
       return const Right(unit);
     } catch (e) {
-      print(e);
       return const Left(Failure.serverError());
     }
   }
@@ -127,7 +135,6 @@ class VideoRepository implements IVideoRepository {
 
       return const Right(unit);
     } catch (e) {
-      print(e);
       return const Left(Failure.serverError());
     }
   }

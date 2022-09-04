@@ -7,14 +7,31 @@ class CommentWidget extends StatelessWidget {
     required this.mainComment,
     required this.commentDate,
     required this.subCommentCount,
-    required this.onPressed,
+    required this.editable,
+    //required this.commentIndex,
+    required this.onPressedOnSubCommentCount,
+    required this.isEdit,
+    required this.startEdit,
+    required this.editComment,
+    required this.endEdit,
+    required this.validator,
+    required this.showErrorMessage,
   });
 
   final String userName;
   final String mainComment;
   final DateTime commentDate;
   final int subCommentCount;
-  final void Function() onPressed;
+  final bool editable;
+  final bool isEdit;
+  final bool showErrorMessage;
+
+  //final int commentIndex;
+  final void Function() onPressedOnSubCommentCount;
+  final void Function() startEdit;
+  final void Function(String) editComment;
+  final Future<void> Function() endEdit;
+  final String? Function(String?) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +57,44 @@ class CommentWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 5),
-        Text(
-          mainComment,
-          textAlign: TextAlign.left,
-        ),
-        TextButton(
-          style: ButtonStyle(
-            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+        if (!isEdit)
+          Text(
+            mainComment,
+            textAlign: TextAlign.left,
+          )
+        else
+          Form(
+            autovalidateMode: showErrorMessage ? AutovalidateMode.always : AutovalidateMode.disabled,
+            child: TextFormField(
+              initialValue: mainComment,
+              onChanged: (String value) => editComment(value),
+              validator: (String? value) => validator(value),
+              decoration: const InputDecoration(
+                isDense: true,
+                hintText: 'Edit...',
+                border: InputBorder.none,
+              ),
+            ),
           ),
-          onPressed: () => onPressed(),
-          child: Text('$subCommentCount comment'),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            TextButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+              ),
+              onPressed: () => onPressedOnSubCommentCount(),
+              child: Text('$subCommentCount comment'),
+            ),
+            if (editable)
+              if(!isEdit) TextButton(
+                onPressed: () => startEdit(),
+                child: const Text('start edit'),
+              ) else TextButton(
+                onPressed: () => endEdit(),
+                child: const Text('end edit'),
+              )
+          ],
         ),
         const SizedBox(height: 15),
       ],
@@ -63,11 +108,22 @@ class SubCommentWidget extends StatelessWidget {
     required this.userName,
     required this.subComment,
     required this.subCommentDate,
+    required this.editable,
+    //required this.subCommentIndex,
+    required this.startEdit,
+    required this.editComment,
+    required this.endEdit,
   });
 
   final String userName;
   final String subComment;
   final DateTime subCommentDate;
+  final bool editable;
+
+  //final int subCommentIndex;
+  final void Function()? startEdit;
+  final void Function()? editComment;
+  final Future<void> Function()? endEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +145,8 @@ class SubCommentWidget extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
             ),
-            Text('${subCommentDate.day}/${subCommentDate.month}/${subCommentDate.year} ${subCommentDate.hour}:${subCommentDate.minute}'),
+            Text(
+                '${subCommentDate.day}/${subCommentDate.month}/${subCommentDate.year} ${subCommentDate.hour}:${subCommentDate.minute}'),
           ],
         ),
         const SizedBox(height: 5),
@@ -97,6 +154,17 @@ class SubCommentWidget extends StatelessWidget {
           subComment,
           textAlign: TextAlign.left,
         ),
+        const SizedBox(height: 5),
+        if (editable)
+          Row(
+            children: <Widget>[
+              const Spacer(),
+              TextButton(
+                onPressed: () {},
+                child: const Text('edit'),
+              ),
+            ],
+          ),
         const SizedBox(height: 15),
       ],
     );

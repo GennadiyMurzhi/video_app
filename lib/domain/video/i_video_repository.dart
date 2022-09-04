@@ -14,7 +14,10 @@ abstract class IVideoRepository {
   Future<Either<Failure, Uint8List>> getVideoFromTheServer(String fileId);
 
   ///A method to upload video on server
-  Future<Either<Failure, Unit>> uploadVideoOnServer(FilePickerResult filePickerResult);
+  Future<Either<Failure, Unit>> uploadVideoOnServer({
+    required FilePickerResult filePickerResult,
+    required String userId,
+  });
 
   ///A method to replace video on server
   Future<Either<Failure, Unit>> replaceVideoOnServer({

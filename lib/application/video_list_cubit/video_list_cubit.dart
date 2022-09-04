@@ -20,11 +20,10 @@ part 'video_list_state.dart';
 class VideoListCubit extends Cubit<VideoListState> {
   ///When VideoListScreen starts to display, VideoListCubit takes a loading state to inform the user that the Video List is about
   /// to be loaded
-  VideoListCubit(this._repository, this._videoDataListReceiver, this._account) : super(VideoListState.loading());
+  VideoListCubit(this._repository, this._videoDataListReceiver) : super(VideoListState.loading());
 
   final IVideoRepository _repository;
   final VideoDataListReceiver _videoDataListReceiver;
-  final Account _account;
 
   ///Used when VideoListScreen starts to display
   Future<void> initialList() async {
@@ -48,15 +47,16 @@ class VideoListCubit extends Cubit<VideoListState> {
   }
 
   ///method for pick video file
-  Future<void> pickAndUploadVideo() async {
+  Future<void> pickAndUploadVideo(String userId) async {
     final FilePickerResult? filePickerResult = await pickFile();
 
     if (filePickerResult != null) {
       emit(VideoListState.loading());
 
-      await _account.createAnonymousSession();
-
-      final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(filePickerResult);
+      final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(
+        filePickerResult: filePickerResult,
+        userId: userId,
+      );
       resultOrFailure.fold(
         (Failure failure) => failure.when(
           serverError: () => _serverErrorShowMessage(),
@@ -65,7 +65,6 @@ class VideoListCubit extends Cubit<VideoListState> {
           showSnackWithText('File uploaded to the server');
         },
       );
-      await _account.deleteSessions();
 
       emit(VideoListState.listDisplayed());
     }

@@ -41,6 +41,7 @@ class SubComments with _$SubComments {
 class Comment with _$Comment {
   const factory Comment({
     required String commentId,
+    required String userId,
     required String userName,
     required String comment,
     required int subCommentCount,
@@ -50,6 +51,7 @@ class Comment with _$Comment {
   factory Comment.fromDocument(Document document) => Comment(
         commentId: document.$id,
         userName: document.data['user_name'] as String,
+        userId: document.data['user_id'] as String,
         comment: document.data['comment'] as String,
         subCommentCount: document.data['sub_comment_count'] as int,
         date: document.data['date'] as int,
@@ -60,12 +62,14 @@ class Comment with _$Comment {
 class SubComment with _$SubComment {
   const factory SubComment({
     required String userName,
+    required String userId,
     required String subComment,
     required int date,
   }) = _SubComment;
 
   factory SubComment.fromDocument(Document document) => SubComment(
         userName: document.data['user_name'] as String,
+        userId: document.data['user_id'] as String,
         subComment: document.data['sub_comment'] as String,
         date: document.data['date'] as int,
       );

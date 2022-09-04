@@ -16,7 +16,7 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> loadUserData() async {
     final Option<User> user = await _authFacade.getSignedInUser();
-    user.fold(() => print('adasd'), (User a) {
+    user.fold(() => null, (User a) {
       emit(
         UserState(
           id: a.id,
@@ -25,5 +25,9 @@ class UserCubit extends Cubit<UserState> {
         ),
       );
     });
+  }
+
+  String getUserId() {
+    return state.id;
   }
 }

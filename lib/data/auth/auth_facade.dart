@@ -25,7 +25,6 @@ class AuthFacade extends IAuthFacade {
         ),
       );
     } catch (e) {
-      print(e);
       return optionOf(null);
     }
   }
@@ -53,7 +52,6 @@ class AuthFacade extends IAuthFacade {
       if (e.type! == 'user_email_already_exists') {
         return Left(AuthFailure.emailAlreadyInUsed());
       } else {
-        print(e);
         return Left(AuthFailure.serverError());
       }
     }
@@ -84,7 +82,7 @@ class AuthFacade extends IAuthFacade {
   }
 
   @override
-  Future<void> signOut() {
-    return Future.wait([_account.deleteSessions()]);
+  Future<void> signOut() async {
+    await _account.deleteSessions();
   }
 }

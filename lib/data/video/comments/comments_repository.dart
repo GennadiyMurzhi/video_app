@@ -95,6 +95,40 @@ class CommentsRepository extends ICommentsRepository {
           'sub_comment': subComment,
           'date': DateTime.now().millisecondsSinceEpoch,
         },
+        read: ['role:all'],
+      );
+      return Right(unit);
+    } catch (e) {
+      return const Left(CommentsFailure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<CommentsFailure, Unit>> updateMainComment({
+    required String commentId,
+    required String comment,
+  }) async {
+    final Either<CommentsFailure, Unit> result = await _updateComment(_commentsCollectionId, commentId, comment, 'comment');
+    return result;
+  }
+
+  @override
+  Future<Either<CommentsFailure, Unit>> updateSubComment({
+    required String subCommentId,
+    required String subComment,
+  }) async {
+    final Either<CommentsFailure, Unit> result = await _updateComment(_subCommentsCollectionId, subCommentId, subComment, 'sub_comment');
+    return result;
+  }
+
+  Future<Either<CommentsFailure, Unit>> _updateComment(String collectionId, String commentId, String comment, String attribute) async {
+    try {
+      await _database.updateDocument(
+        collectionId: collectionId,
+        documentId: commentId,
+        data: <dynamic, dynamic>{
+          attribute: comment,
+        },
       );
       return Right(unit);
     } catch (e) {

@@ -10,7 +10,7 @@ class Layout extends StatelessWidget {
     required this.title,
     this.functionFab,
     this.functionOnPop,
-    required this.id,
+    required this.userId,
     required this.name,
     required this.emailAddress,
     required this.child,
@@ -22,12 +22,12 @@ class Layout extends StatelessWidget {
   ///Title for the app bar
   final String title;
 
-  final String id;
+  final String userId;
   final String name;
   final String emailAddress;
 
   ///Function for Fab
-  final Future<void> Function()? functionFab;
+  final Future<void> Function(String)? functionFab;
 
   ///Function for back button
   final void Function()? functionOnPop;
@@ -65,7 +65,7 @@ class Layout extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text('id: $id', style: Theme.of(context).textTheme.titleMedium),
+                Text('id: $userId', style: Theme.of(context).textTheme.titleMedium),
                 Text('name: $name', style: Theme.of(context).textTheme.titleMedium),
                 Text('e-mail: $emailAddress', style: Theme.of(context).textTheme.titleMedium),
               ],
@@ -95,7 +95,7 @@ class Layout extends StatelessWidget {
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF673AB7)),
               ),
-              onPressed: () async => functionFab!(),
+              onPressed: () async => functionFab!(userId),
               child: const Icon(
                 Icons.add,
                 size: 24,

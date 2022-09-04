@@ -1,7 +1,7 @@
 part of 'comments_cubit.dart';
 
 @freezed
-abstract class CommentsState with _$CommentsState {
+class CommentsState with _$CommentsState {
   const factory CommentsState({
     required bool loading,
     required bool showErrorMessage,

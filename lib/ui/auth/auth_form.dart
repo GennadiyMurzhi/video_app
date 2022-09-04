@@ -13,6 +13,8 @@ class AuthForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<AuthFormCubit>(context).init();
+
     return BlocConsumer<AuthFormCubit, AuthFormState>(
       builder: (BuildContext context, AuthFormState state) {
         return Form(
@@ -34,7 +36,7 @@ class AuthForm extends StatelessWidget {
                   validator: (String? value) => BlocProvider.of<AuthFormCubit>(context).state.name.value.fold(
                     (AuthValueFailure<String> l) => l.maybeMap(
                       wrongName: (_) {
-                        return 'The name must start capitalized';
+                        return 'Enter Name';
                       },
                       orElse: () => null,
                     ),
@@ -80,6 +82,7 @@ class AuthForm extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 105),
                 child: ElevatedButton(
                   onPressed: () {
+                    //_formKey.currentState!.reset();
                     state.isSignUp
                         ? BlocProvider.of<AuthFormCubit>(context).register()
                         : BlocProvider.of<AuthFormCubit>(context).signInWithEmailAndPassword();
@@ -94,10 +97,18 @@ class AuthForm extends StatelessWidget {
                   ),
                 ),
               ),
-              if (state.isLoading) ...<Widget>[
-                const SizedBox(height: 10),
-                SizedBox(width: 100, height: 100, child: CircularProgressIndicator(key: UniqueKey(),)),
-              ] else
+              if (state.isLoading)
+                Column(
+                  children: const <Widget>[
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ],
+                )
+              else
                 TextButton(
                   onPressed: () {
                     _formKey.currentState!.reset();
@@ -126,14 +137,21 @@ class AuthForm extends StatelessWidget {
             },
             (Unit r) {
               //Navigator.of(context).pushReplacementNamed('/video_list_screen');
-              BlocProvider.of<AuthCubit>(context).authCheckRequested();
-              if (state.isSignUp) {
-                BlocProvider.of<AuthFormCubit>(context).signInWithEmailAndPassword().whenComplete(() {
-                  BlocProvider.of<UserCubit>(context).loadUserData().whenComplete(() {
+              //BlocProvider.of<AuthCubit>(context).authCheckRequested();
+              BlocProvider.of<AuthFormCubit>(context).onSuccess(loadUserFun: BlocProvider.of<UserCubit>(context).loadUserData);
+              Navigator.of(context).pushReplacementNamed('/video_list_screen');
+              /*if (state.isSignUp) {
+                BlocProvider.of<AuthFormCubit>(context).signInWithEmailAndPassword().then((e) {
+                  BlocProvider.of<UserCubit>(context).loadUserData().then((e) {
                     Navigator.of(context).pushReplacementNamed('/video_list_screen');
                   });
                 });
-              }
+
+              } else {
+                BlocProvider.of<UserCubit>(context).loadUserData().then((e) {
+                  Navigator.of(context).pushReplacementNamed('/video_list_screen');
+                });
+              }*/
             },
           ),
         );

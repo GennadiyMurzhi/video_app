@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dartz/dartz.dart';
@@ -24,10 +23,9 @@ part 'video_state.dart';
 @Injectable()
 class VideoCubit extends Cubit<VideoState> {
   ///Storage need to update and delete video on the server
-  VideoCubit(this._repository, this._account) : super(VideoState.initial());
+  VideoCubit(this._repository) : super(VideoState.initial());
 
   final IVideoRepository _repository;
-  final Account _account;
 
   ///need to init video on create screen
   Future<void> init(String name, String id) async {
@@ -84,8 +82,6 @@ class VideoCubit extends Cubit<VideoState> {
     if (filePickerResult != null) {
       emit(state.copyWith(videoStatus: VideoStatus.replacing));
 
-      await _account.createAnonymousSession();
-
       final Either<Failure, Unit> resultOrFailure = await _repository.replaceVideoOnServer(
         fileId: fileId,
         fileName: fileName,
@@ -99,8 +95,6 @@ class VideoCubit extends Cubit<VideoState> {
           showSnackWithText('File replaced on the server');
         },
       );
-
-      await _account.deleteSessions();
 
       if (!kIsWeb && resultOrFailure.isRight()) {
         File? videoFile;
@@ -145,8 +139,6 @@ class VideoCubit extends Cubit<VideoState> {
   Future<void> deleteVideo(String fileId) async {
     emit(state.copyWith(videoStatus: VideoStatus.deleting));
 
-    await _account.createAnonymousSession();
-
     final Either<Failure, Unit> resultOrFailure = await _repository.deleteVideoOnServer(fileId);
     resultOrFailure.fold(
       (Failure failure) => failure.when(
@@ -156,8 +148,6 @@ class VideoCubit extends Cubit<VideoState> {
         showSnackWithText('File delete on the server');
       },
     );
-
-    await _account.deleteSessions();
 
     emit(state.copyWith(videoStatus: VideoStatus.deleted));
 

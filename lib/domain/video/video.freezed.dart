@@ -21,7 +21,7 @@ VideoDataList _$VideoDataListFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$VideoDataList {
   int get total => throw _privateConstructorUsedError;
-  List<VideoData> get files => throw _privateConstructorUsedError;
+  List<VideoData> get documents => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +34,7 @@ abstract class $VideoDataListCopyWith<$Res> {
   factory $VideoDataListCopyWith(
           VideoDataList value, $Res Function(VideoDataList) then) =
       _$VideoDataListCopyWithImpl<$Res>;
-  $Res call({int total, List<VideoData> files});
+  $Res call({int total, List<VideoData> documents});
 }
 
 /// @nodoc
@@ -49,16 +49,16 @@ class _$VideoDataListCopyWithImpl<$Res>
   @override
   $Res call({
     Object? total = freezed,
-    Object? files = freezed,
+    Object? documents = freezed,
   }) {
     return _then(_value.copyWith(
       total: total == freezed
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as int,
-      files: files == freezed
-          ? _value.files
-          : files // ignore: cast_nullable_to_non_nullable
+      documents: documents == freezed
+          ? _value.documents
+          : documents // ignore: cast_nullable_to_non_nullable
               as List<VideoData>,
     ));
   }
@@ -71,7 +71,7 @@ abstract class _$$_VideoDataListCopyWith<$Res>
           _$_VideoDataList value, $Res Function(_$_VideoDataList) then) =
       __$$_VideoDataListCopyWithImpl<$Res>;
   @override
-  $Res call({int total, List<VideoData> files});
+  $Res call({int total, List<VideoData> documents});
 }
 
 /// @nodoc
@@ -88,16 +88,16 @@ class __$$_VideoDataListCopyWithImpl<$Res>
   @override
   $Res call({
     Object? total = freezed,
-    Object? files = freezed,
+    Object? documents = freezed,
   }) {
     return _then(_$_VideoDataList(
       total: total == freezed
           ? _value.total
           : total // ignore: cast_nullable_to_non_nullable
               as int,
-      files: files == freezed
-          ? _value._files
-          : files // ignore: cast_nullable_to_non_nullable
+      documents: documents == freezed
+          ? _value._documents
+          : documents // ignore: cast_nullable_to_non_nullable
               as List<VideoData>,
     ));
   }
@@ -107,24 +107,24 @@ class __$$_VideoDataListCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_VideoDataList implements _VideoDataList {
   const _$_VideoDataList(
-      {required this.total, required final List<VideoData> files})
-      : _files = files;
+      {required this.total, required final List<VideoData> documents})
+      : _documents = documents;
 
   factory _$_VideoDataList.fromJson(Map<String, dynamic> json) =>
       _$$_VideoDataListFromJson(json);
 
   @override
   final int total;
-  final List<VideoData> _files;
+  final List<VideoData> _documents;
   @override
-  List<VideoData> get files {
+  List<VideoData> get documents {
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_files);
+    return EqualUnmodifiableListView(_documents);
   }
 
   @override
   String toString() {
-    return 'VideoDataList(total: $total, files: $files)';
+    return 'VideoDataList(total: $total, documents: $documents)';
   }
 
   @override
@@ -133,7 +133,8 @@ class _$_VideoDataList implements _VideoDataList {
         (other.runtimeType == runtimeType &&
             other is _$_VideoDataList &&
             const DeepCollectionEquality().equals(other.total, total) &&
-            const DeepCollectionEquality().equals(other._files, _files));
+            const DeepCollectionEquality()
+                .equals(other._documents, _documents));
   }
 
   @JsonKey(ignore: true)
@@ -141,7 +142,7 @@ class _$_VideoDataList implements _VideoDataList {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(total),
-      const DeepCollectionEquality().hash(_files));
+      const DeepCollectionEquality().hash(_documents));
 
   @JsonKey(ignore: true)
   @override
@@ -159,7 +160,7 @@ class _$_VideoDataList implements _VideoDataList {
 abstract class _VideoDataList implements VideoDataList {
   const factory _VideoDataList(
       {required final int total,
-      required final List<VideoData> files}) = _$_VideoDataList;
+      required final List<VideoData> documents}) = _$_VideoDataList;
 
   factory _VideoDataList.fromJson(Map<String, dynamic> json) =
       _$_VideoDataList.fromJson;
@@ -167,7 +168,7 @@ abstract class _VideoDataList implements VideoDataList {
   @override
   int get total;
   @override
-  List<VideoData> get files;
+  List<VideoData> get documents;
   @override
   @JsonKey(ignore: true)
   _$$_VideoDataListCopyWith<_$_VideoDataList> get copyWith =>
@@ -181,8 +182,8 @@ VideoData _$VideoDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$VideoData {
   String get name => throw _privateConstructorUsedError;
-  @JsonKey(name: '\$id')
-  String get id => throw _privateConstructorUsedError;
+  String get videoId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -194,7 +195,7 @@ mixin _$VideoData {
 abstract class $VideoDataCopyWith<$Res> {
   factory $VideoDataCopyWith(VideoData value, $Res Function(VideoData) then) =
       _$VideoDataCopyWithImpl<$Res>;
-  $Res call({String name, @JsonKey(name: '\$id') String id});
+  $Res call({String name, String videoId, String userId});
 }
 
 /// @nodoc
@@ -208,16 +209,21 @@ class _$VideoDataCopyWithImpl<$Res> implements $VideoDataCopyWith<$Res> {
   @override
   $Res call({
     Object? name = freezed,
-    Object? id = freezed,
+    Object? videoId = freezed,
+    Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      videoId: videoId == freezed
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -229,7 +235,7 @@ abstract class _$$_VideoDataCopyWith<$Res> implements $VideoDataCopyWith<$Res> {
           _$_VideoData value, $Res Function(_$_VideoData) then) =
       __$$_VideoDataCopyWithImpl<$Res>;
   @override
-  $Res call({String name, @JsonKey(name: '\$id') String id});
+  $Res call({String name, String videoId, String userId});
 }
 
 /// @nodoc
@@ -245,16 +251,21 @@ class __$$_VideoDataCopyWithImpl<$Res> extends _$VideoDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = freezed,
-    Object? id = freezed,
+    Object? videoId = freezed,
+    Object? userId = freezed,
   }) {
     return _then(_$_VideoData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      videoId: videoId == freezed
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -264,7 +275,7 @@ class __$$_VideoDataCopyWithImpl<$Res> extends _$VideoDataCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_VideoData implements _VideoData {
   const _$_VideoData(
-      {required this.name, @JsonKey(name: '\$id') required this.id});
+      {required this.name, required this.videoId, required this.userId});
 
   factory _$_VideoData.fromJson(Map<String, dynamic> json) =>
       _$$_VideoDataFromJson(json);
@@ -272,12 +283,13 @@ class _$_VideoData implements _VideoData {
   @override
   final String name;
   @override
-  @JsonKey(name: '\$id')
-  final String id;
+  final String videoId;
+  @override
+  final String userId;
 
   @override
   String toString() {
-    return 'VideoData(name: $name, id: $id)';
+    return 'VideoData(name: $name, videoId: $videoId, userId: $userId)';
   }
 
   @override
@@ -286,7 +298,8 @@ class _$_VideoData implements _VideoData {
         (other.runtimeType == runtimeType &&
             other is _$_VideoData &&
             const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.videoId, videoId) &&
+            const DeepCollectionEquality().equals(other.userId, userId));
   }
 
   @JsonKey(ignore: true)
@@ -294,7 +307,8 @@ class _$_VideoData implements _VideoData {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(id));
+      const DeepCollectionEquality().hash(videoId),
+      const DeepCollectionEquality().hash(userId));
 
   @JsonKey(ignore: true)
   @override
@@ -312,7 +326,8 @@ class _$_VideoData implements _VideoData {
 abstract class _VideoData implements VideoData {
   const factory _VideoData(
       {required final String name,
-      @JsonKey(name: '\$id') required final String id}) = _$_VideoData;
+      required final String videoId,
+      required final String userId}) = _$_VideoData;
 
   factory _VideoData.fromJson(Map<String, dynamic> json) =
       _$_VideoData.fromJson;
@@ -320,8 +335,9 @@ abstract class _VideoData implements VideoData {
   @override
   String get name;
   @override
-  @JsonKey(name: '\$id')
-  String get id;
+  String get videoId;
+  @override
+  String get userId;
   @override
   @JsonKey(ignore: true)
   _$$_VideoDataCopyWith<_$_VideoData> get copyWith =>

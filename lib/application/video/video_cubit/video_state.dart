@@ -32,15 +32,4 @@ abstract class VideoState with _$VideoState {
         videoStatus: VideoStatus.display,
         chewieController: null,
       );
-
-/*
-  ///this state is used when needed to display video
-  factory VideoState.videoDisplayed() => const VideoState(
-    videoStatus: VideoStatus.loaded,
-  );
-
-  ///this state is used when needed to display that video deleted
-  factory VideoState.videoDeleted() => const VideoState(
-    videoStatus: VideoStatus.deleted,
-  );*/
 }

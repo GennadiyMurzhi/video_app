@@ -18,15 +18,24 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
   SubCommentsCubit(this._commentsRepository) : super(SubCommentsState.initial());
   final ICommentsRepository _commentsRepository;
 
-  void openOrClose() {
+  Future<void> onOpen() async {
     emit(
       state.copyWith(
-        isOpen: !state.isOpen,
+        isOpen: true,
       ),
     );
   }
 
-  void editSubComment(String comment) {
+  Future<void> onClose(Future<void> loadComments) async {
+    await loadComments;
+    emit(
+      state.copyWith(
+        isOpen: false,
+      ),
+    );
+  }
+
+  void editNewSubComment(String comment) {
     emit(
       state.copyWith(
         subComment: CommentObject(comment),
@@ -42,7 +51,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
         commentId: commentId,
       ),
     );
-    openOrClose();
+    onOpen();
 
     final Either<CommentsFailure, SubComments> subCommentsOrFailure = await _commentsRepository.getSubComments(commentId);
     subCommentsOrFailure.fold(
