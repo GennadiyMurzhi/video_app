@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
@@ -6,18 +5,12 @@ import 'package:video_app/application/video/comments/comments_cubit/comments_cub
 import 'package:video_app/application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart';
 import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comments_cubit.dart';
 import 'package:video_app/application/video/video_cubit/video_cubit.dart';
-import 'package:video_app/application/video_data_list_receiver.dart';
-import 'package:video_app/domain/core/failures.dart';
-import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
-import 'package:video_app/ui/video/widgets/comment_widget.dart';
 import 'package:video_app/ui/video/widgets/comments_page_widget.dart';
 import 'package:video_app/ui/video/widgets/loading_widget.dart';
 import 'package:video_app/ui/video/widgets/player_widget.dart';
 import 'package:video_app/ui/video/widgets/video_info_page_widget.dart';
-
-final GlobalKey<FormState> _subCommentFormKey = GlobalKey<FormState>();
 
 ///Screen to watch video
 class VideoScreen extends StatelessWidget {

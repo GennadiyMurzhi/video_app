@@ -87,13 +87,16 @@ class CommentWidget extends StatelessWidget {
               child: Text('$subCommentCount comment'),
             ),
             if (editable)
-              if(!isEdit) TextButton(
-                onPressed: () => startEdit(),
-                child: const Text('start edit'),
-              ) else TextButton(
-                onPressed: () => endEdit(),
-                child: const Text('end edit'),
-              )
+              if (!isEdit)
+                TextButton(
+                  onPressed: () => startEdit(),
+                  child: const Text('start edit'),
+                )
+              else
+                TextButton(
+                  onPressed: () => endEdit(),
+                  child: const Text('end edit'),
+                )
           ],
         ),
         const SizedBox(height: 15),
