@@ -10,15 +10,17 @@ import 'package:video_app/domain/video/comments/value_objects.dart';
 import 'package:video_app/injectable.dart';
 
 part 'comments_cubit.freezed.dart';
-
 part 'comments_state.dart';
 
+///cubit manage the uploading of comments and to leave new
 @Injectable()
 class CommentsCubit extends Cubit<CommentsState> {
-  final ICommentsRepository _commentRepository;
-
+  ///pass the comments repository to use the comment management functionality
   CommentsCubit(this._commentRepository) : super(CommentsState.initial());
 
+  final ICommentsRepository _commentRepository;
+
+  ///method for editing the new comment of the input time
   void editNewComment(String comment) {
     emit(
       state.copyWith(
@@ -28,6 +30,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     );
   }
 
+  ///method to leave new comment
   Future<void> leaveComment({
     required String userId,
     required String userName,
@@ -86,6 +89,7 @@ class CommentsCubit extends Cubit<CommentsState> {
     }
   }
 
+  ///method for loading all comments for video when the comments page opens
   Future<void> loadCommentsOnCommentsPage(String videoId) async {
     emit(state.copyWith(loading: true));
 

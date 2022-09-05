@@ -7,11 +7,13 @@ import 'package:video_app/domain/auth/i_auth_facade.dart';
 import 'package:video_app/domain/auth/user.dart' as video;
 import 'package:video_app/domain/auth/value_objects.dart';
 
+///class containing the authorization/registration functionality
 @LazySingleton(as: IAuthFacade)
 class AuthFacade extends IAuthFacade {
+  ///pass Account to use appwrite server functionality
   AuthFacade(this._account);
 
-  Account _account;
+  final Account _account;
 
   @override
   Future<Option<video.User>> getSignedInUser() async {
@@ -47,12 +49,12 @@ class AuthFacade extends IAuthFacade {
         password: passwordStr,
       );
 
-      return Right(unit);
+      return right(unit);
     } on AppwriteException catch (e) {
       if (e.type! == 'user_email_already_exists') {
-        return Left(AuthFailure.emailAlreadyInUsed());
+        return left(const AuthFailure.emailAlreadyInUsed());
       } else {
-        return Left(AuthFailure.serverError());
+        return left(const AuthFailure.serverError());
       }
     }
   }
@@ -71,12 +73,12 @@ class AuthFacade extends IAuthFacade {
         password: passwordStr,
       );
 
-      return Right(unit);
+      return right(unit);
     } on AppwriteException catch (e) {
       if (e.type! == 'user_invalid_credentials') {
-        return Left(AuthFailure.invalidEmailAndPasswordCombination());
+        return left(const AuthFailure.invalidEmailAndPasswordCombination());
       } else {
-        return Left(AuthFailure.serverError());
+        return left(const AuthFailure.serverError());
       }
     }
   }

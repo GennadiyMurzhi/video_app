@@ -1,4 +1,3 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
@@ -12,7 +11,6 @@ import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
 
 part 'video_list_cubit.freezed.dart';
-
 part 'video_list_state.dart';
 
 ///VideoListCubit is needed to control the VideoListScreen view

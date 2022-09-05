@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+///widget to display a comment on the screen
 class CommentWidget extends StatelessWidget {
+  ///gets variables for the textfield and functions in case the commentary will be edited
   const CommentWidget({
     super.key,
     required this.userName,
@@ -8,7 +10,6 @@ class CommentWidget extends StatelessWidget {
     required this.commentDate,
     required this.subCommentCount,
     required this.editable,
-    //required this.commentIndex,
     required this.onPressedOnSubCommentCount,
     required this.isEdit,
     required this.startEdit,
@@ -18,19 +19,40 @@ class CommentWidget extends StatelessWidget {
     required this.showErrorMessage,
   });
 
+  ///the username of the user who left the comment
   final String userName;
+
+  ///the string containing the commentary
   final String mainComment;
+
+  ///date when the commentary was left
   final DateTime commentDate;
+
+  ///the number of sub comments left for the commentary
   final int subCommentCount;
+
+  ///a variable indicating whether the comment can be changed by this user
   final bool editable;
+
+  ///the variable indicating whether or not the comment is being edited now
   final bool isEdit;
+
+  ///a variable indicating whether textfield errors in the comment should be shown now
   final bool showErrorMessage;
 
-  //final int commentIndex;
+  ///function to click on the number of sub comments to open the sub comments widget of this comment
   final void Function() onPressedOnSubCommentCount;
+
+  ///function to start editing a comment
   final void Function() startEdit;
+
+  ///function to edit comment object value
   final void Function(String) editComment;
+
+  ///function for the end of the redacted comment
   final Future<void> Function() endEdit;
+
+  ///function to validate textfield input
   final String? Function(String?) validator;
 
   @override
@@ -105,28 +127,37 @@ class CommentWidget extends StatelessWidget {
   }
 }
 
+///widget to display a sub comment on the screen
 class SubCommentWidget extends StatelessWidget {
+  ///gets variables for the textfield and functions in case the commentary will be edited
   const SubCommentWidget({
     super.key,
     required this.userName,
     required this.subComment,
     required this.subCommentDate,
     required this.editable,
-    //required this.subCommentIndex,
     required this.startEdit,
     required this.editComment,
     required this.endEdit,
   });
 
+  ///the username of the user who left the comment
   final String userName;
+  ///the string containing the commentary
   final String subComment;
+  ///date when the commentary was left
   final DateTime subCommentDate;
-  final bool editable;
 
-  //final int subCommentIndex;
-  final void Function()? startEdit;
-  final void Function()? editComment;
-  final Future<void> Function()? endEdit;
+  ///a variable indicating whether the comment can be changed by this user
+  final bool editable;
+  ///function to start editing a comment
+  final void Function() startEdit;
+
+  ///function to edit comment object value
+  final void Function(String) editComment;
+
+  ///function for the end of the redacted comment
+  final Future<void> Function() endEdit;
 
   @override
   Widget build(BuildContext context) {

@@ -10,14 +10,16 @@ import 'package:video_app/domain/video/comments/value_objects.dart';
 import 'package:video_app/injectable.dart';
 
 part 'sub_comments_cubit.freezed.dart';
-
 part 'sub_comments_state.dart';
 
+///cubit manage the uploading of sub comments and to leave new
 @Injectable()
 class SubCommentsCubit extends Cubit<SubCommentsState> {
+  ///pass the comments repository to use the comment management functionality
   SubCommentsCubit(this._commentsRepository) : super(SubCommentsState.initial());
   final ICommentsRepository _commentsRepository;
 
+  ///method for open subcomments widget
   Future<void> onOpen() async {
     emit(
       state.copyWith(
@@ -26,6 +28,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
     );
   }
 
+  ///method for close sub comments widget
   Future<void> onClose(Future<void> loadComments) async {
     await loadComments;
     emit(
@@ -35,6 +38,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
     );
   }
 
+  ///method for editing the new sub comment of the input time
   void editNewSubComment(String comment) {
     emit(
       state.copyWith(
@@ -44,6 +48,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
     );
   }
 
+  ///method for loading sub comments when open sub comments widget
   Future<void> onOpenSubComments(String commentId) async {
     emit(
       state.copyWith(
@@ -73,6 +78,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
     );
   }
 
+  ///method for leave new sub comment when press leave comment button
   Future<void> leaveSubComment({required String userId, required String userName}) async {
     emit(
       state.copyWith(

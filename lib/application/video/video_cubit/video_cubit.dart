@@ -16,7 +16,6 @@ import 'package:video_app/ui/core/snackbar_custom.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_cubit.freezed.dart';
-
 part 'video_state.dart';
 
 ///cubit for manipulation on video_screen
@@ -124,7 +123,7 @@ class VideoCubit extends Cubit<VideoState> {
       if (kIsWeb && resultOrFailure.isRight()) {
         _crutchLinkVideo = '$_crutchLinkVideo/';
         final VideoPlayerController videoPlayerController = VideoPlayerController.network(_crutchLinkVideo)..initialize();
-        
+
         emit(
           state.copyWith(
             videoStatus: VideoStatus.display,

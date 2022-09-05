@@ -8,12 +8,15 @@ import 'package:video_app/domain/auth/user.dart';
 part 'user_cubit.freezed.dart';
 part 'user_state.dart';
 
+///cubit for store information about authorized users
 @Injectable()
 class UserCubit extends Cubit<UserState> {
+  ///pass a facade to use the server's authorization functionality
   UserCubit(this._authFacade) : super(UserState.initial());
 
   final IAuthFacade _authFacade;
 
+  ///method for load user information into the application
   Future<void> loadUserData() async {
     final Option<User> user = await _authFacade.getSignedInUser();
     user.fold(() => null, (User a) {
@@ -27,7 +30,6 @@ class UserCubit extends Cubit<UserState> {
     });
   }
 
-  String getUserId() {
-    return state.id;
-  }
+  ///application user id
+  String get userId => state.id;
 }

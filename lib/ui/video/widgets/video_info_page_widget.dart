@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+///a page with information about the video and buttons to delete and change the video, if the user is the one who uploaded it
 class VideoInfoPageWidget extends StatelessWidget {
+  ///pass video information, and functions for deleting and replacing video
   const VideoInfoPageWidget({
     super.key,
     required this.name,
@@ -12,11 +14,22 @@ class VideoInfoPageWidget extends StatelessWidget {
     required this.deleteVideo,
   });
 
+  ///vide name
   final String name;
+
+  ///video id on the server
   final String id;
+
+  ///id of the user who uploaded the video to the server
   final String userId;
+
+  ///user id of the authorized user in the application
   final String appUserId;
+
+  ///function for deleting video
   final void Function() deleteVideo;
+
+  ///function for updating\displaying video
   final void Function() updateVideo;
 
   @override

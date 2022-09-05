@@ -27,7 +27,7 @@ class CommentsPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String appUserId = BlocProvider.of<UserCubit>(context).getUserId();
+    final String appUserId = BlocProvider.of<UserCubit>(context).userId;
 
     return BlocBuilder<CommentsCubit, CommentsState>(
       builder: (BuildContext context, CommentsState commentsState) {

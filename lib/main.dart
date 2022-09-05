@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
-import 'package:video_app/realtime_subscription.dart';
 import 'package:video_app/injectable.dart';
+import 'package:video_app/realtime_subscription.dart';
 import 'package:video_app/ui/core/app.dart';
 
 void main() async {

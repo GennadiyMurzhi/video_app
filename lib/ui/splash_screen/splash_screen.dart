@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/auth/auth_cubit/auth_cubit.dart';
 
+///screen that is displayed when the application is started and if the user has finished the session.
+///Contains a listener with logic to determine if the user is authorized or not
 class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {
+      listener: (BuildContext context, AuthState state) {
         state.map(
           initial: (_) {},
           authenticated: (_)  => Navigator.of(context).pushReplacementNamed('/video_list_screen'),

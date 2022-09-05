@@ -2,9 +2,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'failures.freezed.dart';
 
-///Failures that may occur while the application is running
+///failures occurring during video manipulation
 @freezed
 abstract class Failure with _$Failure {
-  ///Appears when an error has occurred on the server
+  ///general server error
   const factory Failure.serverError () = ServerError;
 }

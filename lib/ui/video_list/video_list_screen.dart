@@ -15,8 +15,6 @@ final GlobalKey<ScaffoldState> videoListScreenLayoutKey = GlobalKey<ScaffoldStat
 class VideoListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //BlocProvider.of<UserCubit>(context).loadUserData();
-
     return BlocBuilder<UserCubit, UserState>(
       builder: (BuildContext context, UserState userState) {
         return BlocProvider<VideoListCubit>(

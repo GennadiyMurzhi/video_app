@@ -35,11 +35,9 @@ class VideoRepository implements IVideoRepository {
         orderAttributes: ['\$createdAt'],
         orderTypes: ['DESC'],
       );
-      return Right(
-        VideoDataList.fromDocumentList(documentList.documents),
-      );
+      return right(VideoDataList.fromDocumentList(documentList.documents));
     } catch (e) {
-      return const Left(Failure.serverError());
+      return left(const Failure.serverError());
     }
   }
 
@@ -50,9 +48,9 @@ class VideoRepository implements IVideoRepository {
         bucketId: _bucketId,
         fileId: fileId,
       );
-      return Right(fileBytes);
+      return right(fileBytes);
     } catch (e) {
-      return const Left(Failure.serverError());
+      return left(const Failure.serverError());
     }
   }
 
@@ -83,9 +81,9 @@ class VideoRepository implements IVideoRepository {
         write: <dynamic>['user:$userId'],
       );
 
-      return const Right(unit);
+      return right(unit);
     } catch (e) {
-      return const Left(Failure.serverError());
+      return left(const Failure.serverError());
     }
   }
 
@@ -119,9 +117,9 @@ class VideoRepository implements IVideoRepository {
         file: inputFile,
       );
 
-      return const Right(unit);
+      return right(unit);
     } catch (e) {
-      return const Left(Failure.serverError());
+      return left(const Failure.serverError());
     }
   }
 
@@ -133,9 +131,9 @@ class VideoRepository implements IVideoRepository {
         fileId: fileId,
       );
 
-      return const Right(unit);
+      return right(unit);
     } catch (e) {
-      return const Left(Failure.serverError());
+      return left(const Failure.serverError());
     }
   }
 }

@@ -1,10 +1,8 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/video/video_screen.dart';
 
@@ -24,7 +22,7 @@ class VideoListItemWidget extends StatelessWidget {
   ///File ID in bucket
   final String id;
 
- ///File ID in bucket
+  ///File ID in bucket
   final String userId;
 
   @override

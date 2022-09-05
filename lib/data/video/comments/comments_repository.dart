@@ -9,8 +9,10 @@ import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 const String _commentsCollectionId = '630cdbc377f341426133';
 const String _subCommentsCollectionId = '630cded483e663a5382c';
 
+///repository for manipulation comments on the server
 @Injectable(as: ICommentsRepository)
 class CommentsRepository extends ICommentsRepository {
+  ///pass the appwrite client to create appwrite database object for manipulating comments
   CommentsRepository(this._client) {
     _database = Databases(
       _client,
@@ -30,9 +32,9 @@ class CommentsRepository extends ICommentsRepository {
           Query.equal('comment_id', commentId),
         ],
       );
-      return Right(SubComments.fromDocumentList(documentList.documents));
+      return right(SubComments.fromDocumentList(documentList.documents));
     } catch (e) {
-      return const Left(CommentsFailure.serverError());
+      return left(const CommentsFailure.serverError());
     }
   }
 
@@ -45,9 +47,9 @@ class CommentsRepository extends ICommentsRepository {
           Query.equal('video_id', videoId),
         ],
       );
-      return Right(Comments.fromDocumentList(documentList.documents));
+      return right(Comments.fromDocumentList(documentList.documents));
     } catch (e) {
-      return const Left(CommentsFailure.serverError());
+      return left(const CommentsFailure.serverError());
     }
   }
 
@@ -71,9 +73,9 @@ class CommentsRepository extends ICommentsRepository {
         },
         read: ['role:all'],
       );
-      return Right(unit);
+      return right(unit);
     } catch (e) {
-      return const Left(CommentsFailure.serverError());
+      return left(const CommentsFailure.serverError());
     }
   }
 
@@ -97,9 +99,9 @@ class CommentsRepository extends ICommentsRepository {
         },
         read: ['role:all'],
       );
-      return Right(unit);
+      return right(unit);
     } catch (e) {
-      return const Left(CommentsFailure.serverError());
+      return left(const CommentsFailure.serverError());
     }
   }
 
@@ -117,11 +119,13 @@ class CommentsRepository extends ICommentsRepository {
     required String subCommentId,
     required String subComment,
   }) async {
-    final Either<CommentsFailure, Unit> result = await _updateComment(_subCommentsCollectionId, subCommentId, subComment, 'sub_comment');
+    final Either<CommentsFailure, Unit> result =
+        await _updateComment(_subCommentsCollectionId, subCommentId, subComment, 'sub_comment');
     return result;
   }
 
-  Future<Either<CommentsFailure, Unit>> _updateComment(String collectionId, String commentId, String comment, String attribute) async {
+  Future<Either<CommentsFailure, Unit>> _updateComment(
+      String collectionId, String commentId, String comment, String attribute) async {
     try {
       await _database.updateDocument(
         collectionId: collectionId,
@@ -130,9 +134,9 @@ class CommentsRepository extends ICommentsRepository {
           attribute: comment,
         },
       );
-      return Right(unit);
+      return right(unit);
     } catch (e) {
-      return const Left(CommentsFailure.serverError());
+      return left(const CommentsFailure.serverError());
     }
   }
 }

@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_app/application/auth/auth_cubit/auth_cubit.dart';
 import 'package:video_app/application/auth/auth_form_cubit/auth_form_cubit.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/domain/auth/auth_failure.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
 
+///Form widget for authorization\registration
 class AuthForm extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -136,22 +136,8 @@ class AuthForm extends StatelessWidget {
               );
             },
             (Unit r) {
-              //Navigator.of(context).pushReplacementNamed('/video_list_screen');
-              //BlocProvider.of<AuthCubit>(context).authCheckRequested();
               BlocProvider.of<AuthFormCubit>(context).onSuccess(loadUserFun: BlocProvider.of<UserCubit>(context).loadUserData);
               Navigator.of(context).pushReplacementNamed('/video_list_screen');
-              /*if (state.isSignUp) {
-                BlocProvider.of<AuthFormCubit>(context).signInWithEmailAndPassword().then((e) {
-                  BlocProvider.of<UserCubit>(context).loadUserData().then((e) {
-                    Navigator.of(context).pushReplacementNamed('/video_list_screen');
-                  });
-                });
-
-              } else {
-                BlocProvider.of<UserCubit>(context).loadUserData().then((e) {
-                  Navigator.of(context).pushReplacementNamed('/video_list_screen');
-                });
-              }*/
             },
           ),
         );

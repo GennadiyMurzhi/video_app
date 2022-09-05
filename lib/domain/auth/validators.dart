@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:video_app/domain/core/failures.dart';
 
+///method for validate name in value object
 Either<AuthValueFailure<String>, String> validateName(String input) {
   if(input.isEmpty) {
     return left(AuthValueFailure<String>.wrongName(failedValue: input));
@@ -13,6 +14,7 @@ Either<AuthValueFailure<String>, String> validateName(String input) {
   }
 }
 
+///method for validate email address in value object
 Either<AuthValueFailure<String>, String> validateEmailAddress(String input) {
   return _regExpValidate(
     input: input,
@@ -21,6 +23,7 @@ Either<AuthValueFailure<String>, String> validateEmailAddress(String input) {
   );
 }
 
+///method for validate password in value object
 Either<AuthValueFailure<String>, String> validatePassword(String input) {
   if (input.length >= 8) {
     return right(input);

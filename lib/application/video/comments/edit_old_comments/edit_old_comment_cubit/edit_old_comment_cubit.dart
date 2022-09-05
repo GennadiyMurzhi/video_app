@@ -1,27 +1,23 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
-import 'package:video_app/application/video/comments/comments_cubit/comments_cubit.dart';
-import 'package:video_app/application/video_data_list_receiver.dart';
-import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 import 'package:video_app/domain/video/comments/value_objects.dart';
-import 'package:video_app/injectable.dart';
 
 part 'edit_old_comment_cubit.freezed.dart';
-
 part 'edit_old_comment_state.dart';
 
+///cubit for manage the editing of old comments
 @Injectable()
 class EditOldCommentCubit extends Cubit<EditOldCommentState> {
+  ///pass the comments repository to use the comment management functionality
   EditOldCommentCubit(this._commentsRepository) : super(EditOldCommentState.none());
 
   final ICommentsRepository _commentsRepository;
 
+  ///method need to start edit old comment when press edit comment button
   void startEditComment({
     required String oldComment,
     required int commentIndex,
@@ -36,6 +32,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
     );
   }
 
+  ///method for editing the old comment of the input time
   void editComment(String comment) {
     emit(
       state.copyWith(
@@ -44,6 +41,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
     );
   }
 
+  ///method to end edit old comment when press end edit button
   Future<void> endEditComment({required Future<void> Function() updateCommentsFunction}) async {
     final bool isValidComment = state.comment.isValid();
     if (isValidComment) {
@@ -85,6 +83,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
     }
   }
 
+  ///method to check the index if this comment can be edited
   bool isEditableIndex(int index) {
     return state.commentIndex == index;
   }

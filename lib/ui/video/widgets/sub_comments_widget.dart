@@ -10,17 +10,20 @@ import 'package:video_app/ui/video/widgets/comment_widget.dart';
 
 final GlobalKey<FormState> _subCommentFormKey = GlobalKey<FormState>();
 
+///widget for displaying sub comments
 class SubCommentsWidget extends StatelessWidget {
+  ///pass the future to lading sub comments
   const SubCommentsWidget({
     super.key,
     required this.loadComments,
   });
 
+  ///future to lading sub comments
   final Future<void> loadComments;
 
   @override
   Widget build(BuildContext context) {
-    final String appUserId = BlocProvider.of<UserCubit>(context).getUserId();
+    final String appUserId = BlocProvider.of<UserCubit>(context).userId;
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -109,7 +112,6 @@ class SubCommentsWidget extends StatelessWidget {
                       } else {
                         final SubComment subComment = snapshot.data!.subComments[index - 1];
                         return SubCommentWidget(
-                          //subCommentIndex: index,
                           userName: subComment.userName,
                           editable: appUserId.compareTo(subComment.userId) == 0,
                           subComment: subComment.subComment,
@@ -117,7 +119,7 @@ class SubCommentsWidget extends StatelessWidget {
                             subComment.date,
                           ),
                           startEdit: () {},
-                          editComment: () {},
+                          editComment: (String string) {},
                           endEdit: () async {},
                         );
                       }

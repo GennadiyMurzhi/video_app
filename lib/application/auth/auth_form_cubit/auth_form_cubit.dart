@@ -7,18 +7,21 @@ import 'package:video_app/domain/auth/i_auth_facade.dart';
 import 'package:video_app/domain/auth/value_objects.dart';
 
 part 'auth_form_cubit.freezed.dart';
-
 part 'auth_form_state.dart';
 
+///сubit to control the form on the auth_screen and the authorization/registration process
 @Injectable()
 class AuthFormCubit extends Cubit<AuthFormState> {
+  ///pass a facade to use the server's authorization functionality
   AuthFormCubit(this._authFacade) : super(AuthFormState.initial());
   final IAuthFacade _authFacade;
 
+  ///method to return the form to the initial state
   void init() {
     emit(AuthFormState.initial());
   }
 
+  ///method for editing the name of the input time in the form
   void editName(String name) {
     emit(
       state.copyWith(
@@ -28,6 +31,7 @@ class AuthFormCubit extends Cubit<AuthFormState> {
     );
   }
 
+  ///method for editing the email address of the input time in the form
   void editEmailAddress(String emailAddress) {
     emit(
       state.copyWith(
@@ -37,6 +41,7 @@ class AuthFormCubit extends Cubit<AuthFormState> {
     );
   }
 
+  ///method for editing the password of the input time in the form
   void editPassword(String password) {
     emit(
       state.copyWith(
@@ -46,6 +51,7 @@ class AuthFormCubit extends Cubit<AuthFormState> {
     );
   }
 
+  ///method for pressing the registration button
   Future<void> register() async {
     Either<AuthFailure, Unit>? failureOrSuccess;
     if (_isFieldsValid(withName: true)) {
@@ -92,6 +98,7 @@ class AuthFormCubit extends Cubit<AuthFormState> {
     }
   }
 
+  ///method for pushing the login button
   Future<void> signInWithEmailAndPassword() async {
     Either<AuthFailure, Unit>? failureOrSuccess;
     if (_isFieldsValid(withName: false)) {
@@ -137,6 +144,7 @@ class AuthFormCubit extends Cubit<AuthFormState> {
     }
   }
 
+  ///method changes the state to rebuild the form for login or registration
   void switchForm() {
     emit(
       state.copyWith(
@@ -146,10 +154,11 @@ class AuthFormCubit extends Cubit<AuthFormState> {
     );
   }
 
+  ///actions to be performed upon successful registration/authorization. Pass the function to download the user information
   Future<void> onSuccess({
     required Future<void> Function() loadUserFun,
   }) async {
-    if(state.isSignUp) {
+    if (state.isSignUp) {
       await signInWithEmailAndPassword();
       await loadUserFun();
     } else {

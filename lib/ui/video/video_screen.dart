@@ -17,7 +17,7 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final VideoParams videoParams = ModalRoute.of(context)!.settings.arguments as VideoParams;
-    final String appUserId = BlocProvider.of<UserCubit>(context).getUserId();
+    final String appUserId = BlocProvider.of<UserCubit>(context).userId;
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (BuildContext context, UserState userState) {
@@ -138,6 +138,6 @@ class VideoParams {
   ///File ID in bucket
   final String id;
 
-  ///File user ID in bucket
+  ///File user ID who upload on the server
   final String userId;
 }
