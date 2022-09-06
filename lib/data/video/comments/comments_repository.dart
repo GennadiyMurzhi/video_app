@@ -125,7 +125,11 @@ class CommentsRepository extends ICommentsRepository {
   }
 
   Future<Either<CommentsFailure, Unit>> _updateComment(
-      String collectionId, String commentId, String comment, String attribute) async {
+    String collectionId,
+    String commentId,
+    String comment,
+    String attribute,
+  ) async {
     try {
       await _database.updateDocument(
         collectionId: collectionId,
@@ -136,6 +140,7 @@ class CommentsRepository extends ICommentsRepository {
       );
       return right(unit);
     } catch (e) {
+      print(e);
       return left(const CommentsFailure.serverError());
     }
   }

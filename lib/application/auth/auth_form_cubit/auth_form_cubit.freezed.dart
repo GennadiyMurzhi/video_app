@@ -16,12 +16,25 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthFormState {
+  ///Value object for storing name input
   Name get name => throw _privateConstructorUsedError;
+
+  ///Value object for storing email address input
   EmailAddress get emailAddress => throw _privateConstructorUsedError;
+
+  ///Value object for storing password input
   Password get password => throw _privateConstructorUsedError;
+
+  ///variable to indicate loading
   bool get isLoading => throw _privateConstructorUsedError;
+
+  ///variable indicating that the form is needed for registration/authorization
   bool get isSignUp => throw _privateConstructorUsedError;
+
+  ///variable displaying validate errors in texfields
   bool get showErrorMessage => throw _privateConstructorUsedError;
+
+  ///option necessary to indicate the further action as a result of the registration/authorization
   Option<Either<AuthFailure, Unit>> get authFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
 
@@ -180,18 +193,31 @@ class _$_AuthFormState implements _AuthFormState {
       required this.showErrorMessage,
       required this.authFailureOrSuccessOption});
 
+  ///Value object for storing name input
   @override
   final Name name;
+
+  ///Value object for storing email address input
   @override
   final EmailAddress emailAddress;
+
+  ///Value object for storing password input
   @override
   final Password password;
+
+  ///variable to indicate loading
   @override
   final bool isLoading;
+
+  ///variable indicating that the form is needed for registration/authorization
   @override
   final bool isSignUp;
+
+  ///variable displaying validate errors in texfields
   @override
   final bool showErrorMessage;
+
+  ///option necessary to indicate the further action as a result of the registration/authorization
   @override
   final Option<Either<AuthFailure, Unit>> authFailureOrSuccessOption;
 
@@ -246,18 +272,32 @@ abstract class _AuthFormState implements AuthFormState {
           authFailureOrSuccessOption}) = _$_AuthFormState;
 
   @override
+
+  ///Value object for storing name input
   Name get name;
   @override
+
+  ///Value object for storing email address input
   EmailAddress get emailAddress;
   @override
+
+  ///Value object for storing password input
   Password get password;
   @override
+
+  ///variable to indicate loading
   bool get isLoading;
   @override
+
+  ///variable indicating that the form is needed for registration/authorization
   bool get isSignUp;
   @override
+
+  ///variable displaying validate errors in texfields
   bool get showErrorMessage;
   @override
+
+  ///option necessary to indicate the further action as a result of the registration/authorization
   Option<Either<AuthFailure, Unit>> get authFailureOrSuccessOption;
   @override
   @JsonKey(ignore: true)

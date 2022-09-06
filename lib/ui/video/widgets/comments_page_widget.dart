@@ -8,6 +8,7 @@ import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comm
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/comments/comments.dart';
+import 'package:video_app/enums.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/video/video_screen.dart';
 import 'package:video_app/ui/video/widgets/comment_widget.dart';
@@ -15,20 +16,23 @@ import 'package:video_app/ui/video/widgets/sub_comments_widget.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+///page displaying comments, with the ability to leave new comments and edit old ones
 class CommentsPageWidget extends StatelessWidget {
+  ///pass the videoParams to know for which video to load the comments. And appUserId to know which comments can be edited
   const CommentsPageWidget({
     super.key,
     required this.videoParams,
     required this.appUserId,
   });
 
+  ///video params
   final VideoParams videoParams;
+
+  ///the user id of the user who is logged in to the application
   final String appUserId;
 
   @override
   Widget build(BuildContext context) {
-    final String appUserId = BlocProvider.of<UserCubit>(context).userId;
-
     return BlocBuilder<CommentsCubit, CommentsState>(
       builder: (BuildContext context, CommentsState commentsState) {
         return BlocBuilder<SubCommentsCubit, SubCommentsState>(
@@ -114,14 +118,11 @@ class CommentsPageWidget extends StatelessWidget {
                                         return null;
                                       },
                                     ),
-                                    //commentIndex: index,
                                     userName: comment.userName,
                                     showErrorMessage: editCommentState.showErrorMessage,
                                     editable: appUserId.compareTo(comment.userId) == 0,
-                                    mainComment: comment.comment,
-                                    commentDate: DateTime.fromMillisecondsSinceEpoch(
-                                      comment.date,
-                                    ),
+                                    comment: comment.comment,
+                                    commentDate: DateTime.fromMillisecondsSinceEpoch(comment.date),
                                     subCommentCount: comment.subCommentCount,
                                     onPressedOnSubCommentCount: () =>
                                         BlocProvider.of<SubCommentsCubit>(context).onOpenSubComments(comment.commentId),
@@ -130,12 +131,14 @@ class CommentsPageWidget extends StatelessWidget {
                                       oldComment: comment.comment,
                                       commentIndex: index - 1,
                                       commentId: comment.commentId,
+                                      commentType: CommentType.mainComment,
                                     ),
                                     editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
                                     endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(
                                       updateCommentsFunction: () =>
                                           BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(videoParams.id),
                                     ),
+                                    commentType: CommentType.mainComment,
                                   );
                                 }
                               },
@@ -156,6 +159,7 @@ class CommentsPageWidget extends StatelessWidget {
                 if (subCommentsState.isOpen)
                   SubCommentsWidget(
                     loadComments: BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(videoParams.id),
+                    videoParams: videoParams,
                   ),
               ],
             );

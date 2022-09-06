@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
@@ -9,6 +10,7 @@ import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
 import 'package:video_app/ui/video/widgets/comments_page_widget.dart';
 import 'package:video_app/ui/video/widgets/loading_widget.dart';
+import 'package:video_app/ui/video/widgets/page_switcher_widget.dart';
 import 'package:video_app/ui/video/widgets/player_widget.dart';
 import 'package:video_app/ui/video/widgets/video_info_page_widget.dart';
 
@@ -18,6 +20,8 @@ class VideoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final VideoParams videoParams = ModalRoute.of(context)!.settings.arguments as VideoParams;
     final String appUserId = BlocProvider.of<UserCubit>(context).userId;
+
+    final PageController videoPages = PageController();
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (BuildContext context, UserState userState) {
@@ -77,9 +81,10 @@ class VideoScreen extends StatelessWidget {
                                                 BlocProvider.of<VideoCubit>(context).deleteVideo(videoParams.id),
                                           ),
                                         ),
+                                        if(kIsWeb) PageSwitcherWidget(pageController: videoPages),
                                         Expanded(
                                           child: PageView(
-                                            controller: PageController(),
+                                            controller: videoPages,
                                             onPageChanged: (int page) {
                                               if (page == 1) {
                                                 BlocProvider.of<CommentsCubit>(context)

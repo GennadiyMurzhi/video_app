@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:video_app/enums.dart';
 
 ///widget to display a comment on the screen
 class CommentWidget extends StatelessWidget {
@@ -6,54 +7,58 @@ class CommentWidget extends StatelessWidget {
   const CommentWidget({
     super.key,
     required this.userName,
-    required this.mainComment,
+    required this.comment,
     required this.commentDate,
-    required this.subCommentCount,
+    this.subCommentCount,
     required this.editable,
-    required this.onPressedOnSubCommentCount,
+    this.onPressedOnSubCommentCount,
     required this.isEdit,
     required this.startEdit,
     required this.editComment,
     required this.endEdit,
     required this.validator,
     required this.showErrorMessage,
+    required this.commentType,
   });
 
   ///the username of the user who left the comment
   final String userName;
 
   ///the string containing the commentary
-  final String mainComment;
+  final String comment;
 
   ///date when the commentary was left
   final DateTime commentDate;
 
   ///the number of sub comments left for the commentary
-  final int subCommentCount;
+  final int? subCommentCount;
 
   ///a variable indicating whether the comment can be changed by this user
   final bool editable;
 
   ///the variable indicating whether or not the comment is being edited now
-  final bool isEdit;
+  final bool? isEdit;
 
   ///a variable indicating whether textfield errors in the comment should be shown now
-  final bool showErrorMessage;
+  final bool? showErrorMessage;
 
   ///function to click on the number of sub comments to open the sub comments widget of this comment
-  final void Function() onPressedOnSubCommentCount;
+  final void Function()? onPressedOnSubCommentCount;
 
   ///function to start editing a comment
-  final void Function() startEdit;
+  final void Function()? startEdit;
 
   ///function to edit comment object value
-  final void Function(String) editComment;
+  final void Function(String)? editComment;
 
   ///function for the end of the redacted comment
-  final Future<void> Function() endEdit;
+  final Future<void> Function()? endEdit;
 
   ///function to validate textfield input
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
+
+  ///CommentType for detect whether or not the sub comment widget open button should be displayed
+  final CommentType commentType;
 
   @override
   Widget build(BuildContext context) {
@@ -79,44 +84,45 @@ class CommentWidget extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 5),
-        if (!isEdit)
-          Text(
-            mainComment,
-            textAlign: TextAlign.left,
-          )
-        else
+        if (isEdit! && isEdit != null)
           Form(
-            autovalidateMode: showErrorMessage ? AutovalidateMode.always : AutovalidateMode.disabled,
+            autovalidateMode: showErrorMessage! ? AutovalidateMode.always : AutovalidateMode.disabled,
             child: TextFormField(
-              initialValue: mainComment,
-              onChanged: (String value) => editComment(value),
-              validator: (String? value) => validator(value),
+              initialValue: comment,
+              onChanged: (String value) => editComment!(value),
+              validator: (String? value) => validator!(value),
               decoration: const InputDecoration(
                 isDense: true,
                 hintText: 'Edit...',
                 border: InputBorder.none,
               ),
             ),
+          )
+        else
+          Text(
+            comment,
+            textAlign: TextAlign.left,
           ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            TextButton(
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+            if (commentType == CommentType.mainComment)
+              TextButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),
+                ),
+                onPressed: () => onPressedOnSubCommentCount!(),
+                child: Text('$subCommentCount answer'),
               ),
-              onPressed: () => onPressedOnSubCommentCount(),
-              child: Text('$subCommentCount comment'),
-            ),
             if (editable)
-              if (!isEdit)
+              if (!isEdit!)
                 TextButton(
-                  onPressed: () => startEdit(),
+                  onPressed: () => startEdit!(),
                   child: const Text('start edit'),
                 )
               else
                 TextButton(
-                  onPressed: () => endEdit(),
+                  onPressed: () => endEdit!(),
                   child: const Text('end edit'),
                 )
           ],
@@ -143,13 +149,16 @@ class SubCommentWidget extends StatelessWidget {
 
   ///the username of the user who left the comment
   final String userName;
+
   ///the string containing the commentary
   final String subComment;
+
   ///date when the commentary was left
   final DateTime subCommentDate;
 
   ///a variable indicating whether the comment can be changed by this user
   final bool editable;
+
   ///function to start editing a comment
   final void Function() startEdit;
 

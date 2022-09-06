@@ -57,16 +57,22 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
       ),
     );
     onOpen();
+    updateSubComments();
+  }
 
-    final Either<CommentsFailure, SubComments> subCommentsOrFailure = await _commentsRepository.getSubComments(commentId);
+  ///method for update sub comment
+  Future<void> updateSubComments() async {
+
+
+    final Either<CommentsFailure, SubComments> subCommentsOrFailure = await _commentsRepository.getSubComments(state.commentId);
     subCommentsOrFailure.fold(
-      (CommentsFailure l) => emit(
+          (CommentsFailure l) => emit(
         state.copyWith(
           loading: false,
           subCommentsFailureOrSuccessOption: optionOf(subCommentsOrFailure),
         ),
       ),
-      (SubComments r) {
+          (SubComments r) {
         getIt<DataListReceiver<SubComments>>().getDataList(r);
         emit(
           state.copyWith(

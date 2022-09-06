@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
@@ -33,11 +34,18 @@ class VideoListScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 2,
-                              height: MediaQuery.of(context).size.width / 2,
-                              child: const CircularProgressIndicator(),
-                            ),
+                            if (kIsWeb)
+                              const SizedBox(
+                                width: 300,
+                                height: 300,
+                                child: CircularProgressIndicator(),
+                              )
+                            else
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2,
+                                height: MediaQuery.of(context).size.width / 2,
+                                child: const CircularProgressIndicator(),
+                              ),
                             const SizedBox(height: 20),
                             Text(
                               'Loading...',

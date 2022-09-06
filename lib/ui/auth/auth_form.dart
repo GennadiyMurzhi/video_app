@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/auth/auth_form_cubit/auth_form_cubit.dart';
@@ -78,24 +79,27 @@ class AuthForm extends StatelessWidget {
                 decoration: InputDecoration(hintText: 'password'),
               ),
               const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 105),
-                child: ElevatedButton(
-                  onPressed: () {
-                    //_formKey.currentState!.reset();
-                    state.isSignUp
-                        ? BlocProvider.of<AuthFormCubit>(context).register()
-                        : BlocProvider.of<AuthFormCubit>(context).signInWithEmailAndPassword();
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color(0xFF7C3F8A),
+              Column(
+                children: [
+                  Padding(
+                    padding: kIsWeb ? EdgeInsets.zero : const EdgeInsets.symmetric(horizontal: 105),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //_formKey.currentState!.reset();
+                        state.isSignUp
+                            ? BlocProvider.of<AuthFormCubit>(context).register()
+                            : BlocProvider.of<AuthFormCubit>(context).signInWithEmailAndPassword();
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF7C3F8A)),
+                        fixedSize: MaterialStateProperty.all<Size>(const Size(200, 30)),
+                      ),
+                      child: Text(
+                        state.isSignUp ? 'Sign Up' : "Sign In",
+                      ),
                     ),
                   ),
-                  child: Text(
-                    state.isSignUp ? 'Sign Up' : "Sign In",
-                  ),
-                ),
+                ],
               ),
               if (state.isLoading)
                 Column(

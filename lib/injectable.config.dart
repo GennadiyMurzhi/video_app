@@ -15,6 +15,8 @@ import 'application/user_cubit/user_cubit.dart' as _i11;
 import 'application/video/comments/comments_cubit/comments_cubit.dart' as _i17;
 import 'application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart'
     as _i18;
+import 'application/video/comments/edit_old_comments/edit_old_sub_comment_cubit/edit_old_sub_comment_cubit.dart'
+    as _i19;
 import 'application/video/comments/sub_comments_cubit/sub_comments_cubit.dart'
     as _i10;
 import 'application/video/video_cubit/video_cubit.dart' as _i12;
@@ -52,5 +54,7 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i17.CommentsCubit(get<_i6.ICommentsRepository>()));
   gh.factory<_i18.EditOldCommentCubit>(
       () => _i18.EditOldCommentCubit(get<_i6.ICommentsRepository>()));
+  gh.factory<_i19.EditOldSubCommentCubit>(
+      () => _i19.EditOldSubCommentCubit(get<_i6.ICommentsRepository>()));
   return get;
 }

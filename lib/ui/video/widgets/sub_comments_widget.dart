@@ -1,11 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
+import 'package:video_app/application/video/comments/comments_cubit/comments_cubit.dart';
+import 'package:video_app/application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart';
 import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comments_cubit.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/comments/comments.dart';
+import 'package:video_app/enums.dart';
 import 'package:video_app/injectable.dart';
+import 'package:video_app/ui/video/video_screen.dart';
 import 'package:video_app/ui/video/widgets/comment_widget.dart';
 
 final GlobalKey<FormState> _subCommentFormKey = GlobalKey<FormState>();
@@ -16,10 +21,14 @@ class SubCommentsWidget extends StatelessWidget {
   const SubCommentsWidget({
     super.key,
     required this.loadComments,
+    required this.videoParams,
   });
 
   ///future to lading sub comments
   final Future<void> loadComments;
+
+  ///video params
+  final VideoParams videoParams;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +38,7 @@ class SubCommentsWidget extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height - MediaQuery.of(context).size.height / 3,
       decoration: const BoxDecoration(
-        color: Color(0xFFB3BFFF),
+        color: Color(0xFFBFCCD5),
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
@@ -47,7 +56,7 @@ class SubCommentsWidget extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot<SubComments> snapshot) {
                 if (snapshot.data != null) {
                   return ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: kIsWeb ? const EdgeInsets.symmetric(horizontal: 120) : const EdgeInsets.symmetric(horizontal: 30),
                     shrinkWrap: true,
                     itemCount: snapshot.data!.subComments.length + 1,
                     itemBuilder: (BuildContext context, int index) {
@@ -66,7 +75,7 @@ class SubCommentsWidget extends StatelessWidget {
                                   children: <Widget>[
                                     IconButton(
                                       onPressed: () => BlocProvider.of<SubCommentsCubit>(context).onClose(loadComments),
-                                      icon: Icon(Icons.arrow_back_rounded),
+                                      icon: const Icon(Icons.arrow_back_rounded),
                                     ),
                                     Expanded(
                                       child: TextFormField(
@@ -111,16 +120,34 @@ class SubCommentsWidget extends StatelessWidget {
                         );
                       } else {
                         final SubComment subComment = snapshot.data!.subComments[index - 1];
-                        return SubCommentWidget(
+                        return CommentWidget(
                           userName: subComment.userName,
                           editable: appUserId.compareTo(subComment.userId) == 0,
-                          subComment: subComment.subComment,
-                          subCommentDate: DateTime.fromMillisecondsSinceEpoch(
-                            subComment.date,
+                          comment: subComment.subComment,
+                          commentDate: DateTime.fromMillisecondsSinceEpoch(subComment.date),
+                          startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
+                            oldComment: subComment.subComment,
+                            commentIndex: index - 1,
+                            commentId: subComment.commentId,
+                            commentType: CommentType.subComment,
                           ),
-                          startEdit: () {},
-                          editComment: (String string) {},
-                          endEdit: () async {},
+                          editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
+                          endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(
+                            updateCommentsFunction: () =>
+                                BlocProvider.of<SubCommentsCubit>(context).updateSubComments(),
+                          ),
+                          commentType: CommentType.subComment,
+                          isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
+                          validator: (String? value) => BlocProvider.of<EditOldCommentCubit>(context).state.comment.value.fold(
+                            (CommentValueFailure<String> l) => l.when(
+                              emptyStringComment: (_) => 'Enter comment',
+                              longStringComment: (_) => 'Long Comment',
+                            ),
+                            (String r) {
+                              return null;
+                            },
+                          ),
+                          showErrorMessage: BlocProvider.of<EditOldCommentCubit>(context).state.showErrorMessage,
                         );
                       }
                     },

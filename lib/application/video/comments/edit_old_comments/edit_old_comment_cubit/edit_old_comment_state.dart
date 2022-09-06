@@ -11,17 +11,27 @@ abstract class EditOldCommentState with _$EditOldCommentState {
     required int commentIndex,
     required CommentObject comment,
     required String commentId,
+
+    ///commentType need to detect
+    required CommentType commentType,
     required Option<Either<CommentsFailure, dynamic>> editCommentFailureOrSuccessOption,
   }) = _EditOldCommentState;
 
   ///state use whe start editing old comment
-  factory EditOldCommentState.initial(String oldComment, int commentIndex, String commentId) => EditOldCommentState(
+  factory EditOldCommentState.initial(
+    String oldComment,
+    int commentIndex,
+    String commentId,
+    CommentType commentType,
+  ) =>
+      EditOldCommentState(
         loading: false,
         editing: true,
         showErrorMessage: false,
         commentIndex: commentIndex,
         comment: CommentObject(oldComment),
         commentId: commentId,
+        commentType: commentType,
         editCommentFailureOrSuccessOption: none(),
       );
 
@@ -33,6 +43,7 @@ abstract class EditOldCommentState with _$EditOldCommentState {
         commentIndex: -1,
         comment: CommentObject(''),
         commentId: '',
+        commentType: CommentType.none,
         editCommentFailureOrSuccessOption: none(),
       );
 }

@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:video_app/domain/core/errors.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 import 'package:video_app/domain/video/comments/value_objects.dart';
+import 'package:video_app/enums.dart';
 
 part 'edit_old_comment_cubit.freezed.dart';
 part 'edit_old_comment_state.dart';
@@ -22,12 +26,14 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
     required String oldComment,
     required int commentIndex,
     required String commentId,
+    required CommentType commentType,
   }) {
     emit(
       EditOldCommentState.initial(
         oldComment,
         commentIndex,
         commentId,
+        commentType,
       ),
     );
   }
@@ -51,10 +57,21 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
         ),
       );
 
-      final Either<CommentsFailure, Unit> successOrFailure = await _commentsRepository.updateMainComment(
-        commentId: state.commentId,
-        comment: state.comment.getOrCrash(),
-      );
+      final Either<CommentsFailure, Unit> successOrFailure;
+      if(state.commentType == CommentType.mainComment) {
+        successOrFailure = await _commentsRepository.updateMainComment(
+          commentId: state.commentId,
+          comment: state.comment.getOrCrash(),
+        );
+      } else if(state.commentType == CommentType.subComment) {
+        successOrFailure = await _commentsRepository.updateSubComment(
+          subCommentId: state.commentId,
+          subComment: state.comment.getOrCrash(),
+        );
+      } else {
+        throw UnexpectedCommentTypeError(state.commentType);
+      }
+
       successOrFailure.fold(
         (CommentsFailure l) {
           state.copyWith(
