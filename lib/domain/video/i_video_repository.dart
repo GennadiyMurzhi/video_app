@@ -17,6 +17,8 @@ abstract class IVideoRepository {
   Future<Either<Failure, Unit>> uploadVideoOnServer({
     required FilePickerResult filePickerResult,
     required String userId,
+    required String name,
+    required String description,
   });
 
   ///A method to replace video on server

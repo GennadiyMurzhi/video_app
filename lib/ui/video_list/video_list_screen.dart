@@ -28,7 +28,7 @@ class VideoListScreen extends StatelessWidget {
                 emailAddress: userState.emailAddress,
                 layOutKey: videoListScreenLayoutKey,
                 title: 'Video List',
-                functionFab: BlocProvider.of<VideoListCubit>(context).pickAndUploadVideo,
+                functionFab: (_) => Navigator.of(context).pushNamed('/add_video_screen'),
                 child: BlocProvider.of<VideoListCubit>(context).state.loading
                     ? Center(
                         child: Column(
@@ -66,6 +66,7 @@ class VideoListScreen extends StatelessWidget {
                                 name: snapshot.data!.documents[index].name,
                                 id: snapshot.data!.documents[index].videoId,
                                 userId: snapshot.data!.documents[index].userId,
+                                description: snapshot.data!.documents[index].description,
                               ),
                             );
                           } else {

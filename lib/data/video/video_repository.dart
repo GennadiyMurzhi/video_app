@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
@@ -21,8 +22,10 @@ class VideoRepository implements IVideoRepository {
       _client,
       databaseId: '62e3faba8623b7647567',
     );
+    _functions = Functions(_client);
   }
 
+  late final Functions _functions;
   late final Databases _database;
   final Client _client;
   final Storage _videosStorage;
@@ -31,12 +34,13 @@ class VideoRepository implements IVideoRepository {
   Future<Either<Failure, VideoDataList>> getVideoList() async {
     try {
       final DocumentList documentList = await _database.listDocuments(
-        collectionId: '63149b1a760e860f01a9',
+        collectionId: '631b4f2663f40f701b38',
         orderAttributes: ['\$createdAt'],
         orderTypes: ['DESC'],
       );
       return right(VideoDataList.fromDocumentList(documentList.documents));
     } catch (e) {
+      print(e);
       return left(const Failure.serverError());
     }
   }
@@ -58,6 +62,8 @@ class VideoRepository implements IVideoRepository {
   Future<Either<Failure, Unit>> uploadVideoOnServer({
     required FilePickerResult filePickerResult,
     required String userId,
+    required String name,
+    required String description,
   }) async {
     final InputFile inputFile;
     if (kIsWeb) {
@@ -73,16 +79,23 @@ class VideoRepository implements IVideoRepository {
     }
 
     try {
-      await _videosStorage.createFile(
+      final File uploadFileResult = await _videosStorage.createFile(
         bucketId: _bucketId,
         fileId: 'unique()',
         file: inputFile,
         read: <dynamic>['role:all'],
         write: <dynamic>['user:$userId'],
       );
-
+      final Map<String, dynamic> functionData = <String, dynamic>{
+        'video_id' : uploadFileResult.$id,
+        'name' : name,
+        'description' : description,
+      };
+      await _functions.createExecution(functionId: 'onUploadVideo', data: jsonEncode(functionData));
+      print( jsonEncode(functionData));
       return right(unit);
     } catch (e) {
+      print(e);
       return left(const Failure.serverError());
     }
   }

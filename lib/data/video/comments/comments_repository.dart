@@ -6,31 +6,30 @@ import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 
-const String _commentsCollectionId = '630cdbc377f341426133';
-const String _subCommentsCollectionId = '630cded483e663a5382c';
-
 ///repository for manipulation comments on the server
 @Injectable(as: ICommentsRepository)
 class CommentsRepository extends ICommentsRepository {
-  ///pass the appwrite client to create appwrite database object for manipulating comments
+  ///pass the appwrite client to create appwrite database object for manipulating comments database
   CommentsRepository(this._client) {
-    _database = Databases(
+    _commentsDatabase = Databases(
       _client,
-      databaseId: '62e3faba8623b7647567',
+      databaseId: '631960756fdf55a5c9c3',
+    );
+    _subCommentsDatabase = Databases(
+      _client,
+      databaseId: '631960da68ba468f7fe9',
     );
   }
 
-  late final Databases _database;
+  late final Databases _commentsDatabase;
+  late final Databases _subCommentsDatabase;
   final Client _client;
 
   @override
-  Future<Either<CommentsFailure, SubComments>> getSubComments(String commentId) async {
+  Future<Either<CommentsFailure, SubComments>> getSubComments(String subCommentsCollectionId) async {
     try {
-      final DocumentList documentList = await _database.listDocuments(
-        collectionId: _subCommentsCollectionId,
-        queries: <dynamic>[
-          Query.equal('comment_id', commentId),
-        ],
+      final DocumentList documentList = await _subCommentsDatabase.listDocuments(
+        collectionId: subCommentsCollectionId,
       );
       return right(SubComments.fromDocumentList(documentList.documents));
     } catch (e) {
@@ -39,30 +38,30 @@ class CommentsRepository extends ICommentsRepository {
   }
 
   @override
-  Future<Either<CommentsFailure, Comments>> getVideoComments(String videoId) async {
+  Future<Either<CommentsFailure, Comments>> getVideoComments(String commentsCollectionId) async {
+    print(commentsCollectionId);
     try {
-      final DocumentList documentList = await _database.listDocuments(
-        collectionId: _commentsCollectionId,
-        queries: <dynamic>[
-          Query.equal('video_id', videoId),
-        ],
+      final DocumentList documentList = await _commentsDatabase.listDocuments(
+        collectionId: commentsCollectionId,
       );
       return right(Comments.fromDocumentList(documentList.documents));
     } catch (e) {
+      print(e);
       return left(const CommentsFailure.serverError());
     }
   }
 
   @override
   Future<Either<CommentsFailure, Unit>> uploadComment({
+    required String commentsCollectionId,
     required String userId,
     required String userName,
     required String videoId,
     required String comment,
   }) async {
     try {
-      await _database.createDocument(
-        collectionId: _commentsCollectionId,
+      await _commentsDatabase.createDocument(
+        collectionId: commentsCollectionId,
         documentId: 'unique()',
         data: <dynamic, dynamic>{
           'user_id': userId,
@@ -75,25 +74,25 @@ class CommentsRepository extends ICommentsRepository {
       );
       return right(unit);
     } catch (e) {
+      print(e);
       return left(const CommentsFailure.serverError());
     }
   }
 
   @override
   Future<Either<CommentsFailure, Unit>> uploadSubComment({
+    required String subCommentsCollectionId,
     required String userId,
     required String userName,
-    required String commentId,
     required String subComment,
   }) async {
     try {
-      await _database.createDocument(
-        collectionId: _subCommentsCollectionId,
+      await _subCommentsDatabase.createDocument(
+        collectionId: subCommentsCollectionId,
         documentId: 'unique()',
         data: <dynamic, dynamic>{
           'user_id': userId,
           'user_name': userName,
-          'comment_id': commentId,
           'sub_comment': subComment,
           'date': DateTime.now().millisecondsSinceEpoch,
         },
@@ -101,37 +100,42 @@ class CommentsRepository extends ICommentsRepository {
       );
       return right(unit);
     } catch (e) {
+      print(e);
       return left(const CommentsFailure.serverError());
     }
   }
 
   @override
-  Future<Either<CommentsFailure, Unit>> updateMainComment({
+  Future<Either<CommentsFailure, Unit>> updateComment({
+    required String commentsCollectionId,
     required String commentId,
     required String comment,
   }) async {
-    final Either<CommentsFailure, Unit> result = await _updateComment(_commentsCollectionId, commentId, comment, 'comment');
+    final Either<CommentsFailure, Unit> result =
+        await _updateComment(_commentsDatabase, commentsCollectionId, commentId, comment, 'comment');
     return result;
   }
 
   @override
   Future<Either<CommentsFailure, Unit>> updateSubComment({
+    required String subCommentsCollectionId,
     required String subCommentId,
     required String subComment,
   }) async {
     final Either<CommentsFailure, Unit> result =
-        await _updateComment(_subCommentsCollectionId, subCommentId, subComment, 'sub_comment');
+        await _updateComment(_subCommentsDatabase, subCommentsCollectionId, subCommentId, subComment, 'sub_comment');
     return result;
   }
 
   Future<Either<CommentsFailure, Unit>> _updateComment(
+    Databases databases,
     String collectionId,
     String commentId,
     String comment,
     String attribute,
   ) async {
     try {
-      await _database.updateDocument(
+      await databases.updateDocument(
         collectionId: collectionId,
         documentId: commentId,
         data: <dynamic, dynamic>{

@@ -9,14 +9,15 @@ import 'package:appwrite/appwrite.dart' as _i5;
 import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
-import 'application/auth/auth_cubit/auth_cubit.dart' as _i15;
-import 'application/auth/auth_form_cubit/auth_form_cubit.dart' as _i16;
+import 'application/auth/auth_cubit/auth_cubit.dart' as _i16;
+import 'application/auth/auth_form_cubit/auth_form_cubit.dart' as _i17;
 import 'application/user_cubit/user_cubit.dart' as _i11;
-import 'application/video/comments/comments_cubit/comments_cubit.dart' as _i17;
+import 'application/video/add_video_cubit/add_video_cubit.dart' as _i15;
+import 'application/video/comments/comments_cubit/comments_cubit.dart' as _i18;
 import 'application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart'
-    as _i18;
-import 'application/video/comments/edit_old_comments/edit_old_sub_comment_cubit/edit_old_sub_comment_cubit.dart'
     as _i19;
+import 'application/video/comments/edit_old_comments/edit_old_sub_comment_cubit/edit_old_sub_comment_cubit.dart'
+    as _i20;
 import 'application/video/comments/sub_comments_cubit/sub_comments_cubit.dart'
     as _i10;
 import 'application/video/video_cubit/video_cubit.dart' as _i12;
@@ -47,14 +48,16 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i12.VideoCubit(get<_i8.IVideoRepository>()));
   gh.factory<_i13.VideoListCubit>(() => _i13.VideoListCubit(
       get<_i8.IVideoRepository>(), get<_i14.VideoDataListReceiver>()));
-  gh.factory<_i15.AuthCubit>(() => _i15.AuthCubit(get<_i3.IAuthFacade>()));
-  gh.factory<_i16.AuthFormCubit>(
-      () => _i16.AuthFormCubit(get<_i3.IAuthFacade>()));
-  gh.factory<_i17.CommentsCubit>(
-      () => _i17.CommentsCubit(get<_i6.ICommentsRepository>()));
-  gh.factory<_i18.EditOldCommentCubit>(
-      () => _i18.EditOldCommentCubit(get<_i6.ICommentsRepository>()));
-  gh.factory<_i19.EditOldSubCommentCubit>(
-      () => _i19.EditOldSubCommentCubit(get<_i6.ICommentsRepository>()));
+  gh.factory<_i15.AddVideoCubit>(
+      () => _i15.AddVideoCubit(get<_i8.IVideoRepository>()));
+  gh.factory<_i16.AuthCubit>(() => _i16.AuthCubit(get<_i3.IAuthFacade>()));
+  gh.factory<_i17.AuthFormCubit>(
+      () => _i17.AuthFormCubit(get<_i3.IAuthFacade>()));
+  gh.factory<_i18.CommentsCubit>(
+      () => _i18.CommentsCubit(get<_i6.ICommentsRepository>()));
+  gh.factory<_i19.EditOldCommentCubit>(
+      () => _i19.EditOldCommentCubit(get<_i6.ICommentsRepository>()));
+  gh.factory<_i20.EditOldSubCommentCubit>(
+      () => _i20.EditOldSubCommentCubit(get<_i6.ICommentsRepository>()));
   return get;
 }

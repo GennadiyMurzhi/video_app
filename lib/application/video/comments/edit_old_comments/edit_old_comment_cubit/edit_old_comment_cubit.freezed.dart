@@ -22,6 +22,7 @@ mixin _$EditOldCommentState {
   int get commentIndex => throw _privateConstructorUsedError;
   CommentObject get comment => throw _privateConstructorUsedError;
   String get commentId => throw _privateConstructorUsedError;
+  String get commentsCollectionId => throw _privateConstructorUsedError;
 
   ///commentType need to detect
   CommentType get commentType => throw _privateConstructorUsedError;
@@ -46,6 +47,7 @@ abstract class $EditOldCommentStateCopyWith<$Res> {
       int commentIndex,
       CommentObject comment,
       String commentId,
+      String commentsCollectionId,
       CommentType commentType,
       Option<Either<CommentsFailure, dynamic>>
           editCommentFailureOrSuccessOption});
@@ -68,6 +70,7 @@ class _$EditOldCommentStateCopyWithImpl<$Res>
     Object? commentIndex = freezed,
     Object? comment = freezed,
     Object? commentId = freezed,
+    Object? commentsCollectionId = freezed,
     Object? commentType = freezed,
     Object? editCommentFailureOrSuccessOption = freezed,
   }) {
@@ -96,6 +99,10 @@ class _$EditOldCommentStateCopyWithImpl<$Res>
           ? _value.commentId
           : commentId // ignore: cast_nullable_to_non_nullable
               as String,
+      commentsCollectionId: commentsCollectionId == freezed
+          ? _value.commentsCollectionId
+          : commentsCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
       commentType: commentType == freezed
           ? _value.commentType
           : commentType // ignore: cast_nullable_to_non_nullable
@@ -123,6 +130,7 @@ abstract class _$$_EditOldCommentStateCopyWith<$Res>
       int commentIndex,
       CommentObject comment,
       String commentId,
+      String commentsCollectionId,
       CommentType commentType,
       Option<Either<CommentsFailure, dynamic>>
           editCommentFailureOrSuccessOption});
@@ -147,6 +155,7 @@ class __$$_EditOldCommentStateCopyWithImpl<$Res>
     Object? commentIndex = freezed,
     Object? comment = freezed,
     Object? commentId = freezed,
+    Object? commentsCollectionId = freezed,
     Object? commentType = freezed,
     Object? editCommentFailureOrSuccessOption = freezed,
   }) {
@@ -175,6 +184,10 @@ class __$$_EditOldCommentStateCopyWithImpl<$Res>
           ? _value.commentId
           : commentId // ignore: cast_nullable_to_non_nullable
               as String,
+      commentsCollectionId: commentsCollectionId == freezed
+          ? _value.commentsCollectionId
+          : commentsCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
       commentType: commentType == freezed
           ? _value.commentType
           : commentType // ignore: cast_nullable_to_non_nullable
@@ -198,6 +211,7 @@ class _$_EditOldCommentState implements _EditOldCommentState {
       required this.commentIndex,
       required this.comment,
       required this.commentId,
+      required this.commentsCollectionId,
       required this.commentType,
       required this.editCommentFailureOrSuccessOption});
 
@@ -213,6 +227,8 @@ class _$_EditOldCommentState implements _EditOldCommentState {
   final CommentObject comment;
   @override
   final String commentId;
+  @override
+  final String commentsCollectionId;
 
   ///commentType need to detect
   @override
@@ -223,7 +239,7 @@ class _$_EditOldCommentState implements _EditOldCommentState {
 
   @override
   String toString() {
-    return 'EditOldCommentState(loading: $loading, editing: $editing, showErrorMessage: $showErrorMessage, commentIndex: $commentIndex, comment: $comment, commentId: $commentId, commentType: $commentType, editCommentFailureOrSuccessOption: $editCommentFailureOrSuccessOption)';
+    return 'EditOldCommentState(loading: $loading, editing: $editing, showErrorMessage: $showErrorMessage, commentIndex: $commentIndex, comment: $comment, commentId: $commentId, commentsCollectionId: $commentsCollectionId, commentType: $commentType, editCommentFailureOrSuccessOption: $editCommentFailureOrSuccessOption)';
   }
 
   @override
@@ -240,6 +256,8 @@ class _$_EditOldCommentState implements _EditOldCommentState {
             const DeepCollectionEquality().equals(other.comment, comment) &&
             const DeepCollectionEquality().equals(other.commentId, commentId) &&
             const DeepCollectionEquality()
+                .equals(other.commentsCollectionId, commentsCollectionId) &&
+            const DeepCollectionEquality()
                 .equals(other.commentType, commentType) &&
             const DeepCollectionEquality().equals(
                 other.editCommentFailureOrSuccessOption,
@@ -255,6 +273,7 @@ class _$_EditOldCommentState implements _EditOldCommentState {
       const DeepCollectionEquality().hash(commentIndex),
       const DeepCollectionEquality().hash(comment),
       const DeepCollectionEquality().hash(commentId),
+      const DeepCollectionEquality().hash(commentsCollectionId),
       const DeepCollectionEquality().hash(commentType),
       const DeepCollectionEquality().hash(editCommentFailureOrSuccessOption));
 
@@ -273,6 +292,7 @@ abstract class _EditOldCommentState implements EditOldCommentState {
       required final int commentIndex,
       required final CommentObject comment,
       required final String commentId,
+      required final String commentsCollectionId,
       required final CommentType commentType,
       required final Option<Either<CommentsFailure, dynamic>>
           editCommentFailureOrSuccessOption}) = _$_EditOldCommentState;
@@ -289,6 +309,8 @@ abstract class _EditOldCommentState implements EditOldCommentState {
   CommentObject get comment;
   @override
   String get commentId;
+  @override
+  String get commentsCollectionId;
   @override
 
   ///commentType need to detect

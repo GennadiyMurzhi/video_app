@@ -473,7 +473,7 @@ abstract class _Comment implements Comment {
 
 /// @nodoc
 mixin _$SubComment {
-  String get commentId => throw _privateConstructorUsedError;
+  String get subCommentId => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   String get subComment => throw _privateConstructorUsedError;
@@ -490,7 +490,7 @@ abstract class $SubCommentCopyWith<$Res> {
           SubComment value, $Res Function(SubComment) then) =
       _$SubCommentCopyWithImpl<$Res>;
   $Res call(
-      {String commentId,
+      {String subCommentId,
       String userName,
       String userId,
       String subComment,
@@ -507,16 +507,16 @@ class _$SubCommentCopyWithImpl<$Res> implements $SubCommentCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? commentId = freezed,
+    Object? subCommentId = freezed,
     Object? userName = freezed,
     Object? userId = freezed,
     Object? subComment = freezed,
     Object? date = freezed,
   }) {
     return _then(_value.copyWith(
-      commentId: commentId == freezed
-          ? _value.commentId
-          : commentId // ignore: cast_nullable_to_non_nullable
+      subCommentId: subCommentId == freezed
+          ? _value.subCommentId
+          : subCommentId // ignore: cast_nullable_to_non_nullable
               as String,
       userName: userName == freezed
           ? _value.userName
@@ -546,7 +546,7 @@ abstract class _$$_SubCommentCopyWith<$Res>
       __$$_SubCommentCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String commentId,
+      {String subCommentId,
       String userName,
       String userId,
       String subComment,
@@ -565,16 +565,16 @@ class __$$_SubCommentCopyWithImpl<$Res> extends _$SubCommentCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? commentId = freezed,
+    Object? subCommentId = freezed,
     Object? userName = freezed,
     Object? userId = freezed,
     Object? subComment = freezed,
     Object? date = freezed,
   }) {
     return _then(_$_SubComment(
-      commentId: commentId == freezed
-          ? _value.commentId
-          : commentId // ignore: cast_nullable_to_non_nullable
+      subCommentId: subCommentId == freezed
+          ? _value.subCommentId
+          : subCommentId // ignore: cast_nullable_to_non_nullable
               as String,
       userName: userName == freezed
           ? _value.userName
@@ -600,14 +600,14 @@ class __$$_SubCommentCopyWithImpl<$Res> extends _$SubCommentCopyWithImpl<$Res>
 
 class _$_SubComment implements _SubComment {
   const _$_SubComment(
-      {required this.commentId,
+      {required this.subCommentId,
       required this.userName,
       required this.userId,
       required this.subComment,
       required this.date});
 
   @override
-  final String commentId;
+  final String subCommentId;
   @override
   final String userName;
   @override
@@ -619,7 +619,7 @@ class _$_SubComment implements _SubComment {
 
   @override
   String toString() {
-    return 'SubComment(commentId: $commentId, userName: $userName, userId: $userId, subComment: $subComment, date: $date)';
+    return 'SubComment(subCommentId: $subCommentId, userName: $userName, userId: $userId, subComment: $subComment, date: $date)';
   }
 
   @override
@@ -627,7 +627,8 @@ class _$_SubComment implements _SubComment {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SubComment &&
-            const DeepCollectionEquality().equals(other.commentId, commentId) &&
+            const DeepCollectionEquality()
+                .equals(other.subCommentId, subCommentId) &&
             const DeepCollectionEquality().equals(other.userName, userName) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality()
@@ -638,7 +639,7 @@ class _$_SubComment implements _SubComment {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(commentId),
+      const DeepCollectionEquality().hash(subCommentId),
       const DeepCollectionEquality().hash(userName),
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(subComment),
@@ -652,14 +653,14 @@ class _$_SubComment implements _SubComment {
 
 abstract class _SubComment implements SubComment {
   const factory _SubComment(
-      {required final String commentId,
+      {required final String subCommentId,
       required final String userName,
       required final String userId,
       required final String subComment,
       required final int date}) = _$_SubComment;
 
   @override
-  String get commentId;
+  String get subCommentId;
   @override
   String get userName;
   @override

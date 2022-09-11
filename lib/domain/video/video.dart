@@ -40,12 +40,14 @@ class VideoData with _$VideoData{
     required String name,
     required String videoId,
     required String userId,
+    required String description,
   }) = _VideoData;
 
   factory VideoData.fromDocument(Document document) => VideoData(
     name: document.data['name'] as String,
-    videoId: document.data['video_id'] as String,
+    videoId: document.data['video_file_id'] as String,
     userId: document.data['user_id'] as String,
+    description: document.data['description'] as String,
   );
 
   ///standard serialization method

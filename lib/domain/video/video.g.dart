@@ -24,6 +24,7 @@ _$_VideoData _$$_VideoDataFromJson(Map<String, dynamic> json) => _$_VideoData(
       name: json['name'] as String,
       videoId: json['videoId'] as String,
       userId: json['userId'] as String,
+      description: json['description'] as String,
     );
 
 Map<String, dynamic> _$$_VideoDataToJson(_$_VideoData instance) =>
@@ -31,4 +32,5 @@ Map<String, dynamic> _$$_VideoDataToJson(_$_VideoData instance) =>
       'name': instance.name,
       'videoId': instance.videoId,
       'userId': instance.userId,
+      'description': instance.description,
     };

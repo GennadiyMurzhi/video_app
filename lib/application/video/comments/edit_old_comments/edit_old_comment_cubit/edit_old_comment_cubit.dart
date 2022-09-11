@@ -8,6 +8,7 @@ import 'package:video_app/domain/core/errors.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 import 'package:video_app/domain/video/comments/value_objects.dart';
+import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/enums.dart';
 
 part 'edit_old_comment_cubit.freezed.dart';
@@ -23,6 +24,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
 
   ///method need to start edit old comment when press edit comment button
   void startEditComment({
+    required String commentCollectionId,
     required String oldComment,
     required int commentIndex,
     required String commentId,
@@ -30,6 +32,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
   }) {
     emit(
       EditOldCommentState.initial(
+        commentCollectionId,
         oldComment,
         commentIndex,
         commentId,
@@ -59,12 +62,14 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
 
       final Either<CommentsFailure, Unit> successOrFailure;
       if(state.commentType == CommentType.mainComment) {
-        successOrFailure = await _commentsRepository.updateMainComment(
+        successOrFailure = await _commentsRepository.updateComment(
+          commentsCollectionId: state.commentsCollectionId,
           commentId: state.commentId,
           comment: state.comment.getOrCrash(),
         );
       } else if(state.commentType == CommentType.subComment) {
         successOrFailure = await _commentsRepository.updateSubComment(
+          subCommentsCollectionId: state.commentsCollectionId,
           subCommentId: state.commentId,
           subComment: state.comment.getOrCrash(),
         );

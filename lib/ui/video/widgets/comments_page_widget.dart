@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comm
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/comments/comments.dart';
+import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/enums.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/video/video_screen.dart';
@@ -33,6 +35,23 @@ class CommentsPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String commentCollectionId = commentsCollectionId(videoParams.id);
+    final String commentId = BlocProvider.of<SubCommentsCubit>(context).state.commentId;
+    final String subCommentCollectionId = subCommentsCollectionId(commentId);
+
+    final RealtimeSubscription subscription = getIt<Realtime>().subscribe(<String>[
+      'databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents',
+      'databases.631960da68ba468f7fe9.collections.$subCommentCollectionId.documents ',
+    ]);
+    subscription.stream.listen(
+      (RealtimeMessage response) {
+        BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(videoParams.id);
+        if(BlocProvider.of<SubCommentsCubit>(context).state.isOpen) {
+          BlocProvider.of<SubCommentsCubit>(context).updateSubComments();
+        }
+      },
+    );
+
     return BlocBuilder<CommentsCubit, CommentsState>(
       builder: (BuildContext context, CommentsState commentsState) {
         return BlocBuilder<SubCommentsCubit, SubCommentsState>(
@@ -128,6 +147,7 @@ class CommentsPageWidget extends StatelessWidget {
                                         BlocProvider.of<SubCommentsCubit>(context).onOpenSubComments(comment.commentId),
                                     isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
                                     startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
+                                      commentCollectionId: commentsCollectionId(videoParams.id),
                                       oldComment: comment.comment,
                                       commentIndex: index - 1,
                                       commentId: comment.commentId,

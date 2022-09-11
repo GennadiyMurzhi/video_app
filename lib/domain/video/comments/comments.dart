@@ -76,7 +76,7 @@ class Comment with _$Comment {
 class SubComment with _$SubComment {
   ///gets the general information of the commentary
   const factory SubComment({
-    required String commentId,
+    required String subCommentId,
     required String userName,
     required String userId,
     required String subComment,
@@ -85,7 +85,7 @@ class SubComment with _$SubComment {
 
   ///constructor to create a sub comment model from a appwrite document
   factory SubComment.fromDocument(Document document) => SubComment(
-        commentId: document.$id,
+        subCommentId: document.$id,
         userName: document.data['user_name'] as String,
         userId: document.data['user_id'] as String,
         subComment: document.data['sub_comment'] as String,

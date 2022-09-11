@@ -12,6 +12,7 @@ class VideoInfoPageWidget extends StatelessWidget {
     required this.appUserId,
     required this.updateVideo,
     required this.deleteVideo,
+    required this.description,
   });
 
   ///vide name
@@ -26,6 +27,9 @@ class VideoInfoPageWidget extends StatelessWidget {
   ///user id of the authorized user in the application
   final String appUserId;
 
+  ///video description
+  final String description;
+
   ///function for deleting video
   final void Function() deleteVideo;
 
@@ -34,52 +38,59 @@ class VideoInfoPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        const SizedBox(height: 25),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'File name: ${name}',
-                maxLines: 1,
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'id: ${id}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'User id: ${userId}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 20),
-        if (userId.compareTo(appUserId) == 0) ...<Widget>[
-          ElevatedButton(
-            onPressed: () => updateVideo(),
-            child: Text(
-              'Replace video',
-              style: Theme.of(context).textTheme.labelLarge,
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          const SizedBox(height: 25),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'File name: ${name}',
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'id: ${id}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'User id: ${userId}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Video description: ${description}',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+              ],
             ),
           ),
-          if (kIsWeb) const SizedBox(height: 20) else const SizedBox(height: 5),
-          ElevatedButton(
-            onPressed: () => deleteVideo(),
-            child: Text(
-              'Delete video',
-              style: Theme.of(context).textTheme.labelLarge,
+          const SizedBox(height: 20),
+          if (userId.compareTo(appUserId) == 0) ...<Widget>[
+            ElevatedButton(
+              onPressed: () => updateVideo(),
+              child: Text(
+                'Replace video',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
             ),
-          ),
-        ]
-      ],
+            if (kIsWeb) const SizedBox(height: 20) else const SizedBox(height: 5),
+            ElevatedButton(
+              onPressed: () => deleteVideo(),
+              child: Text(
+                'Delete video',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+          ]
+        ],
+      ),
     );
   }
 }

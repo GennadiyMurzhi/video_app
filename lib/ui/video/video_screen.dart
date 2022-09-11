@@ -59,6 +59,7 @@ class VideoScreen extends StatelessWidget {
                       functionOnPop: () {
                         Navigator.of(context).pop();
                         state.chewieController!.videoPlayerController.dispose();
+                        //state.chewieController!.dispose();
                       },
                       child: state.videoStatus == VideoStatus.loading
                           ? const LoadingWidget(text: 'Loading video...')
@@ -96,6 +97,7 @@ class VideoScreen extends StatelessWidget {
                                                 name: videoParams.name,
                                                 id: videoParams.id,
                                                 userId: videoParams.userId,
+                                                description: videoParams.description,
                                                 appUserId: appUserId,
                                                 updateVideo: () => BlocProvider.of<VideoCubit>(context).updateVideo(
                                                   fileId: videoParams.id,
@@ -135,6 +137,7 @@ class VideoParams {
     required this.name,
     required this.id,
     required this.userId,
+    required this.description,
   });
 
   ///File name on the server
@@ -145,4 +148,7 @@ class VideoParams {
 
   ///File user ID who upload on the server
   final String userId;
+
+  ///video description
+  final String description;
 }

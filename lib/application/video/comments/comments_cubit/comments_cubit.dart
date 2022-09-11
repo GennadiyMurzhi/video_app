@@ -7,9 +7,11 @@ import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 import 'package:video_app/domain/video/comments/value_objects.dart';
+import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/injectable.dart';
 
 part 'comments_cubit.freezed.dart';
+
 part 'comments_state.dart';
 
 ///cubit manage the uploading of comments and to leave new
@@ -44,6 +46,7 @@ class CommentsCubit extends Cubit<CommentsState> {
 
     if (state.comment.isValid()) {
       final Either<CommentsFailure, Unit> successOrFailure = await _commentRepository.uploadComment(
+        commentsCollectionId: commentsCollectionId(videoId),
         userId: userId,
         userName: userName,
         videoId: videoId,
@@ -57,7 +60,8 @@ class CommentsCubit extends Cubit<CommentsState> {
           ),
         ),
         (Unit r) async {
-          final Either<CommentsFailure, Comments> commentsOrFailure = await _commentRepository.getVideoComments(videoId);
+          final Either<CommentsFailure, Comments> commentsOrFailure =
+              await _commentRepository.getVideoComments(commentsCollectionId(videoId));
           commentsOrFailure.fold(
             (CommentsFailure l) => emit(
               state.copyWith(
@@ -93,7 +97,8 @@ class CommentsCubit extends Cubit<CommentsState> {
   Future<void> loadCommentsOnCommentsPage(String videoId) async {
     emit(state.copyWith(loading: true));
 
-    final Either<CommentsFailure, Comments> commentsOrFailure = await _commentRepository.getVideoComments(videoId);
+    final Either<CommentsFailure, Comments> commentsOrFailure =
+        await _commentRepository.getVideoComments(commentsCollectionId(videoId));
     commentsOrFailure.fold(
       (CommentsFailure l) => emit(
         state.copyWith(

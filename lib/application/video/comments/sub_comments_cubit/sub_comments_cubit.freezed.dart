@@ -21,6 +21,7 @@ mixin _$SubCommentsState {
   bool get showErrorMessage => throw _privateConstructorUsedError;
   CommentObject get subComment => throw _privateConstructorUsedError;
   String get commentId => throw _privateConstructorUsedError;
+  String get subCommentsCollectionId => throw _privateConstructorUsedError;
   Option<Either<CommentsFailure, dynamic>>
       get subCommentsFailureOrSuccessOption =>
           throw _privateConstructorUsedError;
@@ -41,6 +42,7 @@ abstract class $SubCommentsStateCopyWith<$Res> {
       bool showErrorMessage,
       CommentObject subComment,
       String commentId,
+      String subCommentsCollectionId,
       Option<Either<CommentsFailure, dynamic>>
           subCommentsFailureOrSuccessOption});
 }
@@ -61,6 +63,7 @@ class _$SubCommentsStateCopyWithImpl<$Res>
     Object? showErrorMessage = freezed,
     Object? subComment = freezed,
     Object? commentId = freezed,
+    Object? subCommentsCollectionId = freezed,
     Object? subCommentsFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
@@ -84,6 +87,10 @@ class _$SubCommentsStateCopyWithImpl<$Res>
           ? _value.commentId
           : commentId // ignore: cast_nullable_to_non_nullable
               as String,
+      subCommentsCollectionId: subCommentsCollectionId == freezed
+          ? _value.subCommentsCollectionId
+          : subCommentsCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
       subCommentsFailureOrSuccessOption: subCommentsFailureOrSuccessOption ==
               freezed
           ? _value.subCommentsFailureOrSuccessOption
@@ -106,6 +113,7 @@ abstract class _$$_SubCommentsStateCopyWith<$Res>
       bool showErrorMessage,
       CommentObject subComment,
       String commentId,
+      String subCommentsCollectionId,
       Option<Either<CommentsFailure, dynamic>>
           subCommentsFailureOrSuccessOption});
 }
@@ -128,6 +136,7 @@ class __$$_SubCommentsStateCopyWithImpl<$Res>
     Object? showErrorMessage = freezed,
     Object? subComment = freezed,
     Object? commentId = freezed,
+    Object? subCommentsCollectionId = freezed,
     Object? subCommentsFailureOrSuccessOption = freezed,
   }) {
     return _then(_$_SubCommentsState(
@@ -151,6 +160,10 @@ class __$$_SubCommentsStateCopyWithImpl<$Res>
           ? _value.commentId
           : commentId // ignore: cast_nullable_to_non_nullable
               as String,
+      subCommentsCollectionId: subCommentsCollectionId == freezed
+          ? _value.subCommentsCollectionId
+          : subCommentsCollectionId // ignore: cast_nullable_to_non_nullable
+              as String,
       subCommentsFailureOrSuccessOption: subCommentsFailureOrSuccessOption ==
               freezed
           ? _value.subCommentsFailureOrSuccessOption
@@ -169,6 +182,7 @@ class _$_SubCommentsState implements _SubCommentsState {
       required this.showErrorMessage,
       required this.subComment,
       required this.commentId,
+      required this.subCommentsCollectionId,
       required this.subCommentsFailureOrSuccessOption});
 
   @override
@@ -182,12 +196,14 @@ class _$_SubCommentsState implements _SubCommentsState {
   @override
   final String commentId;
   @override
+  final String subCommentsCollectionId;
+  @override
   final Option<Either<CommentsFailure, dynamic>>
       subCommentsFailureOrSuccessOption;
 
   @override
   String toString() {
-    return 'SubCommentsState(isOpen: $isOpen, loading: $loading, showErrorMessage: $showErrorMessage, subComment: $subComment, commentId: $commentId, subCommentsFailureOrSuccessOption: $subCommentsFailureOrSuccessOption)';
+    return 'SubCommentsState(isOpen: $isOpen, loading: $loading, showErrorMessage: $showErrorMessage, subComment: $subComment, commentId: $commentId, subCommentsCollectionId: $subCommentsCollectionId, subCommentsFailureOrSuccessOption: $subCommentsFailureOrSuccessOption)';
   }
 
   @override
@@ -203,6 +219,8 @@ class _$_SubCommentsState implements _SubCommentsState {
                 .equals(other.subComment, subComment) &&
             const DeepCollectionEquality().equals(other.commentId, commentId) &&
             const DeepCollectionEquality().equals(
+                other.subCommentsCollectionId, subCommentsCollectionId) &&
+            const DeepCollectionEquality().equals(
                 other.subCommentsFailureOrSuccessOption,
                 subCommentsFailureOrSuccessOption));
   }
@@ -215,6 +233,7 @@ class _$_SubCommentsState implements _SubCommentsState {
       const DeepCollectionEquality().hash(showErrorMessage),
       const DeepCollectionEquality().hash(subComment),
       const DeepCollectionEquality().hash(commentId),
+      const DeepCollectionEquality().hash(subCommentsCollectionId),
       const DeepCollectionEquality().hash(subCommentsFailureOrSuccessOption));
 
   @JsonKey(ignore: true)
@@ -230,6 +249,7 @@ abstract class _SubCommentsState implements SubCommentsState {
       required final bool showErrorMessage,
       required final CommentObject subComment,
       required final String commentId,
+      required final String subCommentsCollectionId,
       required final Option<Either<CommentsFailure, dynamic>>
           subCommentsFailureOrSuccessOption}) = _$_SubCommentsState;
 
@@ -243,6 +263,8 @@ abstract class _SubCommentsState implements SubCommentsState {
   CommentObject get subComment;
   @override
   String get commentId;
+  @override
+  String get subCommentsCollectionId;
   @override
   Option<Either<CommentsFailure, dynamic>>
       get subCommentsFailureOrSuccessOption;

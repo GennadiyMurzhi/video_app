@@ -10,6 +10,7 @@ abstract class SubCommentsState with _$SubCommentsState {
     required bool showErrorMessage,
     required CommentObject subComment,
     required String commentId,
+    required String subCommentsCollectionId,
     required Option<Either<CommentsFailure, dynamic>> subCommentsFailureOrSuccessOption,
   }) = _SubCommentsState;
 
@@ -20,6 +21,7 @@ abstract class SubCommentsState with _$SubCommentsState {
         subComment: CommentObject(''),
         showErrorMessage: false,
         commentId: '',
+        subCommentsCollectionId: '',
         subCommentsFailureOrSuccessOption: none(),
       );
 }

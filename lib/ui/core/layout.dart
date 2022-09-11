@@ -13,6 +13,8 @@ class Layout extends StatelessWidget {
     required this.userId,
     required this.name,
     required this.emailAddress,
+    this.padding,
+    this.addAction,
     required this.child,
   });
 
@@ -26,11 +28,17 @@ class Layout extends StatelessWidget {
   final String name;
   final String emailAddress;
 
+  ///padding layout
+  final EdgeInsets? padding;
+
   ///Function for Fab
-  final Future<void> Function(String)? functionFab;
+  final dynamic Function(dynamic)? functionFab;
 
   ///Function for back button
   final void Function()? functionOnPop;
+
+  ///function if need add video
+  final Future<void> Function()? addAction;
 
   ///Main content
   final Widget child;
@@ -49,6 +57,14 @@ class Layout extends StatelessWidget {
                 icon: const Icon(Icons.arrow_back_rounded),
                 onPressed: () => functionOnPop!(),
               )
+            : null,
+        actions: addAction != null
+            ? <Widget>[
+                IconButton(
+                  onPressed: () => addAction!(),
+                  icon: const Icon(Icons.done),
+                )
+              ]
             : null,
         centerTitle: true,
       ),
@@ -102,7 +118,10 @@ class Layout extends StatelessWidget {
               ),
             )
           : null,
-      body: child,
+      body: Padding(
+        padding: padding != null ? padding! : EdgeInsets.zero,
+        child: child,
+      ),
     );
   }
 }

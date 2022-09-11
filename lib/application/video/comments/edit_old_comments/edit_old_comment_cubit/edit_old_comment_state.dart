@@ -11,6 +11,7 @@ abstract class EditOldCommentState with _$EditOldCommentState {
     required int commentIndex,
     required CommentObject comment,
     required String commentId,
+    required String commentsCollectionId,
 
     ///commentType need to detect
     required CommentType commentType,
@@ -19,6 +20,7 @@ abstract class EditOldCommentState with _$EditOldCommentState {
 
   ///state use whe start editing old comment
   factory EditOldCommentState.initial(
+    String commentsCollectionId,
     String oldComment,
     int commentIndex,
     String commentId,
@@ -33,6 +35,7 @@ abstract class EditOldCommentState with _$EditOldCommentState {
         commentId: commentId,
         commentType: commentType,
         editCommentFailureOrSuccessOption: none(),
+        commentsCollectionId: commentsCollectionId,
       );
 
   ///state is used when a comment is not yet selected for editing
@@ -43,6 +46,7 @@ abstract class EditOldCommentState with _$EditOldCommentState {
         commentIndex: -1,
         comment: CommentObject(''),
         commentId: '',
+        commentsCollectionId: '',
         commentType: CommentType.none,
         editCommentFailureOrSuccessOption: none(),
       );

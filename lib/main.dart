@@ -10,7 +10,7 @@ void main() async {
 
   await configureInjection(Environment.prod);
 
-  realtimeSubscription();
+  realtimeSubscriptionToVideoEvent();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.light.copyWith(statusBarColor: Colors.transparent),

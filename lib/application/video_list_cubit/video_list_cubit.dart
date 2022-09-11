@@ -44,6 +44,7 @@ class VideoListCubit extends Cubit<VideoListState> {
     await initialList();
   }
 
+  /*
   ///method for pick video file
   Future<void> pickAndUploadVideo(String userId) async {
     final FilePickerResult? filePickerResult = await pickFile();
@@ -54,6 +55,7 @@ class VideoListCubit extends Cubit<VideoListState> {
       final Either<Failure, Unit> resultOrFailure = await _repository.uploadVideoOnServer(
         filePickerResult: filePickerResult,
         userId: userId,
+
       );
       resultOrFailure.fold(
         (Failure failure) => failure.when(
@@ -66,7 +68,7 @@ class VideoListCubit extends Cubit<VideoListState> {
 
       emit(VideoListState.listDisplayed());
     }
-  }
+  }*/
 }
 
 void _serverErrorShowMessage() => showSnackWithText('Server Error');

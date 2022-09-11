@@ -14,6 +14,7 @@ class VideoListItemWidget extends StatelessWidget {
     required this.name,
     required this.id,
     required this.userId,
+    required this.description,
   });
 
   ///File name on the server
@@ -25,31 +26,24 @@ class VideoListItemWidget extends StatelessWidget {
   ///File ID in bucket
   final String userId;
 
+  ///video description
+  final String description;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 15),
       child: InkWell(
         onTap: () {
-          if (kIsWeb) {
-            Navigator.of(context).pushNamed(
-              '/video_screen',
-              arguments: VideoParams(
-                name: name,
-                id: id,
-                userId: userId,
-              ),
-            );
-          } else {
-            Navigator.of(context).pushNamed(
-              '/video_screen',
-              arguments: VideoParams(
-                name: name,
-                id: id,
-                userId: userId,
-              ),
-            );
-          }
+          Navigator.of(context).pushNamed(
+            '/video_screen',
+            arguments: VideoParams(
+              name: name,
+              id: id,
+              userId: userId,
+              description: description,
+            ),
+          );
         },
         child: DecoratedBox(
           decoration: const BoxDecoration(

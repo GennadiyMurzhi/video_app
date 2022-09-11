@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'failures.freezed.dart';
@@ -33,4 +34,33 @@ abstract class CommentValueFailure<T> with _$CommentValueFailure<T> {
   const factory CommentValueFailure.longStringComment({
     required String failedValue,
   }) = LongStringComment<T>;
+}
+
+///add video value failure
+@freezed
+abstract class AddVideoValueFailure<T> with _$AddVideoValueFailure<T> {
+  ///failure occurring during the content of an empty string
+  const factory AddVideoValueFailure.emptyStringName({
+    required String failedValue,
+  }) = EmptyStringName<T>;
+
+  ///failure occurring during the content of too large a string
+  const factory AddVideoValueFailure.longStringName({
+    required String failedValue,
+  }) = LongStringName<T>;
+
+  ///failure occurring during the content of an empty string
+  const factory AddVideoValueFailure.emptyStringDescription({
+    required String failedValue,
+  }) = EmptyStringDescription<T>;
+
+  ///failure occurring during the content of too large a string
+  const factory AddVideoValueFailure.longStringDescription({
+    required String failedValue,
+  }) = LongStringDescription<T>;
+
+  ///failure occurring during the content of too large a string
+  const factory AddVideoValueFailure.emptyFilePickerResult({
+    required FilePickerResult? failedValue,
+  }) = EmptyFilePickerResult<T>;
 }

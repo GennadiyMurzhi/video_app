@@ -892,3 +892,884 @@ abstract class LongStringComment<T> implements CommentValueFailure<T> {
   _$$LongStringCommentCopyWith<T, _$LongStringComment<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+/// @nodoc
+mixin _$AddVideoValueFailure<T> {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringName,
+    required TResult Function(String failedValue) longStringName,
+    required TResult Function(String failedValue) emptyStringDescription,
+    required TResult Function(String failedValue) longStringDescription,
+    required TResult Function(FilePickerResult? failedValue)
+        emptyFilePickerResult,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringName<T> value) emptyStringName,
+    required TResult Function(LongStringName<T> value) longStringName,
+    required TResult Function(EmptyStringDescription<T> value)
+        emptyStringDescription,
+    required TResult Function(LongStringDescription<T> value)
+        longStringDescription,
+    required TResult Function(EmptyFilePickerResult<T> value)
+        emptyFilePickerResult,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AddVideoValueFailureCopyWith<T, $Res> {
+  factory $AddVideoValueFailureCopyWith(AddVideoValueFailure<T> value,
+          $Res Function(AddVideoValueFailure<T>) then) =
+      _$AddVideoValueFailureCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class _$AddVideoValueFailureCopyWithImpl<T, $Res>
+    implements $AddVideoValueFailureCopyWith<T, $Res> {
+  _$AddVideoValueFailureCopyWithImpl(this._value, this._then);
+
+  final AddVideoValueFailure<T> _value;
+  // ignore: unused_field
+  final $Res Function(AddVideoValueFailure<T>) _then;
+}
+
+/// @nodoc
+abstract class _$$EmptyStringNameCopyWith<T, $Res> {
+  factory _$$EmptyStringNameCopyWith(_$EmptyStringName<T> value,
+          $Res Function(_$EmptyStringName<T>) then) =
+      __$$EmptyStringNameCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$$EmptyStringNameCopyWithImpl<T, $Res>
+    extends _$AddVideoValueFailureCopyWithImpl<T, $Res>
+    implements _$$EmptyStringNameCopyWith<T, $Res> {
+  __$$EmptyStringNameCopyWithImpl(
+      _$EmptyStringName<T> _value, $Res Function(_$EmptyStringName<T>) _then)
+      : super(_value, (v) => _then(v as _$EmptyStringName<T>));
+
+  @override
+  _$EmptyStringName<T> get _value => super._value as _$EmptyStringName<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$EmptyStringName<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EmptyStringName<T> implements EmptyStringName<T> {
+  const _$EmptyStringName({required this.failedValue});
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'AddVideoValueFailure<$T>.emptyStringName(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmptyStringName<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$EmptyStringNameCopyWith<T, _$EmptyStringName<T>> get copyWith =>
+      __$$EmptyStringNameCopyWithImpl<T, _$EmptyStringName<T>>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringName,
+    required TResult Function(String failedValue) longStringName,
+    required TResult Function(String failedValue) emptyStringDescription,
+    required TResult Function(String failedValue) longStringDescription,
+    required TResult Function(FilePickerResult? failedValue)
+        emptyFilePickerResult,
+  }) {
+    return emptyStringName(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+  }) {
+    return emptyStringName?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (emptyStringName != null) {
+      return emptyStringName(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringName<T> value) emptyStringName,
+    required TResult Function(LongStringName<T> value) longStringName,
+    required TResult Function(EmptyStringDescription<T> value)
+        emptyStringDescription,
+    required TResult Function(LongStringDescription<T> value)
+        longStringDescription,
+    required TResult Function(EmptyFilePickerResult<T> value)
+        emptyFilePickerResult,
+  }) {
+    return emptyStringName(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+  }) {
+    return emptyStringName?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (emptyStringName != null) {
+      return emptyStringName(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmptyStringName<T> implements AddVideoValueFailure<T> {
+  const factory EmptyStringName({required final String failedValue}) =
+      _$EmptyStringName<T>;
+
+  String get failedValue;
+  @JsonKey(ignore: true)
+  _$$EmptyStringNameCopyWith<T, _$EmptyStringName<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LongStringNameCopyWith<T, $Res> {
+  factory _$$LongStringNameCopyWith(
+          _$LongStringName<T> value, $Res Function(_$LongStringName<T>) then) =
+      __$$LongStringNameCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$$LongStringNameCopyWithImpl<T, $Res>
+    extends _$AddVideoValueFailureCopyWithImpl<T, $Res>
+    implements _$$LongStringNameCopyWith<T, $Res> {
+  __$$LongStringNameCopyWithImpl(
+      _$LongStringName<T> _value, $Res Function(_$LongStringName<T>) _then)
+      : super(_value, (v) => _then(v as _$LongStringName<T>));
+
+  @override
+  _$LongStringName<T> get _value => super._value as _$LongStringName<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$LongStringName<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LongStringName<T> implements LongStringName<T> {
+  const _$LongStringName({required this.failedValue});
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'AddVideoValueFailure<$T>.longStringName(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LongStringName<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LongStringNameCopyWith<T, _$LongStringName<T>> get copyWith =>
+      __$$LongStringNameCopyWithImpl<T, _$LongStringName<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringName,
+    required TResult Function(String failedValue) longStringName,
+    required TResult Function(String failedValue) emptyStringDescription,
+    required TResult Function(String failedValue) longStringDescription,
+    required TResult Function(FilePickerResult? failedValue)
+        emptyFilePickerResult,
+  }) {
+    return longStringName(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+  }) {
+    return longStringName?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (longStringName != null) {
+      return longStringName(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringName<T> value) emptyStringName,
+    required TResult Function(LongStringName<T> value) longStringName,
+    required TResult Function(EmptyStringDescription<T> value)
+        emptyStringDescription,
+    required TResult Function(LongStringDescription<T> value)
+        longStringDescription,
+    required TResult Function(EmptyFilePickerResult<T> value)
+        emptyFilePickerResult,
+  }) {
+    return longStringName(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+  }) {
+    return longStringName?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (longStringName != null) {
+      return longStringName(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LongStringName<T> implements AddVideoValueFailure<T> {
+  const factory LongStringName({required final String failedValue}) =
+      _$LongStringName<T>;
+
+  String get failedValue;
+  @JsonKey(ignore: true)
+  _$$LongStringNameCopyWith<T, _$LongStringName<T>> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EmptyStringDescriptionCopyWith<T, $Res> {
+  factory _$$EmptyStringDescriptionCopyWith(_$EmptyStringDescription<T> value,
+          $Res Function(_$EmptyStringDescription<T>) then) =
+      __$$EmptyStringDescriptionCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$$EmptyStringDescriptionCopyWithImpl<T, $Res>
+    extends _$AddVideoValueFailureCopyWithImpl<T, $Res>
+    implements _$$EmptyStringDescriptionCopyWith<T, $Res> {
+  __$$EmptyStringDescriptionCopyWithImpl(_$EmptyStringDescription<T> _value,
+      $Res Function(_$EmptyStringDescription<T>) _then)
+      : super(_value, (v) => _then(v as _$EmptyStringDescription<T>));
+
+  @override
+  _$EmptyStringDescription<T> get _value =>
+      super._value as _$EmptyStringDescription<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$EmptyStringDescription<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EmptyStringDescription<T> implements EmptyStringDescription<T> {
+  const _$EmptyStringDescription({required this.failedValue});
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'AddVideoValueFailure<$T>.emptyStringDescription(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmptyStringDescription<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$EmptyStringDescriptionCopyWith<T, _$EmptyStringDescription<T>>
+      get copyWith => __$$EmptyStringDescriptionCopyWithImpl<T,
+          _$EmptyStringDescription<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringName,
+    required TResult Function(String failedValue) longStringName,
+    required TResult Function(String failedValue) emptyStringDescription,
+    required TResult Function(String failedValue) longStringDescription,
+    required TResult Function(FilePickerResult? failedValue)
+        emptyFilePickerResult,
+  }) {
+    return emptyStringDescription(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+  }) {
+    return emptyStringDescription?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (emptyStringDescription != null) {
+      return emptyStringDescription(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringName<T> value) emptyStringName,
+    required TResult Function(LongStringName<T> value) longStringName,
+    required TResult Function(EmptyStringDescription<T> value)
+        emptyStringDescription,
+    required TResult Function(LongStringDescription<T> value)
+        longStringDescription,
+    required TResult Function(EmptyFilePickerResult<T> value)
+        emptyFilePickerResult,
+  }) {
+    return emptyStringDescription(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+  }) {
+    return emptyStringDescription?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (emptyStringDescription != null) {
+      return emptyStringDescription(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmptyStringDescription<T> implements AddVideoValueFailure<T> {
+  const factory EmptyStringDescription({required final String failedValue}) =
+      _$EmptyStringDescription<T>;
+
+  String get failedValue;
+  @JsonKey(ignore: true)
+  _$$EmptyStringDescriptionCopyWith<T, _$EmptyStringDescription<T>>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$LongStringDescriptionCopyWith<T, $Res> {
+  factory _$$LongStringDescriptionCopyWith(_$LongStringDescription<T> value,
+          $Res Function(_$LongStringDescription<T>) then) =
+      __$$LongStringDescriptionCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$$LongStringDescriptionCopyWithImpl<T, $Res>
+    extends _$AddVideoValueFailureCopyWithImpl<T, $Res>
+    implements _$$LongStringDescriptionCopyWith<T, $Res> {
+  __$$LongStringDescriptionCopyWithImpl(_$LongStringDescription<T> _value,
+      $Res Function(_$LongStringDescription<T>) _then)
+      : super(_value, (v) => _then(v as _$LongStringDescription<T>));
+
+  @override
+  _$LongStringDescription<T> get _value =>
+      super._value as _$LongStringDescription<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$LongStringDescription<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$LongStringDescription<T> implements LongStringDescription<T> {
+  const _$LongStringDescription({required this.failedValue});
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'AddVideoValueFailure<$T>.longStringDescription(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LongStringDescription<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$LongStringDescriptionCopyWith<T, _$LongStringDescription<T>>
+      get copyWith =>
+          __$$LongStringDescriptionCopyWithImpl<T, _$LongStringDescription<T>>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringName,
+    required TResult Function(String failedValue) longStringName,
+    required TResult Function(String failedValue) emptyStringDescription,
+    required TResult Function(String failedValue) longStringDescription,
+    required TResult Function(FilePickerResult? failedValue)
+        emptyFilePickerResult,
+  }) {
+    return longStringDescription(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+  }) {
+    return longStringDescription?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (longStringDescription != null) {
+      return longStringDescription(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringName<T> value) emptyStringName,
+    required TResult Function(LongStringName<T> value) longStringName,
+    required TResult Function(EmptyStringDescription<T> value)
+        emptyStringDescription,
+    required TResult Function(LongStringDescription<T> value)
+        longStringDescription,
+    required TResult Function(EmptyFilePickerResult<T> value)
+        emptyFilePickerResult,
+  }) {
+    return longStringDescription(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+  }) {
+    return longStringDescription?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (longStringDescription != null) {
+      return longStringDescription(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class LongStringDescription<T> implements AddVideoValueFailure<T> {
+  const factory LongStringDescription({required final String failedValue}) =
+      _$LongStringDescription<T>;
+
+  String get failedValue;
+  @JsonKey(ignore: true)
+  _$$LongStringDescriptionCopyWith<T, _$LongStringDescription<T>>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EmptyFilePickerResultCopyWith<T, $Res> {
+  factory _$$EmptyFilePickerResultCopyWith(_$EmptyFilePickerResult<T> value,
+          $Res Function(_$EmptyFilePickerResult<T>) then) =
+      __$$EmptyFilePickerResultCopyWithImpl<T, $Res>;
+  $Res call({FilePickerResult? failedValue});
+}
+
+/// @nodoc
+class __$$EmptyFilePickerResultCopyWithImpl<T, $Res>
+    extends _$AddVideoValueFailureCopyWithImpl<T, $Res>
+    implements _$$EmptyFilePickerResultCopyWith<T, $Res> {
+  __$$EmptyFilePickerResultCopyWithImpl(_$EmptyFilePickerResult<T> _value,
+      $Res Function(_$EmptyFilePickerResult<T>) _then)
+      : super(_value, (v) => _then(v as _$EmptyFilePickerResult<T>));
+
+  @override
+  _$EmptyFilePickerResult<T> get _value =>
+      super._value as _$EmptyFilePickerResult<T>;
+
+  @override
+  $Res call({
+    Object? failedValue = freezed,
+  }) {
+    return _then(_$EmptyFilePickerResult<T>(
+      failedValue: failedValue == freezed
+          ? _value.failedValue
+          : failedValue // ignore: cast_nullable_to_non_nullable
+              as FilePickerResult?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EmptyFilePickerResult<T> implements EmptyFilePickerResult<T> {
+  const _$EmptyFilePickerResult({required this.failedValue});
+
+  @override
+  final FilePickerResult? failedValue;
+
+  @override
+  String toString() {
+    return 'AddVideoValueFailure<$T>.emptyFilePickerResult(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EmptyFilePickerResult<T> &&
+            const DeepCollectionEquality()
+                .equals(other.failedValue, failedValue));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failedValue));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$EmptyFilePickerResultCopyWith<T, _$EmptyFilePickerResult<T>>
+      get copyWith =>
+          __$$EmptyFilePickerResultCopyWithImpl<T, _$EmptyFilePickerResult<T>>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) emptyStringName,
+    required TResult Function(String failedValue) longStringName,
+    required TResult Function(String failedValue) emptyStringDescription,
+    required TResult Function(String failedValue) longStringDescription,
+    required TResult Function(FilePickerResult? failedValue)
+        emptyFilePickerResult,
+  }) {
+    return emptyFilePickerResult(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+  }) {
+    return emptyFilePickerResult?.call(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? emptyStringName,
+    TResult Function(String failedValue)? longStringName,
+    TResult Function(String failedValue)? emptyStringDescription,
+    TResult Function(String failedValue)? longStringDescription,
+    TResult Function(FilePickerResult? failedValue)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (emptyFilePickerResult != null) {
+      return emptyFilePickerResult(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmptyStringName<T> value) emptyStringName,
+    required TResult Function(LongStringName<T> value) longStringName,
+    required TResult Function(EmptyStringDescription<T> value)
+        emptyStringDescription,
+    required TResult Function(LongStringDescription<T> value)
+        longStringDescription,
+    required TResult Function(EmptyFilePickerResult<T> value)
+        emptyFilePickerResult,
+  }) {
+    return emptyFilePickerResult(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+  }) {
+    return emptyFilePickerResult?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmptyStringName<T> value)? emptyStringName,
+    TResult Function(LongStringName<T> value)? longStringName,
+    TResult Function(EmptyStringDescription<T> value)? emptyStringDescription,
+    TResult Function(LongStringDescription<T> value)? longStringDescription,
+    TResult Function(EmptyFilePickerResult<T> value)? emptyFilePickerResult,
+    required TResult orElse(),
+  }) {
+    if (emptyFilePickerResult != null) {
+      return emptyFilePickerResult(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EmptyFilePickerResult<T> implements AddVideoValueFailure<T> {
+  const factory EmptyFilePickerResult(
+          {required final FilePickerResult? failedValue}) =
+      _$EmptyFilePickerResult<T>;
+
+  FilePickerResult? get failedValue;
+  @JsonKey(ignore: true)
+  _$$EmptyFilePickerResultCopyWith<T, _$EmptyFilePickerResult<T>>
+      get copyWith => throw _privateConstructorUsedError;
+}

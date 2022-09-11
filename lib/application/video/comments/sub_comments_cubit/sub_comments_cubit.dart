@@ -7,6 +7,7 @@ import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 import 'package:video_app/domain/video/comments/value_objects.dart';
+import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/injectable.dart';
 
 part 'sub_comments_cubit.freezed.dart';
@@ -54,6 +55,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
       state.copyWith(
         loading: true,
         commentId: commentId,
+        subCommentsCollectionId: subCommentsCollectionId(commentId),
       ),
     );
     onOpen();
@@ -62,9 +64,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
 
   ///method for update sub comment
   Future<void> updateSubComments() async {
-
-
-    final Either<CommentsFailure, SubComments> subCommentsOrFailure = await _commentsRepository.getSubComments(state.commentId);
+    final Either<CommentsFailure, SubComments> subCommentsOrFailure = await _commentsRepository.getSubComments(state.subCommentsCollectionId);
     subCommentsOrFailure.fold(
           (CommentsFailure l) => emit(
         state.copyWith(
@@ -94,9 +94,9 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
 
     if (state.subComment.isValid()) {
       final Either<CommentsFailure, Unit> successOrFailure = await _commentsRepository.uploadSubComment(
+        subCommentsCollectionId: state.subCommentsCollectionId,
         userId: userId,
         userName: userName,
-        commentId: state.commentId,
         subComment: state.subComment.getOrCrash(),
       );
       successOrFailure.fold(
@@ -108,7 +108,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
         ),
         (Unit r) async {
           final Either<CommentsFailure, SubComments> commentsOrFailure =
-              await _commentsRepository.getSubComments(state.commentId);
+              await _commentsRepository.getSubComments(state.subCommentsCollectionId);
           commentsOrFailure.fold(
             (CommentsFailure l) => emit(
               state.copyWith(
