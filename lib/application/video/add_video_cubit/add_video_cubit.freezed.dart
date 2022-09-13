@@ -22,8 +22,10 @@ mixin _$AddVideoState {
   bool get showErrorMessage => throw _privateConstructorUsedError;
   VideoFilePickerResult get filePickerResult =>
       throw _privateConstructorUsedError;
-  Option<Either<Failure, Unit>> get addVideoFailureOrSuccessOption =>
+  Option<Either<Failure, Success>> get addVideoFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
+  bool? get editingVideoName => throw _privateConstructorUsedError;
+  bool? get editingVideoDescription => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddVideoStateCopyWith<AddVideoState> get copyWith =>
@@ -41,7 +43,9 @@ abstract class $AddVideoStateCopyWith<$Res> {
       bool loading,
       bool showErrorMessage,
       VideoFilePickerResult filePickerResult,
-      Option<Either<Failure, Unit>> addVideoFailureOrSuccessOption});
+      Option<Either<Failure, Success>> addVideoFailureOrSuccessOption,
+      bool? editingVideoName,
+      bool? editingVideoDescription});
 }
 
 /// @nodoc
@@ -61,6 +65,8 @@ class _$AddVideoStateCopyWithImpl<$Res>
     Object? showErrorMessage = freezed,
     Object? filePickerResult = freezed,
     Object? addVideoFailureOrSuccessOption = freezed,
+    Object? editingVideoName = freezed,
+    Object? editingVideoDescription = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -86,7 +92,15 @@ class _$AddVideoStateCopyWithImpl<$Res>
       addVideoFailureOrSuccessOption: addVideoFailureOrSuccessOption == freezed
           ? _value.addVideoFailureOrSuccessOption
           : addVideoFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, Unit>>,
+              as Option<Either<Failure, Success>>,
+      editingVideoName: editingVideoName == freezed
+          ? _value.editingVideoName
+          : editingVideoName // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      editingVideoDescription: editingVideoDescription == freezed
+          ? _value.editingVideoDescription
+          : editingVideoDescription // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -104,7 +118,9 @@ abstract class _$$_AddVideoStateCopyWith<$Res>
       bool loading,
       bool showErrorMessage,
       VideoFilePickerResult filePickerResult,
-      Option<Either<Failure, Unit>> addVideoFailureOrSuccessOption});
+      Option<Either<Failure, Success>> addVideoFailureOrSuccessOption,
+      bool? editingVideoName,
+      bool? editingVideoDescription});
 }
 
 /// @nodoc
@@ -126,6 +142,8 @@ class __$$_AddVideoStateCopyWithImpl<$Res>
     Object? showErrorMessage = freezed,
     Object? filePickerResult = freezed,
     Object? addVideoFailureOrSuccessOption = freezed,
+    Object? editingVideoName = freezed,
+    Object? editingVideoDescription = freezed,
   }) {
     return _then(_$_AddVideoState(
       name: name == freezed
@@ -151,7 +169,15 @@ class __$$_AddVideoStateCopyWithImpl<$Res>
       addVideoFailureOrSuccessOption: addVideoFailureOrSuccessOption == freezed
           ? _value.addVideoFailureOrSuccessOption
           : addVideoFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, Unit>>,
+              as Option<Either<Failure, Success>>,
+      editingVideoName: editingVideoName == freezed
+          ? _value.editingVideoName
+          : editingVideoName // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      editingVideoDescription: editingVideoDescription == freezed
+          ? _value.editingVideoDescription
+          : editingVideoDescription // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -165,7 +191,9 @@ class _$_AddVideoState implements _AddVideoState {
       required this.loading,
       required this.showErrorMessage,
       required this.filePickerResult,
-      required this.addVideoFailureOrSuccessOption});
+      required this.addVideoFailureOrSuccessOption,
+      this.editingVideoName,
+      this.editingVideoDescription});
 
   @override
   final VideoName name;
@@ -178,11 +206,15 @@ class _$_AddVideoState implements _AddVideoState {
   @override
   final VideoFilePickerResult filePickerResult;
   @override
-  final Option<Either<Failure, Unit>> addVideoFailureOrSuccessOption;
+  final Option<Either<Failure, Success>> addVideoFailureOrSuccessOption;
+  @override
+  final bool? editingVideoName;
+  @override
+  final bool? editingVideoDescription;
 
   @override
   String toString() {
-    return 'AddVideoState(name: $name, description: $description, loading: $loading, showErrorMessage: $showErrorMessage, filePickerResult: $filePickerResult, addVideoFailureOrSuccessOption: $addVideoFailureOrSuccessOption)';
+    return 'AddVideoState(name: $name, description: $description, loading: $loading, showErrorMessage: $showErrorMessage, filePickerResult: $filePickerResult, addVideoFailureOrSuccessOption: $addVideoFailureOrSuccessOption, editingVideoName: $editingVideoName, editingVideoDescription: $editingVideoDescription)';
   }
 
   @override
@@ -200,7 +232,11 @@ class _$_AddVideoState implements _AddVideoState {
                 .equals(other.filePickerResult, filePickerResult) &&
             const DeepCollectionEquality().equals(
                 other.addVideoFailureOrSuccessOption,
-                addVideoFailureOrSuccessOption));
+                addVideoFailureOrSuccessOption) &&
+            const DeepCollectionEquality()
+                .equals(other.editingVideoName, editingVideoName) &&
+            const DeepCollectionEquality().equals(
+                other.editingVideoDescription, editingVideoDescription));
   }
 
   @override
@@ -211,7 +247,9 @@ class _$_AddVideoState implements _AddVideoState {
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(showErrorMessage),
       const DeepCollectionEquality().hash(filePickerResult),
-      const DeepCollectionEquality().hash(addVideoFailureOrSuccessOption));
+      const DeepCollectionEquality().hash(addVideoFailureOrSuccessOption),
+      const DeepCollectionEquality().hash(editingVideoName),
+      const DeepCollectionEquality().hash(editingVideoDescription));
 
   @JsonKey(ignore: true)
   @override
@@ -226,8 +264,10 @@ abstract class _AddVideoState implements AddVideoState {
       required final bool loading,
       required final bool showErrorMessage,
       required final VideoFilePickerResult filePickerResult,
-      required final Option<Either<Failure, Unit>>
-          addVideoFailureOrSuccessOption}) = _$_AddVideoState;
+      required final Option<Either<Failure, Success>>
+          addVideoFailureOrSuccessOption,
+      final bool? editingVideoName,
+      final bool? editingVideoDescription}) = _$_AddVideoState;
 
   @override
   VideoName get name;
@@ -240,7 +280,11 @@ abstract class _AddVideoState implements AddVideoState {
   @override
   VideoFilePickerResult get filePickerResult;
   @override
-  Option<Either<Failure, Unit>> get addVideoFailureOrSuccessOption;
+  Option<Either<Failure, Success>> get addVideoFailureOrSuccessOption;
+  @override
+  bool? get editingVideoName;
+  @override
+  bool? get editingVideoDescription;
   @override
   @JsonKey(ignore: true)
   _$$_AddVideoStateCopyWith<_$_AddVideoState> get copyWith =>

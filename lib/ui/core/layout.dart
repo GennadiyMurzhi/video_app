@@ -13,7 +13,6 @@ class Layout extends StatelessWidget {
     required this.userId,
     required this.name,
     required this.emailAddress,
-    this.padding,
     this.addAction,
     required this.child,
   });
@@ -27,9 +26,6 @@ class Layout extends StatelessWidget {
   final String userId;
   final String name;
   final String emailAddress;
-
-  ///padding layout
-  final EdgeInsets? padding;
 
   ///Function for Fab
   final dynamic Function(dynamic)? functionFab;
@@ -118,10 +114,7 @@ class Layout extends StatelessWidget {
               ),
             )
           : null,
-      body: Padding(
-        padding: padding != null ? padding! : EdgeInsets.zero,
-        child: child,
-      ),
+      body: child,
     );
   }
 }

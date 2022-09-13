@@ -20,7 +20,7 @@ class AuthCubit extends Cubit<AuthState> {
   ///method for detected user session on the server
   Future<void> authCheckRequested() async {
     final Option<User> userOption = await _authFacade.getSignedInUser();
-
+    print('auth cubit check ');
     emit(
       userOption.fold(
         () => const AuthState.unauthenticated(),

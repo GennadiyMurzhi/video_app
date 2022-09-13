@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,6 +12,7 @@ import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/injectable.dart';
 
 part 'sub_comments_cubit.freezed.dart';
+
 part 'sub_comments_state.dart';
 
 ///cubit manage the uploading of sub comments and to leave new
@@ -19,6 +21,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
   ///pass the comments repository to use the comment management functionality
   SubCommentsCubit(this._commentsRepository) : super(SubCommentsState.initial());
   final ICommentsRepository _commentsRepository;
+  RealtimeSubscription? _subscription;
 
   ///method for open subcomments widget
   Future<void> onOpen() async {
@@ -58,21 +61,38 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
         subCommentsCollectionId: subCommentsCollectionId(commentId),
       ),
     );
+    _subscriptionOnUpdate();
     onOpen();
-    updateSubComments();
+    await updateSubComments();
+  }
+
+  void _subscriptionOnUpdate() {
+    final String subCommentCollectionId = subCommentsCollectionId(state.commentId);
+    _subscription = getIt<Realtime>().subscribe(<String>[
+      'databases.631960da68ba468f7fe9.collections.$subCommentCollectionId.documents',
+    ]);
+
+    _subscription!.stream.listen(
+      (RealtimeMessage response) async {
+        if (state.isOpen) {
+          await updateSubComments();
+        }
+      },
+    );
   }
 
   ///method for update sub comment
   Future<void> updateSubComments() async {
-    final Either<CommentsFailure, SubComments> subCommentsOrFailure = await _commentsRepository.getSubComments(state.subCommentsCollectionId);
+    final Either<CommentsFailure, SubComments> subCommentsOrFailure =
+        await _commentsRepository.getSubComments(state.subCommentsCollectionId);
     subCommentsOrFailure.fold(
-          (CommentsFailure l) => emit(
+      (CommentsFailure l) => emit(
         state.copyWith(
           loading: false,
           subCommentsFailureOrSuccessOption: optionOf(subCommentsOrFailure),
         ),
       ),
-          (SubComments r) {
+      (SubComments r) {
         getIt<DataListReceiver<SubComments>>().getDataList(r);
         emit(
           state.copyWith(
@@ -106,28 +126,13 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
             subCommentsFailureOrSuccessOption: optionOf(successOrFailure),
           ),
         ),
-        (Unit r) async {
-          final Either<CommentsFailure, SubComments> commentsOrFailure =
-              await _commentsRepository.getSubComments(state.subCommentsCollectionId);
-          commentsOrFailure.fold(
-            (CommentsFailure l) => emit(
-              state.copyWith(
-                loading: false,
-                subCommentsFailureOrSuccessOption: optionOf(commentsOrFailure),
-              ),
-            ),
-            (SubComments r) {
-              emit(
-                state.copyWith(
-                  loading: false,
-                  showErrorMessage: false,
-                  subCommentsFailureOrSuccessOption: none(),
-                ),
-              );
-              getIt<DataListReceiver<SubComments>>().getDataList(r);
-            },
-          );
-        },
+        (Unit r) => emit(
+          state.copyWith(
+            loading: false,
+            showErrorMessage: false,
+            subCommentsFailureOrSuccessOption: none(),
+          ),
+        ),
       );
     } else {
       emit(

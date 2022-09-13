@@ -10,7 +10,9 @@ abstract class AddVideoState with _$AddVideoState {
     required bool loading,
     required bool showErrorMessage,
     required VideoFilePickerResult filePickerResult,
-    required Option<Either<Failure, Unit>> addVideoFailureOrSuccessOption,
+    required Option<Either<Failure, Success>> addVideoFailureOrSuccessOption,
+    bool? editingVideoName,
+    bool? editingVideoDescription,
   }) = _AddVideoState;
 
   factory AddVideoState.initial() => AddVideoState(

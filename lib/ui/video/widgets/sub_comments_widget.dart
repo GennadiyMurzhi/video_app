@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
-import 'package:video_app/application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart';
+import 'package:video_app/application/video/comments/edit_old_comments_cubit/edit_old_comment_cubit.dart';
 import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comments_cubit.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/core/failures.dart';
@@ -126,7 +126,8 @@ class SubCommentsWidget extends StatelessWidget {
                           comment: subComment.subComment,
                           commentDate: DateTime.fromMillisecondsSinceEpoch(subComment.date),
                           startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
-                            commentCollectionId: subCommentsCollectionId(BlocProvider.of<SubCommentsCubit>(context).state.commentId),
+                            commentCollectionId:
+                                subCommentsCollectionId(BlocProvider.of<SubCommentsCubit>(context).state.commentId),
                             oldComment: subComment.subComment,
                             commentIndex: index - 1,
                             commentId: subComment.subCommentId,
@@ -134,8 +135,7 @@ class SubCommentsWidget extends StatelessWidget {
                           ),
                           editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
                           endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(
-                            updateCommentsFunction: () =>
-                                BlocProvider.of<SubCommentsCubit>(context).updateSubComments(),
+                            updateCommentsFunction: () => BlocProvider.of<SubCommentsCubit>(context).updateSubComments(),
                           ),
                           commentType: CommentType.subComment,
                           isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),

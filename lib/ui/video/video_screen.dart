@@ -1,13 +1,17 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video/comments/comments_cubit/comments_cubit.dart';
-import 'package:video_app/application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart';
+import 'package:video_app/application/video/comments/edit_old_comments_cubit/edit_old_comment_cubit.dart';
 import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comments_cubit.dart';
 import 'package:video_app/application/video/video_cubit/video_cubit.dart';
+import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
+import 'package:video_app/ui/core/snackbar_custom.dart';
 import 'package:video_app/ui/video/widgets/comments_page_widget.dart';
 import 'package:video_app/ui/video/widgets/loading_widget.dart';
 import 'package:video_app/ui/video/widgets/page_switcher_widget.dart';
@@ -28,10 +32,10 @@ class VideoScreen extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider<VideoCubit>(
-              create: (BuildContext context) => getIt<VideoCubit>()..init(videoParams.name, videoParams.id),
+              create: (BuildContext context) => getIt<VideoCubit>()..init(videoParams.name, videoParams.id, appUserId),
             ),
             BlocProvider<CommentsCubit>(
-              create: (BuildContext context) => getIt<CommentsCubit>(),
+              create: (BuildContext context) => getIt<CommentsCubit>()..init(videoParams.id),
             ),
             BlocProvider<SubCommentsCubit>(
               create: (BuildContext context) => getIt<SubCommentsCubit>(),
@@ -40,7 +44,7 @@ class VideoScreen extends StatelessWidget {
               create: (BuildContext context) => getIt<EditOldCommentCubit>(),
             ),
           ],
-          child: BlocBuilder<VideoCubit, VideoState>(
+          child: BlocConsumer<VideoCubit, VideoState>(
             builder: (BuildContext context, VideoState state) {
               return state.videoStatus == VideoStatus.deleted
                   ? Scaffold(
@@ -59,7 +63,6 @@ class VideoScreen extends StatelessWidget {
                       functionOnPop: () {
                         Navigator.of(context).pop();
                         state.chewieController!.videoPlayerController.dispose();
-                        //state.chewieController!.dispose();
                       },
                       child: state.videoStatus == VideoStatus.loading
                           ? const LoadingWidget(text: 'Loading video...')
@@ -74,22 +77,17 @@ class VideoScreen extends StatelessWidget {
                                           height: MediaQuery.of(context).size.height / 3,
                                           child: PlayerWidget(
                                             chewieController: state.chewieController!,
-                                            updateVideoFunction: () => BlocProvider.of<VideoCubit>(context).updateVideo(
-                                              fileId: videoParams.id,
-                                              fileName: videoParams.name,
-                                            ),
-                                            deleteVideoFunction: () =>
-                                                BlocProvider.of<VideoCubit>(context).deleteVideo(videoParams.id),
+                                            updateVideoFunction: () => BlocProvider.of<VideoCubit>(context).updateVideo(),
+                                            deleteVideoFunction: () => BlocProvider.of<VideoCubit>(context).deleteVideo(),
                                           ),
                                         ),
-                                        if(kIsWeb) PageSwitcherWidget(pageController: videoPages),
+                                        if (kIsWeb) PageSwitcherWidget(pageController: videoPages),
                                         Expanded(
                                           child: PageView(
                                             controller: videoPages,
                                             onPageChanged: (int page) {
                                               if (page == 1) {
-                                                BlocProvider.of<CommentsCubit>(context)
-                                                    .loadCommentsOnCommentsPage(videoParams.id);
+                                                BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage();
                                               }
                                             },
                                             children: <Widget>[
@@ -99,12 +97,9 @@ class VideoScreen extends StatelessWidget {
                                                 userId: videoParams.userId,
                                                 description: videoParams.description,
                                                 appUserId: appUserId,
-                                                updateVideo: () => BlocProvider.of<VideoCubit>(context).updateVideo(
-                                                  fileId: videoParams.id,
-                                                  fileName: videoParams.name,
-                                                ),
+                                                updateVideo: () => BlocProvider.of<VideoCubit>(context).updateVideo(),
                                                 deleteVideo: () {
-                                                  BlocProvider.of<VideoCubit>(context).deleteVideo(videoParams.id).whenComplete(
+                                                  BlocProvider.of<VideoCubit>(context).deleteVideo().whenComplete(
                                                     () {
                                                       Navigator.of(context).pop();
                                                       BlocProvider.of<VideoCubit>(context).displayVideo();
@@ -122,6 +117,32 @@ class VideoScreen extends StatelessWidget {
                                       ],
                                     ),
                     );
+            },
+            listener: (BuildContext context, VideoState state) {
+              state.videoFailureOrSuccessOption.fold(
+                () => null,
+                (Either<Failure, Success> either) {
+                  either.fold(
+                    (Failure failure) => ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBarCustom(
+                        text: failure.when(
+                          serverError: () => 'Server error',
+                        ),
+                      ),
+                    ),
+                    (Success success) => ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBarCustom(
+                        text: success.maybeWhen(
+                          videoUploaded: () => 'Video uploaded',
+                          videoReplaced: () => 'Video replaced',
+                          videoDeleted: () => 'Video deleted',
+                          orElse: () => '',
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              );
             },
           ),
         );

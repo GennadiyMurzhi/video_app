@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CommentsState {
   bool get loading => throw _privateConstructorUsedError;
   bool get showErrorMessage => throw _privateConstructorUsedError;
+  String get videoFileId => throw _privateConstructorUsedError;
   CommentObject get comment => throw _privateConstructorUsedError;
   Option<Either<CommentsFailure, dynamic>> get commentsFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
@@ -35,6 +36,7 @@ abstract class $CommentsStateCopyWith<$Res> {
   $Res call(
       {bool loading,
       bool showErrorMessage,
+      String videoFileId,
       CommentObject comment,
       Option<Either<CommentsFailure, dynamic>> commentsFailureOrSuccessOption});
 }
@@ -52,6 +54,7 @@ class _$CommentsStateCopyWithImpl<$Res>
   $Res call({
     Object? loading = freezed,
     Object? showErrorMessage = freezed,
+    Object? videoFileId = freezed,
     Object? comment = freezed,
     Object? commentsFailureOrSuccessOption = freezed,
   }) {
@@ -64,6 +67,10 @@ class _$CommentsStateCopyWithImpl<$Res>
           ? _value.showErrorMessage
           : showErrorMessage // ignore: cast_nullable_to_non_nullable
               as bool,
+      videoFileId: videoFileId == freezed
+          ? _value.videoFileId
+          : videoFileId // ignore: cast_nullable_to_non_nullable
+              as String,
       comment: comment == freezed
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
@@ -86,6 +93,7 @@ abstract class _$$_CommentsStateCopyWith<$Res>
   $Res call(
       {bool loading,
       bool showErrorMessage,
+      String videoFileId,
       CommentObject comment,
       Option<Either<CommentsFailure, dynamic>> commentsFailureOrSuccessOption});
 }
@@ -105,6 +113,7 @@ class __$$_CommentsStateCopyWithImpl<$Res>
   $Res call({
     Object? loading = freezed,
     Object? showErrorMessage = freezed,
+    Object? videoFileId = freezed,
     Object? comment = freezed,
     Object? commentsFailureOrSuccessOption = freezed,
   }) {
@@ -117,6 +126,10 @@ class __$$_CommentsStateCopyWithImpl<$Res>
           ? _value.showErrorMessage
           : showErrorMessage // ignore: cast_nullable_to_non_nullable
               as bool,
+      videoFileId: videoFileId == freezed
+          ? _value.videoFileId
+          : videoFileId // ignore: cast_nullable_to_non_nullable
+              as String,
       comment: comment == freezed
           ? _value.comment
           : comment // ignore: cast_nullable_to_non_nullable
@@ -135,6 +148,7 @@ class _$_CommentsState implements _CommentsState {
   const _$_CommentsState(
       {required this.loading,
       required this.showErrorMessage,
+      required this.videoFileId,
       required this.comment,
       required this.commentsFailureOrSuccessOption});
 
@@ -143,13 +157,15 @@ class _$_CommentsState implements _CommentsState {
   @override
   final bool showErrorMessage;
   @override
+  final String videoFileId;
+  @override
   final CommentObject comment;
   @override
   final Option<Either<CommentsFailure, dynamic>> commentsFailureOrSuccessOption;
 
   @override
   String toString() {
-    return 'CommentsState(loading: $loading, showErrorMessage: $showErrorMessage, comment: $comment, commentsFailureOrSuccessOption: $commentsFailureOrSuccessOption)';
+    return 'CommentsState(loading: $loading, showErrorMessage: $showErrorMessage, videoFileId: $videoFileId, comment: $comment, commentsFailureOrSuccessOption: $commentsFailureOrSuccessOption)';
   }
 
   @override
@@ -160,6 +176,8 @@ class _$_CommentsState implements _CommentsState {
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality()
                 .equals(other.showErrorMessage, showErrorMessage) &&
+            const DeepCollectionEquality()
+                .equals(other.videoFileId, videoFileId) &&
             const DeepCollectionEquality().equals(other.comment, comment) &&
             const DeepCollectionEquality().equals(
                 other.commentsFailureOrSuccessOption,
@@ -171,6 +189,7 @@ class _$_CommentsState implements _CommentsState {
       runtimeType,
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(showErrorMessage),
+      const DeepCollectionEquality().hash(videoFileId),
       const DeepCollectionEquality().hash(comment),
       const DeepCollectionEquality().hash(commentsFailureOrSuccessOption));
 
@@ -184,6 +203,7 @@ abstract class _CommentsState implements CommentsState {
   const factory _CommentsState(
       {required final bool loading,
       required final bool showErrorMessage,
+      required final String videoFileId,
       required final CommentObject comment,
       required final Option<Either<CommentsFailure, dynamic>>
           commentsFailureOrSuccessOption}) = _$_CommentsState;
@@ -192,6 +212,8 @@ abstract class _CommentsState implements CommentsState {
   bool get loading;
   @override
   bool get showErrorMessage;
+  @override
+  String get videoFileId;
   @override
   CommentObject get comment;
   @override

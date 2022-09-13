@@ -75,7 +75,7 @@ class AuthFacade extends IAuthFacade {
 
       return right(unit);
     } on AppwriteException catch (e) {
-      if (e.type! == 'user_invalid_credentials') {
+      if (e.type != null && e.type! == 'user_invalid_credentials') {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
       } else {
         return left(const AuthFailure.serverError());

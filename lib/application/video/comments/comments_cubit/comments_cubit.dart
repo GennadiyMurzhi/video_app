@@ -1,3 +1,4 @@
+import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -21,6 +22,7 @@ class CommentsCubit extends Cubit<CommentsState> {
   CommentsCubit(this._commentRepository) : super(CommentsState.initial());
 
   final ICommentsRepository _commentRepository;
+  RealtimeSubscription? _subscription;
 
   ///method for editing the new comment of the input time
   void editNewComment(String comment) {
@@ -29,6 +31,28 @@ class CommentsCubit extends Cubit<CommentsState> {
         comment: CommentObject(comment),
         commentsFailureOrSuccessOption: none(),
       ),
+    );
+  }
+
+  ///method for initialise comments
+  void init(String videoFileId) {
+    emit(
+      state.copyWith(videoFileId: videoFileId),
+    );
+    _subscriptionOnUpdateComments();
+  }
+
+  ///method to update comments for video
+  void _subscriptionOnUpdateComments() {
+    final String commentCollectionId = commentsCollectionId(state.videoFileId);
+    _subscription =
+        getIt<Realtime>().subscribe(<String>['databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents']);
+    _subscription!.stream.listen(
+      (RealtimeMessage response) async {
+        if (response.events.contains('databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents.*.update')) {
+          await loadCommentsOnCommentsPage();
+        }
+      },
     );
   }
 
@@ -59,28 +83,13 @@ class CommentsCubit extends Cubit<CommentsState> {
             commentsFailureOrSuccessOption: optionOf(successOrFailure),
           ),
         ),
-        (Unit r) async {
-          final Either<CommentsFailure, Comments> commentsOrFailure =
-              await _commentRepository.getVideoComments(commentsCollectionId(videoId));
-          commentsOrFailure.fold(
-            (CommentsFailure l) => emit(
-              state.copyWith(
-                loading: false,
-                commentsFailureOrSuccessOption: optionOf(commentsOrFailure),
-              ),
-            ),
-            (Comments r) {
-              emit(
-                state.copyWith(
-                  loading: false,
-                  showErrorMessage: false,
-                  commentsFailureOrSuccessOption: none(),
-                ),
-              );
-              getIt<DataListReceiver<Comments>>().getDataList(r);
-            },
-          );
-        },
+        (Unit r) => emit(
+          state.copyWith(
+            loading: false,
+            showErrorMessage: false,
+            commentsFailureOrSuccessOption: none(),
+          ),
+        ),
       );
     } else {
       emit(
@@ -94,11 +103,13 @@ class CommentsCubit extends Cubit<CommentsState> {
   }
 
   ///method for loading all comments for video when the comments page opens
-  Future<void> loadCommentsOnCommentsPage(String videoId) async {
-    emit(state.copyWith(loading: true));
+  Future<void> loadCommentsOnCommentsPage() async {
+    emit(
+      state.copyWith(loading: true),
+    );
 
     final Either<CommentsFailure, Comments> commentsOrFailure =
-        await _commentRepository.getVideoComments(commentsCollectionId(videoId));
+        await _commentRepository.getVideoComments(commentsCollectionId(state.videoFileId));
     commentsOrFailure.fold(
       (CommentsFailure l) => emit(
         state.copyWith(

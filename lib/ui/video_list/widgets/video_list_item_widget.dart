@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:appwrite/appwrite.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/video/video_screen.dart';

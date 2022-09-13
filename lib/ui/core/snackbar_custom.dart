@@ -22,6 +22,6 @@ class SnackBarCustom extends SnackBar {
 }
 
 ///method for easy show snack bar
-void showSnackWithText(String text) => ScaffoldMessenger.of(videoListScreenLayoutKey.currentContext!).showSnackBar(
+void showSnackWithText(String text, BuildContext context) => ScaffoldMessenger.of(context).showSnackBar(
       SnackBarCustom(text: text),
     );

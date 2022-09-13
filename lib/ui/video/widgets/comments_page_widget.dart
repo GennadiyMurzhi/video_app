@@ -1,10 +1,9 @@
-import 'package:appwrite/appwrite.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video/comments/comments_cubit/comments_cubit.dart';
-import 'package:video_app/application/video/comments/edit_old_comments/edit_old_comment_cubit/edit_old_comment_cubit.dart';
+import 'package:video_app/application/video/comments/edit_old_comments_cubit/edit_old_comment_cubit.dart';
 import 'package:video_app/application/video/comments/sub_comments_cubit/sub_comments_cubit.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/core/failures.dart';
@@ -35,23 +34,6 @@ class CommentsPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String commentCollectionId = commentsCollectionId(videoParams.id);
-    final String commentId = BlocProvider.of<SubCommentsCubit>(context).state.commentId;
-    final String subCommentCollectionId = subCommentsCollectionId(commentId);
-
-    final RealtimeSubscription subscription = getIt<Realtime>().subscribe(<String>[
-      'databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents',
-      'databases.631960da68ba468f7fe9.collections.$subCommentCollectionId.documents ',
-    ]);
-    subscription.stream.listen(
-      (RealtimeMessage response) {
-        BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(videoParams.id);
-        if(BlocProvider.of<SubCommentsCubit>(context).state.isOpen) {
-          BlocProvider.of<SubCommentsCubit>(context).updateSubComments();
-        }
-      },
-    );
-
     return BlocBuilder<CommentsCubit, CommentsState>(
       builder: (BuildContext context, CommentsState commentsState) {
         return BlocBuilder<SubCommentsCubit, SubCommentsState>(
@@ -156,7 +138,7 @@ class CommentsPageWidget extends StatelessWidget {
                                     editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
                                     endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(
                                       updateCommentsFunction: () =>
-                                          BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(videoParams.id),
+                                          BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
                                     ),
                                     commentType: CommentType.mainComment,
                                   );
@@ -178,7 +160,7 @@ class CommentsPageWidget extends StatelessWidget {
                   ),
                 if (subCommentsState.isOpen)
                   SubCommentsWidget(
-                    loadComments: BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(videoParams.id),
+                    loadComments: BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
                     videoParams: videoParams,
                   ),
               ],

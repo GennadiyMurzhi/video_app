@@ -7,12 +7,14 @@ class CommentsState with _$CommentsState {
   const factory CommentsState({
     required bool loading,
     required bool showErrorMessage,
+    required String videoFileId,
     required CommentObject comment,
     required Option<Either<CommentsFailure, dynamic>> commentsFailureOrSuccessOption,
   }) = _CommentsState;
 
   ///initial state need when comment not loaded
   factory CommentsState.initial() => CommentsState(
+        videoFileId: '',
         loading: false,
         showErrorMessage: false,
         comment: CommentObject(''),

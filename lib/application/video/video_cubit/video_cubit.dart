@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dartz/dartz.dart';
@@ -12,34 +14,49 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_app/application/pick_file.dart';
 import 'package:video_app/domain/video/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
-import 'package:video_app/ui/core/snackbar_custom.dart';
+import 'package:video_app/domain/video/success.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_cubit.freezed.dart';
+
 part 'video_state.dart';
 
 ///cubit for manipulation on video_screen
 @Injectable()
 class VideoCubit extends Cubit<VideoState> {
   ///Storage need to update and delete video on the server
-  VideoCubit(this._repository) : super(VideoState.initial());
+  VideoCubit(this._repository, Client client) : super(VideoState.initial()) {
+    _functions = Functions(client);
+  }
 
+  late final Functions _functions;
   final IVideoRepository _repository;
 
   ///need to init video on create screen
-  Future<void> init(String name, String id) async {
+  Future<void> init(String videoName, String videoFileId, String userId) async {
+    emit(
+      state.copyWith(
+        videoFileId: videoFileId,
+        videoName: videoName,
+        userId: userId,
+      ),
+    );
     if (kIsWeb) {
-      final VideoPlayerController videoPlayerController = VideoPlayerController.network(_linkVideo(id));
+      final VideoPlayerController videoPlayerController = VideoPlayerController.network(_linkVideo(state.videoFileId));
       emit(
         state.copyWith(
-          chewieController: ChewieController(videoPlayerController: videoPlayerController)..videoPlayerController.initialize(),
+          chewieController: ChewieController(
+            videoPlayerController: videoPlayerController,
+          )..videoPlayerController.initialize(),
         ),
       );
     } else {
       emit(
-        state.copyWith(videoStatus: VideoStatus.loading),
+        state.copyWith(
+          videoStatus: VideoStatus.loading,
+        ),
       );
-      final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(id);
+      final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(state.videoFileId);
       Directory? directory;
       File videoFile;
       if (fileBytesOrFailure.isRight()) {
@@ -47,9 +64,9 @@ class VideoCubit extends Cubit<VideoState> {
       }
 
       fileBytesOrFailure.fold(
-        (Failure l) => _serverErrorShowMessage(),
+        (Failure l) => null, //_serverErrorShowMessage(),
         (Uint8List r) {
-          videoFile = File('${directory!.path}/$name.mp4');
+          videoFile = File('${directory!.path}/$videoName.mp4');
           videoFile.writeAsBytesSync(r as List<int>);
           final VideoPlayerController videoPlayerController = VideoPlayerController.file(videoFile);
           emit(
@@ -63,7 +80,7 @@ class VideoCubit extends Cubit<VideoState> {
       );
     }
 
-    _crutchLinkVideo = _linkVideo(id);
+    _crutchLinkVideo = _linkVideo(state.videoFileId);
   }
 
   ///needed to return the state when return to the video_list_screen
@@ -72,38 +89,52 @@ class VideoCubit extends Cubit<VideoState> {
   }
 
   ///method to update video on the server
-  Future<void> updateVideo({
-    required String fileId,
-    required String fileName,
-  }) async {
+  Future<void> updateVideo() async {
     final FilePickerResult? filePickerResult = await pickFile();
 
     if (filePickerResult != null) {
-      emit(state.copyWith(videoStatus: VideoStatus.replacing));
+      emit(
+        state.copyWith(
+          videoStatus: VideoStatus.replacing,
+        ),
+      );
 
-      final Either<Failure, Unit> resultOrFailure = await _repository.replaceVideoOnServer(
-        fileId: fileId,
-        fileName: fileName,
+      final Either<Failure, Success> resultOrFailure = await _repository.replaceVideoOnServer(
+        userId: state.userId,
+        fileId: state.videoFileId,
+        fileName: state.videoFileId,
         filePickerResult: filePickerResult,
       );
       resultOrFailure.fold(
         (Failure failure) => failure.when(
-          serverError: () => _serverErrorShowMessage(),
+          serverError: () => emit(
+            state.copyWith(
+              videoStatus: VideoStatus.display,
+            ),
+          ),
         ),
-        (Unit r) {
-          showSnackWithText('File replaced on the server');
-        },
+        (Success r) => null,
+      );
+
+      emit(
+        state.copyWith(
+          videoFailureOrSuccessOption: optionOf(resultOrFailure),
+        ),
       );
 
       if (!kIsWeb && resultOrFailure.isRight()) {
         File? videoFile;
-        final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(fileId);
+        final Either<Failure, Uint8List> fileBytesOrFailure = await _repository.getVideoFromTheServer(state.videoFileId);
         if (fileBytesOrFailure.isRight()) {
           Directory directory = await getApplicationDocumentsDirectory();
-          videoFile = File('${directory.path}/$fileName.mp4');
+          videoFile = File('${directory.path}/${state.videoFileId}.mp4');
         }
         fileBytesOrFailure.fold(
-          (Failure l) => _serverErrorShowMessage(),
+          (Failure l) => emit(
+            state.copyWith(
+              videoStatus: VideoStatus.display,
+            ),
+          ),
           (Uint8List r) {
             videoFile!.writeAsBytesSync(r as List<int>);
 
@@ -117,6 +148,12 @@ class VideoCubit extends Cubit<VideoState> {
               ),
             );
           },
+        );
+
+        emit(
+          state.copyWith(
+            videoFailureOrSuccessOption: optionOf(resultOrFailure),
+          ),
         );
       }
 
@@ -135,26 +172,40 @@ class VideoCubit extends Cubit<VideoState> {
   }
 
   ///method to delete video on the server
-  Future<void> deleteVideo(String fileId) async {
+  Future<void> deleteVideo() async {
     emit(state.copyWith(videoStatus: VideoStatus.deleting));
 
-    final Either<Failure, Unit> resultOrFailure = await _repository.deleteVideoOnServer(fileId);
+    final Either<Failure, Success> resultOrFailure = await _repository.deleteVideoOnServer(state.videoFileId);
     resultOrFailure.fold(
-      (Failure failure) => failure.when(
-        serverError: () => _serverErrorShowMessage(),
-      ),
-      (Unit r) {
-        showSnackWithText('File delete on the server');
-      },
-    );
+        (Failure failure) => failure.when(
+              serverError: () => emit(
+                state.copyWith(videoStatus: VideoStatus.display),
+              ), //_serverErrorShowMessage(),
+            ), (Success r) async {
+      await _functions.createExecution(
+        functionId: 'onDeleteVideo',
+        data: jsonEncode({
+          'video_id': state.videoFileId,
+        }),
+      );
+      emit(
+        state.copyWith(
+          videoStatus: VideoStatus.deleted,
+        ),
+      );
+    });
 
-    emit(state.copyWith(videoStatus: VideoStatus.deleted));
+    emit(
+      state.copyWith(
+        videoFailureOrSuccessOption: optionOf(resultOrFailure),
+      ),
+    );
 
     await Future<void>.delayed(const Duration(seconds: 1));
   }
 }
 
-void _serverErrorShowMessage() => showSnackWithText('Server Error');
+//void _serverErrorShowMessage() => showSnackWithText('Server Error');
 
 String _crutchLinkVideo = '';
 

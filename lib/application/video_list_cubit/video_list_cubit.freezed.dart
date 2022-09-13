@@ -17,6 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$VideoListState {
   bool get loading => throw _privateConstructorUsedError;
+  Option<VideoEvent> get event => throw _privateConstructorUsedError;
+  Option<Either<Failure, VideoDataList>> get videoListFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $VideoListStateCopyWith<VideoListState> get copyWith =>
@@ -28,7 +31,10 @@ abstract class $VideoListStateCopyWith<$Res> {
   factory $VideoListStateCopyWith(
           VideoListState value, $Res Function(VideoListState) then) =
       _$VideoListStateCopyWithImpl<$Res>;
-  $Res call({bool loading});
+  $Res call(
+      {bool loading,
+      Option<VideoEvent> event,
+      Option<Either<Failure, VideoDataList>> videoListFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -43,12 +49,23 @@ class _$VideoListStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loading = freezed,
+    Object? event = freezed,
+    Object? videoListFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      event: event == freezed
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as Option<VideoEvent>,
+      videoListFailureOrSuccessOption: videoListFailureOrSuccessOption ==
+              freezed
+          ? _value.videoListFailureOrSuccessOption
+          : videoListFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<Failure, VideoDataList>>,
     ));
   }
 }
@@ -60,7 +77,10 @@ abstract class _$$_VideoListStateCopyWith<$Res>
           _$_VideoListState value, $Res Function(_$_VideoListState) then) =
       __$$_VideoListStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool loading});
+  $Res call(
+      {bool loading,
+      Option<VideoEvent> event,
+      Option<Either<Failure, VideoDataList>> videoListFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -77,12 +97,23 @@ class __$$_VideoListStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loading = freezed,
+    Object? event = freezed,
+    Object? videoListFailureOrSuccessOption = freezed,
   }) {
     return _then(_$_VideoListState(
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      event: event == freezed
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as Option<VideoEvent>,
+      videoListFailureOrSuccessOption: videoListFailureOrSuccessOption ==
+              freezed
+          ? _value.videoListFailureOrSuccessOption
+          : videoListFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<Failure, VideoDataList>>,
     ));
   }
 }
@@ -90,14 +121,21 @@ class __$$_VideoListStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_VideoListState implements _VideoListState {
-  const _$_VideoListState({required this.loading});
+  const _$_VideoListState(
+      {required this.loading,
+      required this.event,
+      required this.videoListFailureOrSuccessOption});
 
   @override
   final bool loading;
+  @override
+  final Option<VideoEvent> event;
+  @override
+  final Option<Either<Failure, VideoDataList>> videoListFailureOrSuccessOption;
 
   @override
   String toString() {
-    return 'VideoListState(loading: $loading)';
+    return 'VideoListState(loading: $loading, event: $event, videoListFailureOrSuccessOption: $videoListFailureOrSuccessOption)';
   }
 
   @override
@@ -105,12 +143,19 @@ class _$_VideoListState implements _VideoListState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VideoListState &&
-            const DeepCollectionEquality().equals(other.loading, loading));
+            const DeepCollectionEquality().equals(other.loading, loading) &&
+            const DeepCollectionEquality().equals(other.event, event) &&
+            const DeepCollectionEquality().equals(
+                other.videoListFailureOrSuccessOption,
+                videoListFailureOrSuccessOption));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(loading));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(loading),
+      const DeepCollectionEquality().hash(event),
+      const DeepCollectionEquality().hash(videoListFailureOrSuccessOption));
 
   @JsonKey(ignore: true)
   @override
@@ -119,11 +164,18 @@ class _$_VideoListState implements _VideoListState {
 }
 
 abstract class _VideoListState implements VideoListState {
-  const factory _VideoListState({required final bool loading}) =
-      _$_VideoListState;
+  const factory _VideoListState(
+      {required final bool loading,
+      required final Option<VideoEvent> event,
+      required final Option<Either<Failure, VideoDataList>>
+          videoListFailureOrSuccessOption}) = _$_VideoListState;
 
   @override
   bool get loading;
+  @override
+  Option<VideoEvent> get event;
+  @override
+  Option<Either<Failure, VideoDataList>> get videoListFailureOrSuccessOption;
   @override
   @JsonKey(ignore: true)
   _$$_VideoListStateCopyWith<_$_VideoListState> get copyWith =>

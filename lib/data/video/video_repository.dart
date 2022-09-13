@@ -9,9 +9,11 @@ import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/domain/video/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
+import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/domain/video/video.dart';
 
 const String _bucketId = '62e3f62d96bf680e817c';
+const String _videoDataCollectionId = '631b4f2663f40f701b38';
 
 ///Repository for video
 @Injectable(as: IVideoRepository)
@@ -59,7 +61,7 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> uploadVideoOnServer({
+  Future<Either<Failure, Success>> uploadVideoOnServer({
     required FilePickerResult filePickerResult,
     required String userId,
     required String name,
@@ -93,7 +95,7 @@ class VideoRepository implements IVideoRepository {
       };
       await _functions.createExecution(functionId: 'onUploadVideo', data: jsonEncode(functionData));
       print( jsonEncode(functionData));
-      return right(unit);
+      return right(const Success.videoUploaded());
     } catch (e) {
       print(e);
       return left(const Failure.serverError());
@@ -101,10 +103,11 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
-  Future<Either<Failure, Unit>> replaceVideoOnServer({
+  Future<Either<Failure, Success>> replaceVideoOnServer({
     required String fileId,
     required String fileName,
     required FilePickerResult filePickerResult,
+    required String userId,
   }) async {
     final InputFile inputFile;
     if (kIsWeb) {
@@ -128,25 +131,59 @@ class VideoRepository implements IVideoRepository {
         bucketId: _bucketId,
         fileId: fileId,
         file: inputFile,
+        read: <dynamic>['role:all'],
+        write: <dynamic>['user:$userId'],
       );
 
-      return right(unit);
+      return right(const Success.videoReplaced());
     } catch (e) {
+      print(e);
       return left(const Failure.serverError());
     }
   }
 
   @override
-  Future<Either<Failure, Unit>> deleteVideoOnServer(String fileId) async {
+  Future<Either<Failure, Success>> deleteVideoOnServer(String fileId) async {
     try {
       await _videosStorage.deleteFile(
         bucketId: _bucketId,
         fileId: fileId,
       );
 
-      return right(unit);
+      return right(const Success.videoDeleted());
     } catch (e) {
       return left(const Failure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Success>> updateVideoInformation({required String videoId, String? name, String? description}) async {
+    final bool isName = name != null;
+    final bool isDescription = description != null;
+    if(isName || isDescription) {
+      try {
+        final Map<dynamic, dynamic> data;
+        if(isName && isDescription) {
+          data = <dynamic, dynamic>{
+            'name': name,
+            'description': description
+          };
+        } else if(isName) {
+          data = <dynamic, dynamic>{
+            'name': name,
+          };
+        } else {
+          data = <dynamic, dynamic>{
+            'description': name,
+          };
+        }
+        await _database.updateDocument(collectionId: _videoDataCollectionId, documentId: 'video_data_$videoId', data: data);
+        return right(const Success.videoInfoUpdated());
+      } catch (e){
+        return left(const Failure.serverError());
+      }
+    } else {
+      throw Exception('Unexpected combination to update video information in method updateVideoInformation');
     }
   }
 }

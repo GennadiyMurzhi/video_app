@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,14 +6,14 @@ import 'package:video_app/domain/core/errors.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
 import 'package:video_app/domain/video/comments/value_objects.dart';
-import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/enums.dart';
 
 part 'edit_old_comment_cubit.freezed.dart';
+
 part 'edit_old_comment_state.dart';
 
 ///cubit for manage the editing of old comments
-@Injectable()
+@lazySingleton
 class EditOldCommentCubit extends Cubit<EditOldCommentState> {
   ///pass the comments repository to use the comment management functionality
   EditOldCommentCubit(this._commentsRepository) : super(EditOldCommentState.none());
@@ -61,13 +59,13 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
       );
 
       final Either<CommentsFailure, Unit> successOrFailure;
-      if(state.commentType == CommentType.mainComment) {
+      if (state.commentType == CommentType.mainComment) {
         successOrFailure = await _commentsRepository.updateComment(
           commentsCollectionId: state.commentsCollectionId,
           commentId: state.commentId,
           comment: state.comment.getOrCrash(),
         );
-      } else if(state.commentType == CommentType.subComment) {
+      } else if (state.commentType == CommentType.subComment) {
         successOrFailure = await _commentsRepository.updateSubComment(
           subCommentsCollectionId: state.commentsCollectionId,
           subCommentId: state.commentId,
