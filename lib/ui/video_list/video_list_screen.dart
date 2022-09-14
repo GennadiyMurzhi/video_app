@@ -39,8 +39,9 @@ class VideoListScreen extends StatelessWidget {
                     (Failure failure) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBarCustom(
-                          text: failure.when(
+                          text: failure.maybeWhen(
                             serverError: () => 'Server error',
+                            orElse: () => '',
                           ),
                         ),
                       );
@@ -58,6 +59,7 @@ class VideoListScreen extends StatelessWidget {
                       text: event.when(
                         deleted: () => 'The video was deleted. List updated',
                         newVideo: () => 'A new video has been added. List updated',
+                        updated: () => 'Some video has been updated. List updated',
                       ),
                     ),
                   );

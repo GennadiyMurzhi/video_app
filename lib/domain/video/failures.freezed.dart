@@ -19,32 +19,38 @@ mixin _$Failure {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() serverError,
+    required TResult Function() fileNotChoose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? serverError,
+    TResult Function()? fileNotChoose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? serverError,
+    TResult Function()? fileNotChoose,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ServerError value) serverError,
+    required TResult Function(FileNotChoose value) fileNotChoose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ServerError value)? serverError,
+    TResult Function(FileNotChoose value)? fileNotChoose,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ServerError value)? serverError,
+    TResult Function(FileNotChoose value)? fileNotChoose,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -106,6 +112,7 @@ class _$ServerError implements ServerError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() serverError,
+    required TResult Function() fileNotChoose,
   }) {
     return serverError();
   }
@@ -114,6 +121,7 @@ class _$ServerError implements ServerError {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? serverError,
+    TResult Function()? fileNotChoose,
   }) {
     return serverError?.call();
   }
@@ -122,6 +130,7 @@ class _$ServerError implements ServerError {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? serverError,
+    TResult Function()? fileNotChoose,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -134,6 +143,7 @@ class _$ServerError implements ServerError {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ServerError value) serverError,
+    required TResult Function(FileNotChoose value) fileNotChoose,
   }) {
     return serverError(this);
   }
@@ -142,6 +152,7 @@ class _$ServerError implements ServerError {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(ServerError value)? serverError,
+    TResult Function(FileNotChoose value)? fileNotChoose,
   }) {
     return serverError?.call(this);
   }
@@ -150,6 +161,7 @@ class _$ServerError implements ServerError {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ServerError value)? serverError,
+    TResult Function(FileNotChoose value)? fileNotChoose,
     required TResult orElse(),
   }) {
     if (serverError != null) {
@@ -161,4 +173,108 @@ class _$ServerError implements ServerError {
 
 abstract class ServerError implements Failure {
   const factory ServerError() = _$ServerError;
+}
+
+/// @nodoc
+abstract class _$$FileNotChooseCopyWith<$Res> {
+  factory _$$FileNotChooseCopyWith(
+          _$FileNotChoose value, $Res Function(_$FileNotChoose) then) =
+      __$$FileNotChooseCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$FileNotChooseCopyWithImpl<$Res> extends _$FailureCopyWithImpl<$Res>
+    implements _$$FileNotChooseCopyWith<$Res> {
+  __$$FileNotChooseCopyWithImpl(
+      _$FileNotChoose _value, $Res Function(_$FileNotChoose) _then)
+      : super(_value, (v) => _then(v as _$FileNotChoose));
+
+  @override
+  _$FileNotChoose get _value => super._value as _$FileNotChoose;
+}
+
+/// @nodoc
+
+class _$FileNotChoose implements FileNotChoose {
+  const _$FileNotChoose();
+
+  @override
+  String toString() {
+    return 'Failure.fileNotChoose()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$FileNotChoose);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() serverError,
+    required TResult Function() fileNotChoose,
+  }) {
+    return fileNotChoose();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? serverError,
+    TResult Function()? fileNotChoose,
+  }) {
+    return fileNotChoose?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? serverError,
+    TResult Function()? fileNotChoose,
+    required TResult orElse(),
+  }) {
+    if (fileNotChoose != null) {
+      return fileNotChoose();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ServerError value) serverError,
+    required TResult Function(FileNotChoose value) fileNotChoose,
+  }) {
+    return fileNotChoose(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(ServerError value)? serverError,
+    TResult Function(FileNotChoose value)? fileNotChoose,
+  }) {
+    return fileNotChoose?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ServerError value)? serverError,
+    TResult Function(FileNotChoose value)? fileNotChoose,
+    required TResult orElse(),
+  }) {
+    if (fileNotChoose != null) {
+      return fileNotChoose(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class FileNotChoose implements Failure {
+  const factory FileNotChoose() = _$FileNotChoose;
 }

@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$VideoState {
   VideoStatus get videoStatus => throw _privateConstructorUsedError;
   String get videoName => throw _privateConstructorUsedError;
+  String get videoDescription => throw _privateConstructorUsedError;
   String get videoFileId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
   ChewieController? get chewieController => throw _privateConstructorUsedError;
@@ -37,6 +38,7 @@ abstract class $VideoStateCopyWith<$Res> {
   $Res call(
       {VideoStatus videoStatus,
       String videoName,
+      String videoDescription,
       String videoFileId,
       String userId,
       ChewieController? chewieController,
@@ -55,6 +57,7 @@ class _$VideoStateCopyWithImpl<$Res> implements $VideoStateCopyWith<$Res> {
   $Res call({
     Object? videoStatus = freezed,
     Object? videoName = freezed,
+    Object? videoDescription = freezed,
     Object? videoFileId = freezed,
     Object? userId = freezed,
     Object? chewieController = freezed,
@@ -68,6 +71,10 @@ class _$VideoStateCopyWithImpl<$Res> implements $VideoStateCopyWith<$Res> {
       videoName: videoName == freezed
           ? _value.videoName
           : videoName // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoDescription: videoDescription == freezed
+          ? _value.videoDescription
+          : videoDescription // ignore: cast_nullable_to_non_nullable
               as String,
       videoFileId: videoFileId == freezed
           ? _value.videoFileId
@@ -99,6 +106,7 @@ abstract class _$$_VideoStateCopyWith<$Res>
   $Res call(
       {VideoStatus videoStatus,
       String videoName,
+      String videoDescription,
       String videoFileId,
       String userId,
       ChewieController? chewieController,
@@ -119,6 +127,7 @@ class __$$_VideoStateCopyWithImpl<$Res> extends _$VideoStateCopyWithImpl<$Res>
   $Res call({
     Object? videoStatus = freezed,
     Object? videoName = freezed,
+    Object? videoDescription = freezed,
     Object? videoFileId = freezed,
     Object? userId = freezed,
     Object? chewieController = freezed,
@@ -132,6 +141,10 @@ class __$$_VideoStateCopyWithImpl<$Res> extends _$VideoStateCopyWithImpl<$Res>
       videoName: videoName == freezed
           ? _value.videoName
           : videoName // ignore: cast_nullable_to_non_nullable
+              as String,
+      videoDescription: videoDescription == freezed
+          ? _value.videoDescription
+          : videoDescription // ignore: cast_nullable_to_non_nullable
               as String,
       videoFileId: videoFileId == freezed
           ? _value.videoFileId
@@ -159,6 +172,7 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
   const _$_VideoState(
       {required this.videoStatus,
       required this.videoName,
+      required this.videoDescription,
       required this.videoFileId,
       required this.userId,
       required this.chewieController,
@@ -168,6 +182,8 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
   final VideoStatus videoStatus;
   @override
   final String videoName;
+  @override
+  final String videoDescription;
   @override
   final String videoFileId;
   @override
@@ -179,7 +195,7 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'VideoState(videoStatus: $videoStatus, videoName: $videoName, videoFileId: $videoFileId, userId: $userId, chewieController: $chewieController, videoFailureOrSuccessOption: $videoFailureOrSuccessOption)';
+    return 'VideoState(videoStatus: $videoStatus, videoName: $videoName, videoDescription: $videoDescription, videoFileId: $videoFileId, userId: $userId, chewieController: $chewieController, videoFailureOrSuccessOption: $videoFailureOrSuccessOption)';
   }
 
   @override
@@ -189,6 +205,7 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
       ..add(DiagnosticsProperty('type', 'VideoState'))
       ..add(DiagnosticsProperty('videoStatus', videoStatus))
       ..add(DiagnosticsProperty('videoName', videoName))
+      ..add(DiagnosticsProperty('videoDescription', videoDescription))
       ..add(DiagnosticsProperty('videoFileId', videoFileId))
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('chewieController', chewieController))
@@ -205,6 +222,8 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
                 .equals(other.videoStatus, videoStatus) &&
             const DeepCollectionEquality().equals(other.videoName, videoName) &&
             const DeepCollectionEquality()
+                .equals(other.videoDescription, videoDescription) &&
+            const DeepCollectionEquality()
                 .equals(other.videoFileId, videoFileId) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
             const DeepCollectionEquality()
@@ -219,6 +238,7 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
       runtimeType,
       const DeepCollectionEquality().hash(videoStatus),
       const DeepCollectionEquality().hash(videoName),
+      const DeepCollectionEquality().hash(videoDescription),
       const DeepCollectionEquality().hash(videoFileId),
       const DeepCollectionEquality().hash(userId),
       const DeepCollectionEquality().hash(chewieController),
@@ -234,6 +254,7 @@ abstract class _VideoState implements VideoState {
   const factory _VideoState(
       {required final VideoStatus videoStatus,
       required final String videoName,
+      required final String videoDescription,
       required final String videoFileId,
       required final String userId,
       required final ChewieController? chewieController,
@@ -244,6 +265,8 @@ abstract class _VideoState implements VideoState {
   VideoStatus get videoStatus;
   @override
   String get videoName;
+  @override
+  String get videoDescription;
   @override
   String get videoFileId;
   @override

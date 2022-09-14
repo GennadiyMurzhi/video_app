@@ -25,6 +25,7 @@ abstract class VideoState with _$VideoState {
   const factory VideoState({
     required VideoStatus videoStatus,
     required String videoName,
+    required String videoDescription,
     required String videoFileId,
     required String userId,
     required ChewieController? chewieController,
@@ -35,6 +36,7 @@ abstract class VideoState with _$VideoState {
   factory VideoState.initial() => VideoState(
         videoStatus: VideoStatus.display,
         videoName: '',
+        videoDescription: '',
         videoFileId: '',
         userId: '',
         chewieController: null,

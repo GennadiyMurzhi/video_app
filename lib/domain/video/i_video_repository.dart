@@ -11,6 +11,9 @@ abstract class IVideoRepository {
   ///A method to get a list of all videos
   Future<Either<Failure, VideoDataList>> getVideoList();
 
+  ///A method to get a video data
+  Future<Either<Failure, VideoData>> getDataForVideo(String videoDataDocumentId);
+
   ///A method for get video from the server
   Future<Either<Failure, Uint8List>> getVideoFromTheServer(String fileId);
 

@@ -41,6 +41,16 @@ class VideoListCubit extends Cubit<VideoListState> {
           _getVideoListFromTheServer();
         }
 
+        if (response.events.contains('databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents.*.update')) {
+          emit(
+            state.copyWith(
+              event: optionOf(const VideoEvent.updated()),
+              videoListFailureOrSuccessOption: none(),
+            ),
+          );
+          _getVideoListFromTheServer();
+        }
+
         if (response.events.contains('databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents.*.delete')) {
           emit(
             state.copyWith(
@@ -70,13 +80,14 @@ class VideoListCubit extends Cubit<VideoListState> {
     final Either<Failure, VideoDataList> videoListOrFailure = await _repository.getVideoList();
 
     videoListOrFailure.fold(
-      (Failure l) => l.when(
+      (Failure l) => l.maybeWhen(
         serverError: () => emit(
           state.copyWith(
             event: none(),
             loading: false,
           ),
         ),
+        orElse: () => null,
       ),
       (VideoDataList newVideoDataList) {
         _videoDataListReceiver.getVideoDataList(newVideoDataList);

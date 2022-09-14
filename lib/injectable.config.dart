@@ -13,12 +13,12 @@ import 'application/auth/auth_cubit/auth_cubit.dart' as _i16;
 import 'application/auth/auth_form_cubit/auth_form_cubit.dart' as _i17;
 import 'application/user_cubit/user_cubit.dart' as _i11;
 import 'application/video/add_video_cubit/add_video_cubit.dart' as _i15;
-import 'application/video/add_video_cubit/edit_video_cubit.dart' as _i20;
 import 'application/video/comments/comments_cubit/comments_cubit.dart' as _i18;
 import 'application/video/comments/edit_old_comments_cubit/edit_old_comment_cubit.dart'
     as _i19;
 import 'application/video/comments/sub_comments_cubit/sub_comments_cubit.dart'
     as _i10;
+import 'application/video/edit_video_cubit/edit_video_cubit.dart' as _i20;
 import 'application/video/video_cubit/video_cubit.dart' as _i12;
 import 'application/video_data_list_receiver.dart' as _i14;
 import 'application/video_list_cubit/video_list_cubit.dart' as _i13;

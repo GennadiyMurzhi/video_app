@@ -32,7 +32,7 @@ class VideoScreen extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider<VideoCubit>(
-              create: (BuildContext context) => getIt<VideoCubit>()..init(videoParams.name, videoParams.id, appUserId),
+              create: (BuildContext context) => getIt<VideoCubit>()..init(videoParams.name, videoParams.id, appUserId, videoParams.description),
             ),
             BlocProvider<CommentsCubit>(
               create: (BuildContext context) => getIt<CommentsCubit>()..init(videoParams.id),
@@ -92,16 +92,15 @@ class VideoScreen extends StatelessWidget {
                                             },
                                             children: <Widget>[
                                               VideoInfoPageWidget(
-                                                name: videoParams.name,
+                                                name: BlocProvider.of<VideoCubit>(context).state.videoName,
                                                 id: videoParams.id,
                                                 userId: videoParams.userId,
-                                                description: videoParams.description,
+                                                description: BlocProvider.of<VideoCubit>(context).state.videoDescription,
                                                 appUserId: appUserId,
                                                 updateVideo: () => BlocProvider.of<VideoCubit>(context).updateVideo(),
                                                 deleteVideo: () {
                                                   BlocProvider.of<VideoCubit>(context).deleteVideo().whenComplete(
                                                     () {
-                                                      Navigator.of(context).pop();
                                                       BlocProvider.of<VideoCubit>(context).displayVideo();
                                                     },
                                                   );
@@ -125,8 +124,9 @@ class VideoScreen extends StatelessWidget {
                   either.fold(
                     (Failure failure) => ScaffoldMessenger.of(context).showSnackBar(
                       SnackBarCustom(
-                        text: failure.when(
+                        text: failure.maybeWhen(
                           serverError: () => 'Server error',
+                          orElse: () => '',
                         ),
                       ),
                     ),

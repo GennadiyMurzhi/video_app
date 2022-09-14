@@ -13,6 +13,13 @@ abstract class AddVideoState with _$AddVideoState {
     required Option<Either<Failure, Success>> addVideoFailureOrSuccessOption,
     bool? editingVideoName,
     bool? editingVideoDescription,
+    String? videoId,
+
+    ///function for deleting video
+    void Function()? deleteVideo,
+
+    ///function for updating\displaying video
+    void Function()? updateVideo,
   }) = _AddVideoState;
 
   factory AddVideoState.initial() => AddVideoState(

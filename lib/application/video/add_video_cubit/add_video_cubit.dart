@@ -66,13 +66,14 @@ class AddVideoCubit extends Cubit<AddVideoState> {
         description: state.description.getOrCrash(),
       );
       resultOrFailure.fold(
-        (Failure failure) => failure.when(
+        (Failure failure) => failure.maybeWhen(
           serverError: () => emit(
             state.copyWith(
               loading: false,
               showErrorMessage: false,
             ),
           ),
+          orElse: () => '',
         ),
         (Success r) => null,
       );

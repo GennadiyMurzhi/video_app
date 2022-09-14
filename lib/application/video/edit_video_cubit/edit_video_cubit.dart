@@ -15,17 +15,27 @@ class EditVideoCubit extends AddVideoCubit {
   final IVideoRepository _videoRepository;
 
   ///init cubit
-  void init(String name, String description) {
+  void init({
+    required String name,
+    required String description,
+    required String videoId,
+    required void Function()? deleteVideo,
+    required void Function()? updateVideo,
+  }) {
     emit(
       state.copyWith(
         name: VideoName(name),
         description: VideoDescription(description),
+        videoId: videoId,
+        deleteVideo: deleteVideo,
+        updateVideo: updateVideo,
       ),
     );
   }
 
   ///method to so start edit Video Name
   void startEditName() {
+    print('startEditName');
     emit(
       state.copyWith(
         editingVideoName: true,
@@ -35,6 +45,7 @@ class EditVideoCubit extends AddVideoCubit {
 
   ///method to so start edit Video Description
   void startEditingDescription() {
+    print('startEditingDescription');
     emit(
       state.copyWith(editingVideoDescription: true),
     );
@@ -58,6 +69,7 @@ class EditVideoCubit extends AddVideoCubit {
 
   ///method to update video information
   Future<void> updateInformation(String videoId) async {
+    print('updateInformation video');
     emit(
       state.copyWith(
         loading: true,
@@ -76,7 +88,10 @@ class EditVideoCubit extends AddVideoCubit {
       ),
       (Success r) => emit(
         state.copyWith(
+          loading: false,
           addVideoFailureOrSuccessOption: optionOf(succecassOfFailure),
+          editingVideoName: null,
+          editingVideoDescription: null,
         ),
       ),
     );

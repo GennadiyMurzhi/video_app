@@ -10,4 +10,7 @@ abstract class VideoEvent with _$VideoEvent {
 
   ///is intended to indicate the event about the removal of the video
   const factory VideoEvent.deleted() = Deleted;
+
+  ///is intended to indicate the event about the removal of the video
+  const factory VideoEvent.updated() = Updated;
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:video_app/ui/video/edit_video/edit_video_screen.dart';
 
 ///a page with information about the video and buttons to delete and change the video, if the user is the one who uploaded it
 class VideoInfoPageWidget extends StatelessWidget {
@@ -74,6 +75,22 @@ class VideoInfoPageWidget extends StatelessWidget {
           const SizedBox(height: 20),
           if (userId.compareTo(appUserId) == 0) ...<Widget>[
             ElevatedButton(
+              onPressed: () => Navigator.of(context).pushNamed(
+                '/edit_video_screen',
+                arguments: EditVideoParams(
+                  name: name,
+                  description: description,
+                  videoId: id,
+                  deleteVideo: deleteVideo,
+                  updateVideo: updateVideo,
+                ),
+              ),
+              child: Text(
+                'Edit',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+            /*ElevatedButton(
               onPressed: () => updateVideo(),
               child: Text(
                 'Replace video',
@@ -87,7 +104,7 @@ class VideoInfoPageWidget extends StatelessWidget {
                 'Delete video',
                 style: Theme.of(context).textTheme.labelLarge,
               ),
-            ),
+            ),*/
           ]
         ],
       ),

@@ -8,9 +8,9 @@ import 'package:video_app/application/video/add_video_cubit/add_video_cubit.dart
 import 'package:video_app/domain/video/failures.dart';
 import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/injectable.dart';
-import 'package:video_app/ui/add_video/add_video_form_widget.dart';
 import 'package:video_app/ui/core/layout.dart';
 import 'package:video_app/ui/core/snackbar_custom.dart';
+import 'package:video_app/ui/video/add_video/add_video_form_widget.dart';
 
 ///screen to add video
 class AddVideoScreen extends StatelessWidget {
@@ -42,6 +42,7 @@ class AddVideoScreen extends StatelessWidget {
                   SnackBarCustom(
                     text: failure.when(
                       serverError: () => 'Server error',
+                      fileNotChoose: () => 'File not shoose',
                     ),
                   ),
                 );

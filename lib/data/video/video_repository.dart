@@ -48,6 +48,21 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
+  Future<Either<Failure, VideoData>> getDataForVideo(String videoDataDocumentId) async {
+    try {
+      final Document document = await _database.getDocument(
+        collectionId: '631b4f2663f40f701b38',
+        documentId: videoDataDocumentId,
+      );
+      return right(VideoData.fromDocument(document));
+    } catch (e) {
+      print(e);
+      return left(const Failure.serverError());
+    }
+  }
+
+
+  @override
   Future<Either<Failure, Uint8List>> getVideoFromTheServer(String fileId) async {
     try {
       final Uint8List fileBytes = await _videosStorage.getFileView(
@@ -174,12 +189,13 @@ class VideoRepository implements IVideoRepository {
           };
         } else {
           data = <dynamic, dynamic>{
-            'description': name,
+            'description': description,
           };
         }
         await _database.updateDocument(collectionId: _videoDataCollectionId, documentId: 'video_data_$videoId', data: data);
         return right(const Success.videoInfoUpdated());
       } catch (e){
+        print(e);
         return left(const Failure.serverError());
       }
     } else {

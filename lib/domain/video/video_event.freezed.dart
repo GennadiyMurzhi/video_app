@@ -20,18 +20,21 @@ mixin _$VideoEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() newVideo,
     required TResult Function() deleted,
+    required TResult Function() updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? newVideo,
     TResult Function()? deleted,
+    TResult Function()? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? newVideo,
     TResult Function()? deleted,
+    TResult Function()? updated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,18 +42,21 @@ mixin _$VideoEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(NewVideo value) newVideo,
     required TResult Function(Deleted value) deleted,
+    required TResult Function(Updated value) updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(NewVideo value)? newVideo,
     TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NewVideo value)? newVideo,
     TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -113,6 +119,7 @@ class _$NewVideo implements NewVideo {
   TResult when<TResult extends Object?>({
     required TResult Function() newVideo,
     required TResult Function() deleted,
+    required TResult Function() updated,
   }) {
     return newVideo();
   }
@@ -122,6 +129,7 @@ class _$NewVideo implements NewVideo {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? newVideo,
     TResult Function()? deleted,
+    TResult Function()? updated,
   }) {
     return newVideo?.call();
   }
@@ -131,6 +139,7 @@ class _$NewVideo implements NewVideo {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? newVideo,
     TResult Function()? deleted,
+    TResult Function()? updated,
     required TResult orElse(),
   }) {
     if (newVideo != null) {
@@ -144,6 +153,7 @@ class _$NewVideo implements NewVideo {
   TResult map<TResult extends Object?>({
     required TResult Function(NewVideo value) newVideo,
     required TResult Function(Deleted value) deleted,
+    required TResult Function(Updated value) updated,
   }) {
     return newVideo(this);
   }
@@ -153,6 +163,7 @@ class _$NewVideo implements NewVideo {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(NewVideo value)? newVideo,
     TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
   }) {
     return newVideo?.call(this);
   }
@@ -162,6 +173,7 @@ class _$NewVideo implements NewVideo {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NewVideo value)? newVideo,
     TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
     required TResult orElse(),
   }) {
     if (newVideo != null) {
@@ -215,6 +227,7 @@ class _$Deleted implements Deleted {
   TResult when<TResult extends Object?>({
     required TResult Function() newVideo,
     required TResult Function() deleted,
+    required TResult Function() updated,
   }) {
     return deleted();
   }
@@ -224,6 +237,7 @@ class _$Deleted implements Deleted {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? newVideo,
     TResult Function()? deleted,
+    TResult Function()? updated,
   }) {
     return deleted?.call();
   }
@@ -233,6 +247,7 @@ class _$Deleted implements Deleted {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? newVideo,
     TResult Function()? deleted,
+    TResult Function()? updated,
     required TResult orElse(),
   }) {
     if (deleted != null) {
@@ -246,6 +261,7 @@ class _$Deleted implements Deleted {
   TResult map<TResult extends Object?>({
     required TResult Function(NewVideo value) newVideo,
     required TResult Function(Deleted value) deleted,
+    required TResult Function(Updated value) updated,
   }) {
     return deleted(this);
   }
@@ -255,6 +271,7 @@ class _$Deleted implements Deleted {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(NewVideo value)? newVideo,
     TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
   }) {
     return deleted?.call(this);
   }
@@ -264,6 +281,7 @@ class _$Deleted implements Deleted {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NewVideo value)? newVideo,
     TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
     required TResult orElse(),
   }) {
     if (deleted != null) {
@@ -275,4 +293,112 @@ class _$Deleted implements Deleted {
 
 abstract class Deleted implements VideoEvent {
   const factory Deleted() = _$Deleted;
+}
+
+/// @nodoc
+abstract class _$$UpdatedCopyWith<$Res> {
+  factory _$$UpdatedCopyWith(_$Updated value, $Res Function(_$Updated) then) =
+      __$$UpdatedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$UpdatedCopyWithImpl<$Res> extends _$VideoEventCopyWithImpl<$Res>
+    implements _$$UpdatedCopyWith<$Res> {
+  __$$UpdatedCopyWithImpl(_$Updated _value, $Res Function(_$Updated) _then)
+      : super(_value, (v) => _then(v as _$Updated));
+
+  @override
+  _$Updated get _value => super._value as _$Updated;
+}
+
+/// @nodoc
+
+class _$Updated implements Updated {
+  const _$Updated();
+
+  @override
+  String toString() {
+    return 'VideoEvent.updated()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$Updated);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() newVideo,
+    required TResult Function() deleted,
+    required TResult Function() updated,
+  }) {
+    return updated();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? newVideo,
+    TResult Function()? deleted,
+    TResult Function()? updated,
+  }) {
+    return updated?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? newVideo,
+    TResult Function()? deleted,
+    TResult Function()? updated,
+    required TResult orElse(),
+  }) {
+    if (updated != null) {
+      return updated();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NewVideo value) newVideo,
+    required TResult Function(Deleted value) deleted,
+    required TResult Function(Updated value) updated,
+  }) {
+    return updated(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(NewVideo value)? newVideo,
+    TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
+  }) {
+    return updated?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NewVideo value)? newVideo,
+    TResult Function(Deleted value)? deleted,
+    TResult Function(Updated value)? updated,
+    required TResult orElse(),
+  }) {
+    if (updated != null) {
+      return updated(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class Updated implements VideoEvent {
+  const factory Updated() = _$Updated;
 }

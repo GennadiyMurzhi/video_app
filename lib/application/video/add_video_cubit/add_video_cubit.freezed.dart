@@ -26,6 +26,13 @@ mixin _$AddVideoState {
       throw _privateConstructorUsedError;
   bool? get editingVideoName => throw _privateConstructorUsedError;
   bool? get editingVideoDescription => throw _privateConstructorUsedError;
+  String? get videoId => throw _privateConstructorUsedError;
+
+  ///function for deleting video
+  void Function()? get deleteVideo => throw _privateConstructorUsedError;
+
+  ///function for updating\displaying video
+  void Function()? get updateVideo => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AddVideoStateCopyWith<AddVideoState> get copyWith =>
@@ -45,7 +52,10 @@ abstract class $AddVideoStateCopyWith<$Res> {
       VideoFilePickerResult filePickerResult,
       Option<Either<Failure, Success>> addVideoFailureOrSuccessOption,
       bool? editingVideoName,
-      bool? editingVideoDescription});
+      bool? editingVideoDescription,
+      String? videoId,
+      void Function()? deleteVideo,
+      void Function()? updateVideo});
 }
 
 /// @nodoc
@@ -67,6 +77,9 @@ class _$AddVideoStateCopyWithImpl<$Res>
     Object? addVideoFailureOrSuccessOption = freezed,
     Object? editingVideoName = freezed,
     Object? editingVideoDescription = freezed,
+    Object? videoId = freezed,
+    Object? deleteVideo = freezed,
+    Object? updateVideo = freezed,
   }) {
     return _then(_value.copyWith(
       name: name == freezed
@@ -101,6 +114,18 @@ class _$AddVideoStateCopyWithImpl<$Res>
           ? _value.editingVideoDescription
           : editingVideoDescription // ignore: cast_nullable_to_non_nullable
               as bool?,
+      videoId: videoId == freezed
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deleteVideo: deleteVideo == freezed
+          ? _value.deleteVideo
+          : deleteVideo // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
+      updateVideo: updateVideo == freezed
+          ? _value.updateVideo
+          : updateVideo // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
     ));
   }
 }
@@ -120,7 +145,10 @@ abstract class _$$_AddVideoStateCopyWith<$Res>
       VideoFilePickerResult filePickerResult,
       Option<Either<Failure, Success>> addVideoFailureOrSuccessOption,
       bool? editingVideoName,
-      bool? editingVideoDescription});
+      bool? editingVideoDescription,
+      String? videoId,
+      void Function()? deleteVideo,
+      void Function()? updateVideo});
 }
 
 /// @nodoc
@@ -144,6 +172,9 @@ class __$$_AddVideoStateCopyWithImpl<$Res>
     Object? addVideoFailureOrSuccessOption = freezed,
     Object? editingVideoName = freezed,
     Object? editingVideoDescription = freezed,
+    Object? videoId = freezed,
+    Object? deleteVideo = freezed,
+    Object? updateVideo = freezed,
   }) {
     return _then(_$_AddVideoState(
       name: name == freezed
@@ -178,6 +209,18 @@ class __$$_AddVideoStateCopyWithImpl<$Res>
           ? _value.editingVideoDescription
           : editingVideoDescription // ignore: cast_nullable_to_non_nullable
               as bool?,
+      videoId: videoId == freezed
+          ? _value.videoId
+          : videoId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deleteVideo: deleteVideo == freezed
+          ? _value.deleteVideo
+          : deleteVideo // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
+      updateVideo: updateVideo == freezed
+          ? _value.updateVideo
+          : updateVideo // ignore: cast_nullable_to_non_nullable
+              as void Function()?,
     ));
   }
 }
@@ -193,7 +236,10 @@ class _$_AddVideoState implements _AddVideoState {
       required this.filePickerResult,
       required this.addVideoFailureOrSuccessOption,
       this.editingVideoName,
-      this.editingVideoDescription});
+      this.editingVideoDescription,
+      this.videoId,
+      this.deleteVideo,
+      this.updateVideo});
 
   @override
   final VideoName name;
@@ -211,10 +257,20 @@ class _$_AddVideoState implements _AddVideoState {
   final bool? editingVideoName;
   @override
   final bool? editingVideoDescription;
+  @override
+  final String? videoId;
+
+  ///function for deleting video
+  @override
+  final void Function()? deleteVideo;
+
+  ///function for updating\displaying video
+  @override
+  final void Function()? updateVideo;
 
   @override
   String toString() {
-    return 'AddVideoState(name: $name, description: $description, loading: $loading, showErrorMessage: $showErrorMessage, filePickerResult: $filePickerResult, addVideoFailureOrSuccessOption: $addVideoFailureOrSuccessOption, editingVideoName: $editingVideoName, editingVideoDescription: $editingVideoDescription)';
+    return 'AddVideoState(name: $name, description: $description, loading: $loading, showErrorMessage: $showErrorMessage, filePickerResult: $filePickerResult, addVideoFailureOrSuccessOption: $addVideoFailureOrSuccessOption, editingVideoName: $editingVideoName, editingVideoDescription: $editingVideoDescription, videoId: $videoId, deleteVideo: $deleteVideo, updateVideo: $updateVideo)';
   }
 
   @override
@@ -236,7 +292,12 @@ class _$_AddVideoState implements _AddVideoState {
             const DeepCollectionEquality()
                 .equals(other.editingVideoName, editingVideoName) &&
             const DeepCollectionEquality().equals(
-                other.editingVideoDescription, editingVideoDescription));
+                other.editingVideoDescription, editingVideoDescription) &&
+            const DeepCollectionEquality().equals(other.videoId, videoId) &&
+            (identical(other.deleteVideo, deleteVideo) ||
+                other.deleteVideo == deleteVideo) &&
+            (identical(other.updateVideo, updateVideo) ||
+                other.updateVideo == updateVideo));
   }
 
   @override
@@ -249,7 +310,10 @@ class _$_AddVideoState implements _AddVideoState {
       const DeepCollectionEquality().hash(filePickerResult),
       const DeepCollectionEquality().hash(addVideoFailureOrSuccessOption),
       const DeepCollectionEquality().hash(editingVideoName),
-      const DeepCollectionEquality().hash(editingVideoDescription));
+      const DeepCollectionEquality().hash(editingVideoDescription),
+      const DeepCollectionEquality().hash(videoId),
+      deleteVideo,
+      updateVideo);
 
   @JsonKey(ignore: true)
   @override
@@ -267,7 +331,10 @@ abstract class _AddVideoState implements AddVideoState {
       required final Option<Either<Failure, Success>>
           addVideoFailureOrSuccessOption,
       final bool? editingVideoName,
-      final bool? editingVideoDescription}) = _$_AddVideoState;
+      final bool? editingVideoDescription,
+      final String? videoId,
+      final void Function()? deleteVideo,
+      final void Function()? updateVideo}) = _$_AddVideoState;
 
   @override
   VideoName get name;
@@ -285,6 +352,16 @@ abstract class _AddVideoState implements AddVideoState {
   bool? get editingVideoName;
   @override
   bool? get editingVideoDescription;
+  @override
+  String? get videoId;
+  @override
+
+  ///function for deleting video
+  void Function()? get deleteVideo;
+  @override
+
+  ///function for updating\displaying video
+  void Function()? get updateVideo;
   @override
   @JsonKey(ignore: true)
   _$$_AddVideoStateCopyWith<_$_AddVideoState> get copyWith =>

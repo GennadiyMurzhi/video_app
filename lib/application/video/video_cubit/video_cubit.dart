@@ -15,6 +15,9 @@ import 'package:video_app/application/pick_file.dart';
 import 'package:video_app/domain/video/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
 import 'package:video_app/domain/video/success.dart';
+import 'package:video_app/domain/video/value_objects.dart';
+import 'package:video_app/domain/video/video.dart';
+import 'package:video_app/injectable.dart';
 import 'package:video_player/video_player.dart';
 
 part 'video_cubit.freezed.dart';
@@ -31,16 +34,21 @@ class VideoCubit extends Cubit<VideoState> {
 
   late final Functions _functions;
   final IVideoRepository _repository;
+  RealtimeSubscription? _subscription;
 
   ///need to init video on create screen
-  Future<void> init(String videoName, String videoFileId, String userId) async {
+  Future<void> init(String videoName, String videoFileId, String userId, String description) async {
     emit(
       state.copyWith(
         videoFileId: videoFileId,
         videoName: videoName,
         userId: userId,
+        videoDescription: description,
       ),
     );
+
+    _subscriptionOnUpdateVideoInformation();
+
     if (kIsWeb) {
       final VideoPlayerController videoPlayerController = VideoPlayerController.network(_linkVideo(state.videoFileId));
       emit(
@@ -83,13 +91,52 @@ class VideoCubit extends Cubit<VideoState> {
     _crutchLinkVideo = _linkVideo(state.videoFileId);
   }
 
+  ///method to update comments for video
+  void _subscriptionOnUpdateVideoInformation() {
+    final String videoDataDocumentId = 'video_data_${state.videoFileId}';
+    _subscription = getIt<Realtime>()
+        .subscribe(<String>['databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents.$videoDataDocumentId']);
+    _subscription!.stream.listen(
+      (RealtimeMessage response) async {
+        if (response.events
+            .contains('databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents.$videoDataDocumentId.update')) {
+          print('_subscriptionOnUpdateVideoInformation');
+          _updateVideoInfo();
+        }
+      },
+    );
+  }
+
+  Future<void> _updateVideoInfo() async {
+    final Either<Failure, VideoData> documentOrFailure = await _repository.getDataForVideo('video_data_${state.videoFileId}');
+    final Either<Failure, Success> editEiter = documentOrFailure.replace(const Success.videoInfoUpdated());
+    documentOrFailure.fold(
+      (Failure l) => emit(
+        state.copyWith(
+          videoFailureOrSuccessOption: optionOf(editEiter),
+        ),
+      ),
+      (VideoData videoData) {
+        print('documentOrFailure video data');
+        print(videoData.name);
+        print(videoData.description);
+        emit(
+          state.copyWith(
+            videoName: videoData.name,
+            videoDescription: videoData.description,
+          ),
+        );
+      },
+    );
+  }
+
   ///needed to return the state when return to the video_list_screen
   void displayVideo() {
     emit(state.copyWith(videoStatus: VideoStatus.display));
   }
 
   ///method to update video on the server
-  Future<void> updateVideo() async {
+  Future<Either<Failure, Success>> updateVideo() async {
     final FilePickerResult? filePickerResult = await pickFile();
 
     if (filePickerResult != null) {
@@ -106,12 +153,13 @@ class VideoCubit extends Cubit<VideoState> {
         filePickerResult: filePickerResult,
       );
       resultOrFailure.fold(
-        (Failure failure) => failure.when(
+        (Failure failure) => failure.maybeWhen(
           serverError: () => emit(
             state.copyWith(
               videoStatus: VideoStatus.display,
             ),
           ),
+          orElse: () => null,
         ),
         (Success r) => null,
       );
@@ -168,19 +216,23 @@ class VideoCubit extends Cubit<VideoState> {
           ),
         );
       }
+
+      return resultOrFailure;
     }
+    return left(const Failure.fileNotChoose());
   }
 
   ///method to delete video on the server
-  Future<void> deleteVideo() async {
+  Future<Either<Failure, Success>> deleteVideo() async {
     emit(state.copyWith(videoStatus: VideoStatus.deleting));
 
     final Either<Failure, Success> resultOrFailure = await _repository.deleteVideoOnServer(state.videoFileId);
     resultOrFailure.fold(
-        (Failure failure) => failure.when(
+        (Failure failure) => failure.maybeWhen(
               serverError: () => emit(
                 state.copyWith(videoStatus: VideoStatus.display),
-              ), //_serverErrorShowMessage(),
+              ),
+              orElse: () => null,
             ), (Success r) async {
       await _functions.createExecution(
         functionId: 'onDeleteVideo',
@@ -201,7 +253,7 @@ class VideoCubit extends Cubit<VideoState> {
       ),
     );
 
-    await Future<void>.delayed(const Duration(seconds: 1));
+    return resultOrFailure;
   }
 }
 

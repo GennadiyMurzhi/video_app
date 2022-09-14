@@ -6,5 +6,8 @@ part 'failures.freezed.dart';
 @freezed
 abstract class Failure with _$Failure {
   ///general server error
-  const factory Failure.serverError () = ServerError;
+  const factory Failure.serverError() = ServerError;
+
+  ///used to indicate when user not chosen file
+  const factory Failure.fileNotChoose() = FileNotChoose;
 }
