@@ -25,7 +25,7 @@ class VideoDataList with _$VideoDataList {
     total: documentList.length,
     documents: List<VideoData>.generate(
       documentList.length,
-          (index) => VideoData.fromDocument(documentList[index]),
+          (int index) => VideoData.fromDocument(documentList[index]),
     ),
   );
 }
@@ -37,16 +37,20 @@ class VideoData with _$VideoData{
   ///
   ///id variable is file id on the server. Needed for receives video file from the server
   const factory VideoData ({
+    required String videoDataId,
     required String name,
     required String videoId,
     required String userId,
+    required String userName,
     required String description,
   }) = _VideoData;
 
   factory VideoData.fromDocument(Document document) => VideoData(
+    videoDataId: document.$id,
     name: document.data['name'] as String,
     videoId: document.data['video_file_id'] as String,
     userId: document.data['user_id'] as String,
+    userName: document.data['userName'] as String,
     description: document.data['description'] as String,
   );
 

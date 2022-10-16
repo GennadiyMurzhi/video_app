@@ -64,3 +64,22 @@ abstract class AddVideoValueFailure<T> with _$AddVideoValueFailure<T> {
     required FilePickerResult? failedValue,
   }) = EmptyFilePickerResult<T>;
 }
+
+///user value failure
+@freezed
+abstract class UserValueFailure<T> with _$UserValueFailure<T> {
+  ///failure occurring during the content of too large a string
+  const factory UserValueFailure.emptyFilePickerPhotoResult({
+    required FilePickerResult? failedValue,
+  }) = EmptyFilePickerPhotoResult<T>;
+}
+
+///general failures occurring during use app
+@freezed
+abstract class Failure with _$Failure {
+  ///general server error
+  const factory Failure.serverError() = ServerError;
+
+  ///used to indicate when user not chosen file
+  const factory Failure.fileNotChoose() = FileNotChoose;
+}

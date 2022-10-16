@@ -11,6 +11,7 @@ import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/enums.dart';
 import 'package:video_app/injectable.dart';
+import 'package:video_app/ui/core/widgets/user_photo_widget.dart';
 import 'package:video_app/ui/video/video_screen.dart';
 import 'package:video_app/ui/video/widgets/comment_widget.dart';
 import 'package:video_app/ui/video/widgets/sub_comments_widget.dart';
@@ -34,8 +35,10 @@ class CommentsPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('CommentsPageWidget build');
     return BlocBuilder<CommentsCubit, CommentsState>(
       builder: (BuildContext context, CommentsState commentsState) {
+        print('CommentsPageWidget BlocBuilder<CommentsCubit');
         return BlocBuilder<SubCommentsCubit, SubCommentsState>(
           builder: (BuildContext context, SubCommentsState subCommentsState) {
             return Stack(
@@ -54,12 +57,14 @@ class CommentsPageWidget extends StatelessWidget {
                       return StreamBuilder<Comments>(
                         stream: getIt<DataListReceiver<Comments>>().dataListStream,
                         builder: (BuildContext context, AsyncSnapshot<Comments> snapshot) {
+                          print('StreamBuilder<Comments>');
                           if (snapshot.data != null) {
                             return ListView.builder(
                               padding: const EdgeInsets.symmetric(horizontal: 30),
                               shrinkWrap: true,
                               itemCount: snapshot.data!.comments.length + 1,
                               itemBuilder: (BuildContext context, int index) {
+                                print('ListView.builder comment page');
                                 if (index == 0) {
                                   return Padding(
                                     padding: const EdgeInsets.only(top: 10, bottom: 15),
@@ -109,38 +114,45 @@ class CommentsPageWidget extends StatelessWidget {
                                   );
                                 } else {
                                   final Comment comment = snapshot.data!.comments[index - 1];
-                                  return CommentWidget(
-                                    validator: (String? value) => editCommentState.comment.value.fold(
-                                      (CommentValueFailure<String> l) => l.when(
-                                        emptyStringComment: (_) => 'Enter comment',
-                                        longStringComment: (_) => 'Long Comment',
+                                  return Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      UserPhotoWidget(
+                                        size: 30,
+                                        userId: comment.userId,
                                       ),
-                                      (String r) {
-                                        return null;
-                                      },
-                                    ),
-                                    userName: comment.userName,
-                                    showErrorMessage: editCommentState.showErrorMessage,
-                                    editable: appUserId.compareTo(comment.userId) == 0,
-                                    comment: comment.comment,
-                                    commentDate: DateTime.fromMillisecondsSinceEpoch(comment.date),
-                                    subCommentCount: comment.subCommentCount,
-                                    onPressedOnSubCommentCount: () =>
-                                        BlocProvider.of<SubCommentsCubit>(context).onOpenSubComments(comment.commentId),
-                                    isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
-                                    startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
-                                      commentCollectionId: commentsCollectionId(videoParams.id),
-                                      oldComment: comment.comment,
-                                      commentIndex: index - 1,
-                                      commentId: comment.commentId,
-                                      commentType: CommentType.mainComment,
-                                    ),
-                                    editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
-                                    endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(
-                                      updateCommentsFunction: () =>
-                                          BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
-                                    ),
-                                    commentType: CommentType.mainComment,
+                                      const SizedBox(width: 20),
+                                      CommentWidget(
+                                        validator: (String? value) => editCommentState.comment.value.fold(
+                                          (CommentValueFailure<String> l) => l.when(
+                                            emptyStringComment: (_) => 'Enter comment',
+                                            longStringComment: (_) => 'Long Comment',
+                                          ),
+                                          (String r) {
+                                            return null;
+                                          },
+                                        ),
+                                        userName: comment.userName,
+                                        showErrorMessage: editCommentState.showErrorMessage,
+                                        editable: appUserId.compareTo(comment.userId) == 0,
+                                        comment: comment.comment,
+                                        commentDate: DateTime.fromMillisecondsSinceEpoch(comment.date),
+                                        subCommentCount: comment.subCommentCount,
+                                        onPressedOnSubCommentCount: () =>
+                                            BlocProvider.of<SubCommentsCubit>(context).onOpenSubComments(comment.commentId),
+                                        isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
+                                        startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
+                                          commentCollectionId: commentsCollectionId(videoParams.id),
+                                          oldComment: comment.comment,
+                                          commentIndex: index - 1,
+                                          commentId: comment.commentId,
+                                          commentType: CommentType.mainComment,
+                                        ),
+                                        editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
+                                        endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(),
+                                        commentType: CommentType.mainComment,
+                                      ),
+                                    ],
                                   );
                                 }
                               },
@@ -160,7 +172,7 @@ class CommentsPageWidget extends StatelessWidget {
                   ),
                 if (subCommentsState.isOpen)
                   SubCommentsWidget(
-                    loadComments: BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
+                    loadComments: () => BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
                     videoParams: videoParams,
                   ),
               ],

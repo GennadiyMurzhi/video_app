@@ -1,6 +1,14 @@
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/auth/auth_cubit/auth_cubit.dart';
+import 'package:video_app/application/user_cubit/user_cubit.dart';
+import 'package:video_app/domain/core/failures.dart';
+import 'package:video_app/ui/core/snackbar_custom.dart';
 
 ///This widget is used as a frame for the screens
 class Layout extends StatelessWidget {
@@ -10,9 +18,6 @@ class Layout extends StatelessWidget {
     required this.title,
     this.functionFab,
     this.functionOnPop,
-    required this.userId,
-    required this.name,
-    required this.emailAddress,
     this.addAction,
     required this.child,
   });
@@ -22,10 +27,6 @@ class Layout extends StatelessWidget {
 
   ///Title for the app bar
   final String title;
-
-  final String userId;
-  final String name;
-  final String emailAddress;
 
   ///Function for Fab
   final dynamic Function(dynamic)? functionFab;
@@ -64,34 +65,79 @@ class Layout extends StatelessWidget {
             : null,
         centerTitle: true,
       ),
-      drawer: Drawer(
-        width: MediaQuery.of(context).size.width * 0.7,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(height: 50),
-            const Icon(
-              Icons.person,
-              size: 50,
+      drawer: BlocConsumer<UserCubit, UserState>(
+        listener: (BuildContext context, UserState state) {
+          state.userFailureOrSuccessOption.fold(
+            () => null,
+            (Either<Failure, dynamic> a) => a.fold(
+              (Failure l) => ScaffoldMessenger.of(context).showSnackBar(
+                SnackBarCustom(
+                  text: l.when(
+                    serverError: () => 'Server error',
+                    fileNotChoose: () => 'File not choose',
+                  ),
+                ),
+              ),
+              (dynamic r) => null,
             ),
-            const SizedBox(height: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        },
+        builder: (BuildContext context, UserState state) {
+          return Drawer(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Column(
               children: <Widget>[
-                Text('id: $userId', style: Theme.of(context).textTheme.titleMedium),
-                Text('name: $name', style: Theme.of(context).textTheme.titleMedium),
-                Text('e-mail: $emailAddress', style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: 50),
+                InkWell(
+                  onTap: () => Navigator.of(context).pushNamed('/edit_user_info_screen'),
+                  child: _UserPhotoWidget(
+                    key: UniqueKey(),
+                    sizePhoto: 100,
+                    photoBits: state.photoBits,
+                    photoFile: state.photoFile,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('id: ${state.id}', style: Theme.of(context).textTheme.titleMedium),
+                    Text('name: ${state.name}', style: Theme.of(context).textTheme.titleMedium),
+                    Text('e-mail: ${state.emailAddress}', style: Theme.of(context).textTheme.titleMedium),
+                  ],
+                ),
+                const SizedBox(height: 30),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/likes_screen'),
+                  child: const Text('Likes'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/subscriptions_screen'),
+                  child: const Text('Subscriptions'),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pushNamed('/video_list_screen'),
+                  child: const Text('Video list'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed('/upload_video_list_screen');
+                  },
+                  child: const Text('Uploaded videos'),
+                ),
+                const SizedBox(height: 30),
+                TextButton(
+                  onPressed: () {
+                    BlocProvider.of<AuthCubit>(context).signOut();
+                    Navigator.of(context).pushReplacementNamed('/auth_screen');
+                  },
+                  child: const Text('Sign out'),
+                ),
               ],
             ),
-            const SizedBox(height: 30),
-            TextButton(
-              onPressed: () {
-                BlocProvider.of<AuthCubit>(context).signOut();
-                Navigator.of(context).pushReplacementNamed('/auth_screen');
-              },
-              child: const Text('Sign out'),
-            ),
-          ],
-        ),
+          );
+        },
       ),
       floatingActionButton: functionFab != null
           ? ElevatedButton(
@@ -107,7 +153,7 @@ class Layout extends StatelessWidget {
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF673AB7)),
               ),
-              onPressed: () async => functionFab!(userId),
+              onPressed: () async => functionFab!(BlocProvider.of<UserCubit>(context).state.id),
               child: const Icon(
                 Icons.add,
                 size: 24,
@@ -116,5 +162,55 @@ class Layout extends StatelessWidget {
           : null,
       body: child,
     );
+  }
+}
+
+class _UserPhotoWidget extends StatelessWidget {
+  const _UserPhotoWidget({
+    super.key,
+    required this.sizePhoto,
+    this.photoBits,
+    this.photoFile,
+  });
+
+  final double sizePhoto;
+  final Uint8List? photoBits;
+  final File? photoFile;
+
+  @override
+  Widget build(BuildContext context) {
+    if (kIsWeb) {
+      if (photoBits == null) {
+        return Icon(
+          Icons.person,
+          size: sizePhoto,
+        );
+      } else {
+        return ClipOval(
+          child: Image.memory(
+            photoBits!,
+            width: sizePhoto,
+            height: sizePhoto,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    } else {
+      if (photoFile == null) {
+        return Icon(
+          Icons.person,
+          size: sizePhoto,
+        );
+      } else {
+        return ClipOval(
+          child: Image.file(
+            photoFile!,
+            width: sizePhoto,
+            height: sizePhoto,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
+    }
   }
 }

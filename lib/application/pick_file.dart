@@ -8,3 +8,12 @@ Future<FilePickerResult?> pickFile() async {
   );
   return filePickerResult;
 }
+
+///the wrap of pickFiles method from FilePicker
+Future<FilePickerResult?> pickPhoto() async {
+  final FilePickerResult? filePickerResult = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: <String>['jpg', 'png'],
+  );
+  return filePickerResult;
+}

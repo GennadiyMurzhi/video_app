@@ -10,6 +10,7 @@ import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/value_transformers.dart';
 import 'package:video_app/enums.dart';
 import 'package:video_app/injectable.dart';
+import 'package:video_app/ui/core/widgets/user_photo_widget.dart';
 import 'package:video_app/ui/video/video_screen.dart';
 import 'package:video_app/ui/video/widgets/comment_widget.dart';
 
@@ -25,7 +26,7 @@ class SubCommentsWidget extends StatelessWidget {
   });
 
   ///future to lading sub comments
-  final Future<void> loadComments;
+  final Future<void> Function() loadComments;
 
   ///video params
   final VideoParams videoParams;
@@ -33,6 +34,7 @@ class SubCommentsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String appUserId = BlocProvider.of<UserCubit>(context).userId;
+    print('SubCommentsWidget');
 
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -54,10 +56,12 @@ class SubCommentsWidget extends StatelessWidget {
           : StreamBuilder<SubComments>(
               stream: getIt<DataListReceiver<SubComments>>().dataListStream,
               builder: (BuildContext context, AsyncSnapshot<SubComments> snapshot) {
+                print('StreamBuilder<SubComments>');
                 if (snapshot.data != null) {
                   return ListView.builder(
                     padding: kIsWeb ? const EdgeInsets.symmetric(horizontal: 120) : const EdgeInsets.symmetric(horizontal: 30),
                     shrinkWrap: true,
+
                     itemCount: snapshot.data!.subComments.length + 1,
                     itemBuilder: (BuildContext context, int index) {
                       if (index == 0) {
@@ -120,35 +124,43 @@ class SubCommentsWidget extends StatelessWidget {
                         );
                       } else {
                         final SubComment subComment = snapshot.data!.subComments[index - 1];
-                        return CommentWidget(
-                          userName: subComment.userName,
-                          editable: appUserId.compareTo(subComment.userId) == 0,
-                          comment: subComment.subComment,
-                          commentDate: DateTime.fromMillisecondsSinceEpoch(subComment.date),
-                          startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
-                            commentCollectionId:
-                                subCommentsCollectionId(BlocProvider.of<SubCommentsCubit>(context).state.commentId),
-                            oldComment: subComment.subComment,
-                            commentIndex: index - 1,
-                            commentId: subComment.subCommentId,
-                            commentType: CommentType.subComment,
-                          ),
-                          editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
-                          endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(
-                            updateCommentsFunction: () => BlocProvider.of<SubCommentsCubit>(context).updateSubComments(),
-                          ),
-                          commentType: CommentType.subComment,
-                          isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
-                          validator: (String? value) => BlocProvider.of<EditOldCommentCubit>(context).state.comment.value.fold(
-                            (CommentValueFailure<String> l) => l.when(
-                              emptyStringComment: (_) => 'Enter comment',
-                              longStringComment: (_) => 'Long Comment',
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget> [
+                            UserPhotoWidget(
+                              size: 30,
+                              userId: subComment.userId,
                             ),
-                            (String r) {
-                              return null;
-                            },
-                          ),
-                          showErrorMessage: BlocProvider.of<EditOldCommentCubit>(context).state.showErrorMessage,
+                            const SizedBox(width: 20),
+                            CommentWidget(
+                              userName: subComment.userName,
+                              editable: appUserId.compareTo(subComment.userId) == 0,
+                              comment: subComment.subComment,
+                              commentDate: DateTime.fromMillisecondsSinceEpoch(subComment.date),
+                              startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
+                                commentCollectionId:
+                                    subCommentsCollectionId(BlocProvider.of<SubCommentsCubit>(context).state.commentId),
+                                oldComment: subComment.subComment,
+                                commentIndex: index - 1,
+                                commentId: subComment.subCommentId,
+                                commentType: CommentType.subComment,
+                              ),
+                              editComment: BlocProvider.of<EditOldCommentCubit>(context).editComment,
+                              endEdit: () => BlocProvider.of<EditOldCommentCubit>(context).endEditComment(),
+                              commentType: CommentType.subComment,
+                              isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
+                              validator: (String? value) => BlocProvider.of<EditOldCommentCubit>(context).state.comment.value.fold(
+                                (CommentValueFailure<String> l) => l.when(
+                                  emptyStringComment: (_) => 'Enter comment',
+                                  longStringComment: (_) => 'Long Comment',
+                                ),
+                                (String r) {
+                                  return null;
+                                },
+                              ),
+                              showErrorMessage: BlocProvider.of<EditOldCommentCubit>(context).state.showErrorMessage,
+                            ),
+                          ],
                         );
                       }
                     },

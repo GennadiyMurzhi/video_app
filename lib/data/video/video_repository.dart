@@ -7,12 +7,16 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
 import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/domain/video/video.dart';
 
+///video bucket
 const String _bucketId = '62e3f62d96bf680e817c';
+
+///preview bucket
+const String _previewBucketId = '633c5933bd7ce6a7f5cb';
 const String _videoDataCollectionId = '631b4f2663f40f701b38';
 
 ///Repository for video
@@ -33,9 +37,16 @@ class VideoRepository implements IVideoRepository {
   final Storage _videosStorage;
 
   @override
-  Future<Either<Failure, VideoDataList>> getVideoList() async {
+  Future<Either<Failure, VideoDataList>> getVideoList({String? appUserId}) async {
     try {
+      List<dynamic>? queries;
+      if(appUserId != null) {
+        final dynamic query = Query.equal('user_id', appUserId);
+        queries = <dynamic>[query];
+      }
+
       final DocumentList documentList = await _database.listDocuments(
+        queries: queries,
         collectionId: '631b4f2663f40f701b38',
         orderAttributes: ['\$createdAt'],
         orderTypes: ['DESC'],
@@ -61,7 +72,6 @@ class VideoRepository implements IVideoRepository {
     }
   }
 
-
   @override
   Future<Either<Failure, Uint8List>> getVideoFromTheServer(String fileId) async {
     try {
@@ -76,12 +86,27 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
+  Future<Either<Failure, Uint8List>> getVideoPreviewFromTheServer(String fileId) async {
+    try {
+      final Uint8List fileBytes = await _videosStorage.getFileView(
+        bucketId: _previewBucketId,
+        fileId: 'preview_$fileId',
+      );
+      return right(fileBytes);
+    } catch (e) {
+      return left(const Failure.serverError());
+    }
+  }
+
+  @override
   Future<Either<Failure, Success>> uploadVideoOnServer({
     required FilePickerResult filePickerResult,
+    required String previewPath,
     required String userId,
     required String name,
     required String description,
   }) async {
+    //video file
     final InputFile inputFile;
     if (kIsWeb) {
       inputFile = InputFile(
@@ -95,6 +120,12 @@ class VideoRepository implements IVideoRepository {
       );
     }
 
+    //preview file
+    final InputFile inputFilePreview = InputFile(
+      path: previewPath,
+      filename: filePickerResult.files.first.name,
+    );
+
     try {
       final File uploadFileResult = await _videosStorage.createFile(
         bucketId: _bucketId,
@@ -103,14 +134,23 @@ class VideoRepository implements IVideoRepository {
         read: <dynamic>['role:all'],
         write: <dynamic>['user:$userId'],
       );
+
       final Map<String, dynamic> functionData = <String, dynamic>{
-        'video_id' : uploadFileResult.$id,
-        'name' : name,
-        'description' : description,
+        'video_id': uploadFileResult.$id,
+        'name': name,
+        'description': description,
       };
       await _functions.createExecution(functionId: 'onUploadVideo', data: jsonEncode(functionData));
-      print( jsonEncode(functionData));
-      return right(const Success.videoUploaded());
+
+      await _videosStorage.createFile(
+        bucketId: _previewBucketId,
+        fileId: 'preview_${uploadFileResult.$id}',
+        file: inputFilePreview,
+        read: <dynamic>['role:all'],
+        write: <dynamic>['user:$userId'],
+      );
+
+      return right(Success.videoUploaded(uploadFileResult.$id));
     } catch (e) {
       print(e);
       return left(const Failure.serverError());
@@ -120,6 +160,7 @@ class VideoRepository implements IVideoRepository {
   @override
   Future<Either<Failure, Success>> replaceVideoOnServer({
     required String fileId,
+    required String previewPath,
     required String fileName,
     required FilePickerResult filePickerResult,
     required String userId,
@@ -137,15 +178,35 @@ class VideoRepository implements IVideoRepository {
       );
     }
 
+    //preview file
+    final InputFile inputFilePreview = InputFile(
+      path: previewPath,
+      filename: filePickerResult.files.first.name,
+    );
+
     try {
       await _videosStorage.deleteFile(
         bucketId: _bucketId,
         fileId: fileId,
       );
-      await _videosStorage.createFile(
+
+      await _videosStorage.deleteFile(
+        bucketId: _previewBucketId,
+        fileId: 'preview_$fileId',
+      );
+
+      final File uploadFileResult = await _videosStorage.createFile(
         bucketId: _bucketId,
         fileId: fileId,
         file: inputFile,
+        read: <dynamic>['role:all'],
+        write: <dynamic>['user:$userId'],
+      );
+
+      await _videosStorage.createFile(
+        bucketId: _previewBucketId,
+        fileId: 'preview_${uploadFileResult.$id}',
+        file: inputFilePreview,
         read: <dynamic>['role:all'],
         write: <dynamic>['user:$userId'],
       );
@@ -165,6 +226,20 @@ class VideoRepository implements IVideoRepository {
         fileId: fileId,
       );
 
+      await _videosStorage.deleteFile(
+        bucketId: _previewBucketId,
+        fileId: 'preview_$fileId',
+      );
+
+      await _functions.createExecution(
+        functionId: 'onDeleteVideo',
+        data: jsonEncode(
+          <String, dynamic>{
+            'video_id': fileId,
+          },
+        ),
+      );
+
       return right(const Success.videoDeleted());
     } catch (e) {
       return left(const Failure.serverError());
@@ -172,18 +247,16 @@ class VideoRepository implements IVideoRepository {
   }
 
   @override
-  Future<Either<Failure, Success>> updateVideoInformation({required String videoId, String? name, String? description}) async {
+  Future<Either<Failure, Success>> updateVideoInformation(
+      {required String videoId, String? name, String? description}) async {
     final bool isName = name != null;
     final bool isDescription = description != null;
-    if(isName || isDescription) {
+    if (isName || isDescription) {
       try {
         final Map<dynamic, dynamic> data;
-        if(isName && isDescription) {
-          data = <dynamic, dynamic>{
-            'name': name,
-            'description': description
-          };
-        } else if(isName) {
+        if (isName && isDescription) {
+          data = <dynamic, dynamic>{'name': name, 'description': description};
+        } else if (isName) {
           data = <dynamic, dynamic>{
             'name': name,
           };
@@ -192,9 +265,10 @@ class VideoRepository implements IVideoRepository {
             'description': description,
           };
         }
-        await _database.updateDocument(collectionId: _videoDataCollectionId, documentId: 'video_data_$videoId', data: data);
+        await _database.updateDocument(
+            collectionId: _videoDataCollectionId, documentId: 'video_data_$videoId', data: data);
         return right(const Success.videoInfoUpdated());
-      } catch (e){
+      } catch (e) {
         print(e);
         return left(const Failure.serverError());
       }

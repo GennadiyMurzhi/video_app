@@ -63,6 +63,7 @@ class CommentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Row(
@@ -87,14 +88,17 @@ class CommentWidget extends StatelessWidget {
         if (isEdit! && isEdit != null)
           Form(
             autovalidateMode: showErrorMessage! ? AutovalidateMode.always : AutovalidateMode.disabled,
-            child: TextFormField(
-              initialValue: comment,
-              onChanged: (String value) => editComment!(value),
-              validator: (String? value) => validator!(value),
-              decoration: const InputDecoration(
-                isDense: true,
-                hintText: 'Edit...',
-                border: InputBorder.none,
+            child: SizedBox(
+              width: 150,
+              child: TextFormField(
+                initialValue: comment,
+                onChanged: (String value) => editComment!(value),
+                validator: (String? value) => validator!(value),
+                decoration: const InputDecoration(
+                  isDense: true,
+                  hintText: 'Edit...',
+                  border: InputBorder.none,
+                ),
               ),
             ),
           )

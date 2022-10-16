@@ -19,6 +19,14 @@ mixin _$UserState {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get emailAddress => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
+  UserPhotoFilePickerResult get filePickerResult =>
+      throw _privateConstructorUsedError;
+  Uint8List? get photoBits => throw _privateConstructorUsedError;
+  File? get photoFile => throw _privateConstructorUsedError;
+  File? get chosenPhotoFile => throw _privateConstructorUsedError;
+  Option<Either<Failure, dynamic>> get userFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserStateCopyWith<UserState> get copyWith =>
@@ -29,7 +37,16 @@ mixin _$UserState {
 abstract class $UserStateCopyWith<$Res> {
   factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
       _$UserStateCopyWithImpl<$Res>;
-  $Res call({String id, String name, String emailAddress});
+  $Res call(
+      {String id,
+      String name,
+      String emailAddress,
+      bool loading,
+      UserPhotoFilePickerResult filePickerResult,
+      Uint8List? photoBits,
+      File? photoFile,
+      File? chosenPhotoFile,
+      Option<Either<Failure, dynamic>> userFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -45,6 +62,12 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
     Object? id = freezed,
     Object? name = freezed,
     Object? emailAddress = freezed,
+    Object? loading = freezed,
+    Object? filePickerResult = freezed,
+    Object? photoBits = freezed,
+    Object? photoFile = freezed,
+    Object? chosenPhotoFile = freezed,
+    Object? userFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -59,6 +82,30 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
           ? _value.emailAddress
           : emailAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      filePickerResult: filePickerResult == freezed
+          ? _value.filePickerResult
+          : filePickerResult // ignore: cast_nullable_to_non_nullable
+              as UserPhotoFilePickerResult,
+      photoBits: photoBits == freezed
+          ? _value.photoBits
+          : photoBits // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      photoFile: photoFile == freezed
+          ? _value.photoFile
+          : photoFile // ignore: cast_nullable_to_non_nullable
+              as File?,
+      chosenPhotoFile: chosenPhotoFile == freezed
+          ? _value.chosenPhotoFile
+          : chosenPhotoFile // ignore: cast_nullable_to_non_nullable
+              as File?,
+      userFailureOrSuccessOption: userFailureOrSuccessOption == freezed
+          ? _value.userFailureOrSuccessOption
+          : userFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<Failure, dynamic>>,
     ));
   }
 }
@@ -69,7 +116,16 @@ abstract class _$$_UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
           _$_UserState value, $Res Function(_$_UserState) then) =
       __$$_UserStateCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, String emailAddress});
+  $Res call(
+      {String id,
+      String name,
+      String emailAddress,
+      bool loading,
+      UserPhotoFilePickerResult filePickerResult,
+      Uint8List? photoBits,
+      File? photoFile,
+      File? chosenPhotoFile,
+      Option<Either<Failure, dynamic>> userFailureOrSuccessOption});
 }
 
 /// @nodoc
@@ -87,6 +143,12 @@ class __$$_UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? emailAddress = freezed,
+    Object? loading = freezed,
+    Object? filePickerResult = freezed,
+    Object? photoBits = freezed,
+    Object? photoFile = freezed,
+    Object? chosenPhotoFile = freezed,
+    Object? userFailureOrSuccessOption = freezed,
   }) {
     return _then(_$_UserState(
       id: id == freezed
@@ -101,15 +163,47 @@ class __$$_UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
           ? _value.emailAddress
           : emailAddress // ignore: cast_nullable_to_non_nullable
               as String,
+      loading: loading == freezed
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      filePickerResult: filePickerResult == freezed
+          ? _value.filePickerResult
+          : filePickerResult // ignore: cast_nullable_to_non_nullable
+              as UserPhotoFilePickerResult,
+      photoBits: photoBits == freezed
+          ? _value.photoBits
+          : photoBits // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      photoFile: photoFile == freezed
+          ? _value.photoFile
+          : photoFile // ignore: cast_nullable_to_non_nullable
+              as File?,
+      chosenPhotoFile: chosenPhotoFile == freezed
+          ? _value.chosenPhotoFile
+          : chosenPhotoFile // ignore: cast_nullable_to_non_nullable
+              as File?,
+      userFailureOrSuccessOption: userFailureOrSuccessOption == freezed
+          ? _value.userFailureOrSuccessOption
+          : userFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<Failure, dynamic>>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_UserState implements _UserState {
+class _$_UserState with DiagnosticableTreeMixin implements _UserState {
   const _$_UserState(
-      {required this.id, required this.name, required this.emailAddress});
+      {required this.id,
+      required this.name,
+      required this.emailAddress,
+      required this.loading,
+      required this.filePickerResult,
+      this.photoBits,
+      this.photoFile,
+      this.chosenPhotoFile,
+      required this.userFailureOrSuccessOption});
 
   @override
   final String id;
@@ -117,10 +211,39 @@ class _$_UserState implements _UserState {
   final String name;
   @override
   final String emailAddress;
+  @override
+  final bool loading;
+  @override
+  final UserPhotoFilePickerResult filePickerResult;
+  @override
+  final Uint8List? photoBits;
+  @override
+  final File? photoFile;
+  @override
+  final File? chosenPhotoFile;
+  @override
+  final Option<Either<Failure, dynamic>> userFailureOrSuccessOption;
 
   @override
-  String toString() {
-    return 'UserState(id: $id, name: $name, emailAddress: $emailAddress)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'UserState(id: $id, name: $name, emailAddress: $emailAddress, loading: $loading, filePickerResult: $filePickerResult, photoBits: $photoBits, photoFile: $photoFile, chosenPhotoFile: $chosenPhotoFile, userFailureOrSuccessOption: $userFailureOrSuccessOption)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'UserState'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('emailAddress', emailAddress))
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('filePickerResult', filePickerResult))
+      ..add(DiagnosticsProperty('photoBits', photoBits))
+      ..add(DiagnosticsProperty('photoFile', photoFile))
+      ..add(DiagnosticsProperty('chosenPhotoFile', chosenPhotoFile))
+      ..add(DiagnosticsProperty(
+          'userFailureOrSuccessOption', userFailureOrSuccessOption));
   }
 
   @override
@@ -131,7 +254,16 @@ class _$_UserState implements _UserState {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality()
-                .equals(other.emailAddress, emailAddress));
+                .equals(other.emailAddress, emailAddress) &&
+            const DeepCollectionEquality().equals(other.loading, loading) &&
+            const DeepCollectionEquality()
+                .equals(other.filePickerResult, filePickerResult) &&
+            const DeepCollectionEquality().equals(other.photoBits, photoBits) &&
+            const DeepCollectionEquality().equals(other.photoFile, photoFile) &&
+            const DeepCollectionEquality()
+                .equals(other.chosenPhotoFile, chosenPhotoFile) &&
+            const DeepCollectionEquality().equals(
+                other.userFailureOrSuccessOption, userFailureOrSuccessOption));
   }
 
   @override
@@ -139,7 +271,13 @@ class _$_UserState implements _UserState {
       runtimeType,
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(emailAddress));
+      const DeepCollectionEquality().hash(emailAddress),
+      const DeepCollectionEquality().hash(loading),
+      const DeepCollectionEquality().hash(filePickerResult),
+      const DeepCollectionEquality().hash(photoBits),
+      const DeepCollectionEquality().hash(photoFile),
+      const DeepCollectionEquality().hash(chosenPhotoFile),
+      const DeepCollectionEquality().hash(userFailureOrSuccessOption));
 
   @JsonKey(ignore: true)
   @override
@@ -151,7 +289,14 @@ abstract class _UserState implements UserState {
   const factory _UserState(
       {required final String id,
       required final String name,
-      required final String emailAddress}) = _$_UserState;
+      required final String emailAddress,
+      required final bool loading,
+      required final UserPhotoFilePickerResult filePickerResult,
+      final Uint8List? photoBits,
+      final File? photoFile,
+      final File? chosenPhotoFile,
+      required final Option<Either<Failure, dynamic>>
+          userFailureOrSuccessOption}) = _$_UserState;
 
   @override
   String get id;
@@ -159,6 +304,18 @@ abstract class _UserState implements UserState {
   String get name;
   @override
   String get emailAddress;
+  @override
+  bool get loading;
+  @override
+  UserPhotoFilePickerResult get filePickerResult;
+  @override
+  Uint8List? get photoBits;
+  @override
+  File? get photoFile;
+  @override
+  File? get chosenPhotoFile;
+  @override
+  Option<Either<Failure, dynamic>> get userFailureOrSuccessOption;
   @override
   @JsonKey(ignore: true)
   _$$_UserStateCopyWith<_$_UserState> get copyWith =>

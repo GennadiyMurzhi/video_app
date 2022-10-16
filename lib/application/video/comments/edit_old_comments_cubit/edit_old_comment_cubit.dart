@@ -49,7 +49,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
   }
 
   ///method to end edit old comment when press end edit button
-  Future<void> endEditComment({required Future<void> Function() updateCommentsFunction}) async {
+  Future<void> endEditComment() async {
     final bool isValidComment = state.comment.isValid();
     if (isValidComment) {
       emit(
@@ -82,8 +82,7 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
             editCommentFailureOrSuccessOption: optionOf(successOrFailure),
           );
         },
-        (Unit r) async {
-          await updateCommentsFunction();
+        (Unit r) {
           emit(
             state.copyWith(
               loading: false,

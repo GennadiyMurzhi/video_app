@@ -181,9 +181,11 @@ VideoData _$VideoDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VideoData {
+  String get videoDataId => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get videoId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
+  String get userName => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -196,7 +198,13 @@ mixin _$VideoData {
 abstract class $VideoDataCopyWith<$Res> {
   factory $VideoDataCopyWith(VideoData value, $Res Function(VideoData) then) =
       _$VideoDataCopyWithImpl<$Res>;
-  $Res call({String name, String videoId, String userId, String description});
+  $Res call(
+      {String videoDataId,
+      String name,
+      String videoId,
+      String userId,
+      String userName,
+      String description});
 }
 
 /// @nodoc
@@ -209,12 +217,18 @@ class _$VideoDataCopyWithImpl<$Res> implements $VideoDataCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? videoDataId = freezed,
     Object? name = freezed,
     Object? videoId = freezed,
     Object? userId = freezed,
+    Object? userName = freezed,
     Object? description = freezed,
   }) {
     return _then(_value.copyWith(
+      videoDataId: videoDataId == freezed
+          ? _value.videoDataId
+          : videoDataId // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -226,6 +240,10 @@ class _$VideoDataCopyWithImpl<$Res> implements $VideoDataCopyWith<$Res> {
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String,
       description: description == freezed
           ? _value.description
@@ -241,7 +259,13 @@ abstract class _$$_VideoDataCopyWith<$Res> implements $VideoDataCopyWith<$Res> {
           _$_VideoData value, $Res Function(_$_VideoData) then) =
       __$$_VideoDataCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String videoId, String userId, String description});
+  $Res call(
+      {String videoDataId,
+      String name,
+      String videoId,
+      String userId,
+      String userName,
+      String description});
 }
 
 /// @nodoc
@@ -256,12 +280,18 @@ class __$$_VideoDataCopyWithImpl<$Res> extends _$VideoDataCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? videoDataId = freezed,
     Object? name = freezed,
     Object? videoId = freezed,
     Object? userId = freezed,
+    Object? userName = freezed,
     Object? description = freezed,
   }) {
     return _then(_$_VideoData(
+      videoDataId: videoDataId == freezed
+          ? _value.videoDataId
+          : videoDataId // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -273,6 +303,10 @@ class __$$_VideoDataCopyWithImpl<$Res> extends _$VideoDataCopyWithImpl<$Res>
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
               as String,
       description: description == freezed
           ? _value.description
@@ -286,14 +320,18 @@ class __$$_VideoDataCopyWithImpl<$Res> extends _$VideoDataCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_VideoData implements _VideoData {
   const _$_VideoData(
-      {required this.name,
+      {required this.videoDataId,
+      required this.name,
       required this.videoId,
       required this.userId,
+      required this.userName,
       required this.description});
 
   factory _$_VideoData.fromJson(Map<String, dynamic> json) =>
       _$$_VideoDataFromJson(json);
 
+  @override
+  final String videoDataId;
   @override
   final String name;
   @override
@@ -301,11 +339,13 @@ class _$_VideoData implements _VideoData {
   @override
   final String userId;
   @override
+  final String userName;
+  @override
   final String description;
 
   @override
   String toString() {
-    return 'VideoData(name: $name, videoId: $videoId, userId: $userId, description: $description)';
+    return 'VideoData(videoDataId: $videoDataId, name: $name, videoId: $videoId, userId: $userId, userName: $userName, description: $description)';
   }
 
   @override
@@ -313,9 +353,12 @@ class _$_VideoData implements _VideoData {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VideoData &&
+            const DeepCollectionEquality()
+                .equals(other.videoDataId, videoDataId) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.videoId, videoId) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.userName, userName) &&
             const DeepCollectionEquality()
                 .equals(other.description, description));
   }
@@ -324,9 +367,11 @@ class _$_VideoData implements _VideoData {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(videoDataId),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(videoId),
       const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(userName),
       const DeepCollectionEquality().hash(description));
 
   @JsonKey(ignore: true)
@@ -344,20 +389,26 @@ class _$_VideoData implements _VideoData {
 
 abstract class _VideoData implements VideoData {
   const factory _VideoData(
-      {required final String name,
+      {required final String videoDataId,
+      required final String name,
       required final String videoId,
       required final String userId,
+      required final String userName,
       required final String description}) = _$_VideoData;
 
   factory _VideoData.fromJson(Map<String, dynamic> json) =
       _$_VideoData.fromJson;
 
   @override
+  String get videoDataId;
+  @override
   String get name;
   @override
   String get videoId;
   @override
   String get userId;
+  @override
+  String get userName;
   @override
   String get description;
   @override

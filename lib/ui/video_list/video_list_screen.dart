@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video_list_cubit/video_list_cubit.dart';
-import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/domain/video/video_event.dart';
 import 'package:video_app/injectable.dart';
@@ -22,16 +22,11 @@ class VideoListScreen extends StatelessWidget {
           child: BlocConsumer<VideoListCubit, VideoListState>(
             builder: (BuildContext context, VideoListState state) {
               return Layout(
-                userId: userState.id,
-                name: userState.name,
-                emailAddress: userState.emailAddress,
                 title: 'Video List',
-                functionFab: (_) => Navigator.of(context).pushNamed('/add_video_screen'),
                 child: VideoListBodyWidget(),
               );
             },
             listener: (BuildContext context, VideoListState state) {
-              print(state.event.toString());
               state.videoListFailureOrSuccessOption.fold(
                 () => null,
                 (Either<Failure, VideoDataList> either) {
@@ -50,7 +45,6 @@ class VideoListScreen extends StatelessWidget {
                   );
                 },
               );
-
               state.event.fold(
                 () => null,
                 (VideoEvent event) {

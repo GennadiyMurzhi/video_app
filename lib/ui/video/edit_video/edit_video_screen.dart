@@ -7,7 +7,6 @@ import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video/add_video_cubit/add_video_cubit.dart';
 import 'package:video_app/application/video/edit_video_cubit/edit_video_cubit.dart';
 import 'package:video_app/domain/core/failures.dart';
-import 'package:video_app/domain/video/failures.dart';
 import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
@@ -32,9 +31,6 @@ class EditVideoScreen extends StatelessWidget {
       child: BlocConsumer<EditVideoCubit, AddVideoState>(
         builder: (BuildContext context, AddVideoState state) {
           return Layout(
-            name: BlocProvider.of<UserCubit>(context).state.name,
-            userId: BlocProvider.of<UserCubit>(context).state.id,
-            emailAddress: BlocProvider.of<UserCubit>(context).state.emailAddress,
             functionOnPop: () {
               SystemChannels.textInput.invokeMethod('TextInput.hide');
               Navigator.of(context).pop();

@@ -4,7 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/domain/auth/auth_failure.dart';
 import 'package:video_app/domain/auth/i_auth_facade.dart';
-import 'package:video_app/domain/auth/user.dart' as video;
+import 'package:video_app/domain/user/user.dart' as video;
 import 'package:video_app/domain/auth/value_objects.dart';
 
 ///class containing the authorization/registration functionality
@@ -51,9 +51,10 @@ class AuthFacade extends IAuthFacade {
 
       return right(unit);
     } on AppwriteException catch (e) {
-      if (e.type! == 'user_email_already_exists') {
+      if (e.type != null && e.type! == 'user_email_already_exists') {
         return left(const AuthFailure.emailAlreadyInUsed());
       } else {
+        print(e);
         return left(const AuthFailure.serverError());
       }
     }

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video/add_video_cubit/add_video_cubit.dart';
-import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
@@ -22,14 +22,12 @@ class AddVideoScreen extends StatelessWidget {
         builder: (BuildContext context, AddVideoState state) {
           return Layout(
             title: 'Add Video',
-            userId: BlocProvider.of<UserCubit>(context).state.id,
-            name: BlocProvider.of<UserCubit>(context).state.name,
-            emailAddress: BlocProvider.of<UserCubit>(context).state.emailAddress,
             functionOnPop: () {
               SystemChannels.textInput.invokeMethod('TextInput.hide');
               Navigator.of(context).pop();
             },
-            addAction: () => BlocProvider.of<AddVideoCubit>(context).uploadVideo(BlocProvider.of<UserCubit>(context).state.id),
+            addAction: () =>
+                BlocProvider.of<AddVideoCubit>(context).uploadVideo(BlocProvider.of<UserCubit>(context).state.id),
             child: AddVideoFormWidget(),
           );
         },

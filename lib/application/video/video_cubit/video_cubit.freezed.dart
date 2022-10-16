@@ -21,6 +21,13 @@ mixin _$VideoState {
   String get videoDescription => throw _privateConstructorUsedError;
   String get videoFileId => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
+  String get userName => throw _privateConstructorUsedError;
+  int get likesCount => throw _privateConstructorUsedError;
+  int get dislikesCount => throw _privateConstructorUsedError;
+  bool get isUserLiked => throw _privateConstructorUsedError;
+  bool get isUserDisliked => throw _privateConstructorUsedError;
+  bool get isAppUserSubscribe => throw _privateConstructorUsedError;
+  Uint8List? get userPhotoBits => throw _privateConstructorUsedError;
   ChewieController? get chewieController => throw _privateConstructorUsedError;
   Option<Either<Failure, Success>> get videoFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
@@ -41,6 +48,13 @@ abstract class $VideoStateCopyWith<$Res> {
       String videoDescription,
       String videoFileId,
       String userId,
+      String userName,
+      int likesCount,
+      int dislikesCount,
+      bool isUserLiked,
+      bool isUserDisliked,
+      bool isAppUserSubscribe,
+      Uint8List? userPhotoBits,
       ChewieController? chewieController,
       Option<Either<Failure, Success>> videoFailureOrSuccessOption});
 }
@@ -60,6 +74,13 @@ class _$VideoStateCopyWithImpl<$Res> implements $VideoStateCopyWith<$Res> {
     Object? videoDescription = freezed,
     Object? videoFileId = freezed,
     Object? userId = freezed,
+    Object? userName = freezed,
+    Object? likesCount = freezed,
+    Object? dislikesCount = freezed,
+    Object? isUserLiked = freezed,
+    Object? isUserDisliked = freezed,
+    Object? isAppUserSubscribe = freezed,
+    Object? userPhotoBits = freezed,
     Object? chewieController = freezed,
     Object? videoFailureOrSuccessOption = freezed,
   }) {
@@ -84,6 +105,34 @@ class _$VideoStateCopyWithImpl<$Res> implements $VideoStateCopyWith<$Res> {
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      likesCount: likesCount == freezed
+          ? _value.likesCount
+          : likesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      dislikesCount: dislikesCount == freezed
+          ? _value.dislikesCount
+          : dislikesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      isUserLiked: isUserLiked == freezed
+          ? _value.isUserLiked
+          : isUserLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isUserDisliked: isUserDisliked == freezed
+          ? _value.isUserDisliked
+          : isUserDisliked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppUserSubscribe: isAppUserSubscribe == freezed
+          ? _value.isAppUserSubscribe
+          : isAppUserSubscribe // ignore: cast_nullable_to_non_nullable
+              as bool,
+      userPhotoBits: userPhotoBits == freezed
+          ? _value.userPhotoBits
+          : userPhotoBits // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       chewieController: chewieController == freezed
           ? _value.chewieController
           : chewieController // ignore: cast_nullable_to_non_nullable
@@ -109,6 +158,13 @@ abstract class _$$_VideoStateCopyWith<$Res>
       String videoDescription,
       String videoFileId,
       String userId,
+      String userName,
+      int likesCount,
+      int dislikesCount,
+      bool isUserLiked,
+      bool isUserDisliked,
+      bool isAppUserSubscribe,
+      Uint8List? userPhotoBits,
       ChewieController? chewieController,
       Option<Either<Failure, Success>> videoFailureOrSuccessOption});
 }
@@ -130,6 +186,13 @@ class __$$_VideoStateCopyWithImpl<$Res> extends _$VideoStateCopyWithImpl<$Res>
     Object? videoDescription = freezed,
     Object? videoFileId = freezed,
     Object? userId = freezed,
+    Object? userName = freezed,
+    Object? likesCount = freezed,
+    Object? dislikesCount = freezed,
+    Object? isUserLiked = freezed,
+    Object? isUserDisliked = freezed,
+    Object? isAppUserSubscribe = freezed,
+    Object? userPhotoBits = freezed,
     Object? chewieController = freezed,
     Object? videoFailureOrSuccessOption = freezed,
   }) {
@@ -154,6 +217,34 @@ class __$$_VideoStateCopyWithImpl<$Res> extends _$VideoStateCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      userName: userName == freezed
+          ? _value.userName
+          : userName // ignore: cast_nullable_to_non_nullable
+              as String,
+      likesCount: likesCount == freezed
+          ? _value.likesCount
+          : likesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      dislikesCount: dislikesCount == freezed
+          ? _value.dislikesCount
+          : dislikesCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      isUserLiked: isUserLiked == freezed
+          ? _value.isUserLiked
+          : isUserLiked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isUserDisliked: isUserDisliked == freezed
+          ? _value.isUserDisliked
+          : isUserDisliked // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAppUserSubscribe: isAppUserSubscribe == freezed
+          ? _value.isAppUserSubscribe
+          : isAppUserSubscribe // ignore: cast_nullable_to_non_nullable
+              as bool,
+      userPhotoBits: userPhotoBits == freezed
+          ? _value.userPhotoBits
+          : userPhotoBits // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       chewieController: chewieController == freezed
           ? _value.chewieController
           : chewieController // ignore: cast_nullable_to_non_nullable
@@ -175,6 +266,13 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
       required this.videoDescription,
       required this.videoFileId,
       required this.userId,
+      required this.userName,
+      required this.likesCount,
+      required this.dislikesCount,
+      required this.isUserLiked,
+      required this.isUserDisliked,
+      required this.isAppUserSubscribe,
+      this.userPhotoBits,
       required this.chewieController,
       required this.videoFailureOrSuccessOption});
 
@@ -189,13 +287,27 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
   @override
   final String userId;
   @override
+  final String userName;
+  @override
+  final int likesCount;
+  @override
+  final int dislikesCount;
+  @override
+  final bool isUserLiked;
+  @override
+  final bool isUserDisliked;
+  @override
+  final bool isAppUserSubscribe;
+  @override
+  final Uint8List? userPhotoBits;
+  @override
   final ChewieController? chewieController;
   @override
   final Option<Either<Failure, Success>> videoFailureOrSuccessOption;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'VideoState(videoStatus: $videoStatus, videoName: $videoName, videoDescription: $videoDescription, videoFileId: $videoFileId, userId: $userId, chewieController: $chewieController, videoFailureOrSuccessOption: $videoFailureOrSuccessOption)';
+    return 'VideoState(videoStatus: $videoStatus, videoName: $videoName, videoDescription: $videoDescription, videoFileId: $videoFileId, userId: $userId, userName: $userName, likesCount: $likesCount, dislikesCount: $dislikesCount, isUserLiked: $isUserLiked, isUserDisliked: $isUserDisliked, isAppUserSubscribe: $isAppUserSubscribe, userPhotoBits: $userPhotoBits, chewieController: $chewieController, videoFailureOrSuccessOption: $videoFailureOrSuccessOption)';
   }
 
   @override
@@ -208,6 +320,13 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
       ..add(DiagnosticsProperty('videoDescription', videoDescription))
       ..add(DiagnosticsProperty('videoFileId', videoFileId))
       ..add(DiagnosticsProperty('userId', userId))
+      ..add(DiagnosticsProperty('userName', userName))
+      ..add(DiagnosticsProperty('likesCount', likesCount))
+      ..add(DiagnosticsProperty('dislikesCount', dislikesCount))
+      ..add(DiagnosticsProperty('isUserLiked', isUserLiked))
+      ..add(DiagnosticsProperty('isUserDisliked', isUserDisliked))
+      ..add(DiagnosticsProperty('isAppUserSubscribe', isAppUserSubscribe))
+      ..add(DiagnosticsProperty('userPhotoBits', userPhotoBits))
       ..add(DiagnosticsProperty('chewieController', chewieController))
       ..add(DiagnosticsProperty(
           'videoFailureOrSuccessOption', videoFailureOrSuccessOption));
@@ -226,6 +345,19 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
             const DeepCollectionEquality()
                 .equals(other.videoFileId, videoFileId) &&
             const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.userName, userName) &&
+            const DeepCollectionEquality()
+                .equals(other.likesCount, likesCount) &&
+            const DeepCollectionEquality()
+                .equals(other.dislikesCount, dislikesCount) &&
+            const DeepCollectionEquality()
+                .equals(other.isUserLiked, isUserLiked) &&
+            const DeepCollectionEquality()
+                .equals(other.isUserDisliked, isUserDisliked) &&
+            const DeepCollectionEquality()
+                .equals(other.isAppUserSubscribe, isAppUserSubscribe) &&
+            const DeepCollectionEquality()
+                .equals(other.userPhotoBits, userPhotoBits) &&
             const DeepCollectionEquality()
                 .equals(other.chewieController, chewieController) &&
             const DeepCollectionEquality().equals(
@@ -241,6 +373,13 @@ class _$_VideoState with DiagnosticableTreeMixin implements _VideoState {
       const DeepCollectionEquality().hash(videoDescription),
       const DeepCollectionEquality().hash(videoFileId),
       const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(userName),
+      const DeepCollectionEquality().hash(likesCount),
+      const DeepCollectionEquality().hash(dislikesCount),
+      const DeepCollectionEquality().hash(isUserLiked),
+      const DeepCollectionEquality().hash(isUserDisliked),
+      const DeepCollectionEquality().hash(isAppUserSubscribe),
+      const DeepCollectionEquality().hash(userPhotoBits),
       const DeepCollectionEquality().hash(chewieController),
       const DeepCollectionEquality().hash(videoFailureOrSuccessOption));
 
@@ -257,6 +396,13 @@ abstract class _VideoState implements VideoState {
       required final String videoDescription,
       required final String videoFileId,
       required final String userId,
+      required final String userName,
+      required final int likesCount,
+      required final int dislikesCount,
+      required final bool isUserLiked,
+      required final bool isUserDisliked,
+      required final bool isAppUserSubscribe,
+      final Uint8List? userPhotoBits,
       required final ChewieController? chewieController,
       required final Option<Either<Failure, Success>>
           videoFailureOrSuccessOption}) = _$_VideoState;
@@ -271,6 +417,20 @@ abstract class _VideoState implements VideoState {
   String get videoFileId;
   @override
   String get userId;
+  @override
+  String get userName;
+  @override
+  int get likesCount;
+  @override
+  int get dislikesCount;
+  @override
+  bool get isUserLiked;
+  @override
+  bool get isUserDisliked;
+  @override
+  bool get isAppUserSubscribe;
+  @override
+  Uint8List? get userPhotoBits;
   @override
   ChewieController? get chewieController;
   @override

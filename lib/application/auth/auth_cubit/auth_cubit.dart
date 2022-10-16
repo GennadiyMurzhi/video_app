@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:video_app/domain/auth/i_auth_facade.dart';
-import 'package:video_app/domain/auth/user.dart';
+import 'package:video_app/domain/user/user.dart';
 
 part 'auth_cubit.freezed.dart';
 part 'auth_state.dart';

@@ -18,26 +18,29 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() videoUploaded,
+    required TResult Function(String? uploadFileID) videoUploaded,
     required TResult Function() videoReplaced,
     required TResult Function() videoDeleted,
     required TResult Function() videoInfoUpdated,
+    required TResult Function() none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -47,6 +50,7 @@ mixin _$Success {
     required TResult Function(VideoReplaced value) videoReplaced,
     required TResult Function(VideoDeleted value) videoDeleted,
     required TResult Function(VideoInfoUpdated value) videoInfoUpdated,
+    required TResult Function(None value) none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,6 +59,7 @@ mixin _$Success {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,6 +68,7 @@ mixin _$Success {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -88,6 +94,7 @@ abstract class _$$VideoUploadedCopyWith<$Res> {
   factory _$$VideoUploadedCopyWith(
           _$VideoUploaded value, $Res Function(_$VideoUploaded) then) =
       __$$VideoUploadedCopyWithImpl<$Res>;
+  $Res call({String? uploadFileID});
 }
 
 /// @nodoc
@@ -99,60 +106,87 @@ class __$$VideoUploadedCopyWithImpl<$Res> extends _$SuccessCopyWithImpl<$Res>
 
   @override
   _$VideoUploaded get _value => super._value as _$VideoUploaded;
+
+  @override
+  $Res call({
+    Object? uploadFileID = freezed,
+  }) {
+    return _then(_$VideoUploaded(
+      uploadFileID == freezed
+          ? _value.uploadFileID
+          : uploadFileID // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$VideoUploaded implements VideoUploaded {
-  const _$VideoUploaded();
+  const _$VideoUploaded(this.uploadFileID);
+
+  @override
+  final String? uploadFileID;
 
   @override
   String toString() {
-    return 'Success.videoUploaded()';
+    return 'Success.videoUploaded(uploadFileID: $uploadFileID)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$VideoUploaded);
+        (other.runtimeType == runtimeType &&
+            other is _$VideoUploaded &&
+            const DeepCollectionEquality()
+                .equals(other.uploadFileID, uploadFileID));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(uploadFileID));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$VideoUploadedCopyWith<_$VideoUploaded> get copyWith =>
+      __$$VideoUploadedCopyWithImpl<_$VideoUploaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() videoUploaded,
+    required TResult Function(String? uploadFileID) videoUploaded,
     required TResult Function() videoReplaced,
     required TResult Function() videoDeleted,
     required TResult Function() videoInfoUpdated,
+    required TResult Function() none,
   }) {
-    return videoUploaded();
+    return videoUploaded(uploadFileID);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
   }) {
-    return videoUploaded?.call();
+    return videoUploaded?.call(uploadFileID);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
     required TResult orElse(),
   }) {
     if (videoUploaded != null) {
-      return videoUploaded();
+      return videoUploaded(uploadFileID);
     }
     return orElse();
   }
@@ -164,6 +198,7 @@ class _$VideoUploaded implements VideoUploaded {
     required TResult Function(VideoReplaced value) videoReplaced,
     required TResult Function(VideoDeleted value) videoDeleted,
     required TResult Function(VideoInfoUpdated value) videoInfoUpdated,
+    required TResult Function(None value) none,
   }) {
     return videoUploaded(this);
   }
@@ -175,6 +210,7 @@ class _$VideoUploaded implements VideoUploaded {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
   }) {
     return videoUploaded?.call(this);
   }
@@ -186,6 +222,7 @@ class _$VideoUploaded implements VideoUploaded {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
     required TResult orElse(),
   }) {
     if (videoUploaded != null) {
@@ -196,7 +233,12 @@ class _$VideoUploaded implements VideoUploaded {
 }
 
 abstract class VideoUploaded implements Success {
-  const factory VideoUploaded() = _$VideoUploaded;
+  const factory VideoUploaded(final String? uploadFileID) = _$VideoUploaded;
+
+  String? get uploadFileID;
+  @JsonKey(ignore: true)
+  _$$VideoUploadedCopyWith<_$VideoUploaded> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -239,10 +281,11 @@ class _$VideoReplaced implements VideoReplaced {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() videoUploaded,
+    required TResult Function(String? uploadFileID) videoUploaded,
     required TResult Function() videoReplaced,
     required TResult Function() videoDeleted,
     required TResult Function() videoInfoUpdated,
+    required TResult Function() none,
   }) {
     return videoReplaced();
   }
@@ -250,10 +293,11 @@ class _$VideoReplaced implements VideoReplaced {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
   }) {
     return videoReplaced?.call();
   }
@@ -261,10 +305,11 @@ class _$VideoReplaced implements VideoReplaced {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
     required TResult orElse(),
   }) {
     if (videoReplaced != null) {
@@ -280,6 +325,7 @@ class _$VideoReplaced implements VideoReplaced {
     required TResult Function(VideoReplaced value) videoReplaced,
     required TResult Function(VideoDeleted value) videoDeleted,
     required TResult Function(VideoInfoUpdated value) videoInfoUpdated,
+    required TResult Function(None value) none,
   }) {
     return videoReplaced(this);
   }
@@ -291,6 +337,7 @@ class _$VideoReplaced implements VideoReplaced {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
   }) {
     return videoReplaced?.call(this);
   }
@@ -302,6 +349,7 @@ class _$VideoReplaced implements VideoReplaced {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
     required TResult orElse(),
   }) {
     if (videoReplaced != null) {
@@ -355,10 +403,11 @@ class _$VideoDeleted implements VideoDeleted {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() videoUploaded,
+    required TResult Function(String? uploadFileID) videoUploaded,
     required TResult Function() videoReplaced,
     required TResult Function() videoDeleted,
     required TResult Function() videoInfoUpdated,
+    required TResult Function() none,
   }) {
     return videoDeleted();
   }
@@ -366,10 +415,11 @@ class _$VideoDeleted implements VideoDeleted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
   }) {
     return videoDeleted?.call();
   }
@@ -377,10 +427,11 @@ class _$VideoDeleted implements VideoDeleted {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
     required TResult orElse(),
   }) {
     if (videoDeleted != null) {
@@ -396,6 +447,7 @@ class _$VideoDeleted implements VideoDeleted {
     required TResult Function(VideoReplaced value) videoReplaced,
     required TResult Function(VideoDeleted value) videoDeleted,
     required TResult Function(VideoInfoUpdated value) videoInfoUpdated,
+    required TResult Function(None value) none,
   }) {
     return videoDeleted(this);
   }
@@ -407,6 +459,7 @@ class _$VideoDeleted implements VideoDeleted {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
   }) {
     return videoDeleted?.call(this);
   }
@@ -418,6 +471,7 @@ class _$VideoDeleted implements VideoDeleted {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
     required TResult orElse(),
   }) {
     if (videoDeleted != null) {
@@ -471,10 +525,11 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() videoUploaded,
+    required TResult Function(String? uploadFileID) videoUploaded,
     required TResult Function() videoReplaced,
     required TResult Function() videoDeleted,
     required TResult Function() videoInfoUpdated,
+    required TResult Function() none,
   }) {
     return videoInfoUpdated();
   }
@@ -482,10 +537,11 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
   }) {
     return videoInfoUpdated?.call();
   }
@@ -493,10 +549,11 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? videoUploaded,
+    TResult Function(String? uploadFileID)? videoUploaded,
     TResult Function()? videoReplaced,
     TResult Function()? videoDeleted,
     TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
     required TResult orElse(),
   }) {
     if (videoInfoUpdated != null) {
@@ -512,6 +569,7 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
     required TResult Function(VideoReplaced value) videoReplaced,
     required TResult Function(VideoDeleted value) videoDeleted,
     required TResult Function(VideoInfoUpdated value) videoInfoUpdated,
+    required TResult Function(None value) none,
   }) {
     return videoInfoUpdated(this);
   }
@@ -523,6 +581,7 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
   }) {
     return videoInfoUpdated?.call(this);
   }
@@ -534,6 +593,7 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
     TResult Function(VideoReplaced value)? videoReplaced,
     TResult Function(VideoDeleted value)? videoDeleted,
     TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
     required TResult orElse(),
   }) {
     if (videoInfoUpdated != null) {
@@ -545,4 +605,124 @@ class _$VideoInfoUpdated implements VideoInfoUpdated {
 
 abstract class VideoInfoUpdated implements Success {
   const factory VideoInfoUpdated() = _$VideoInfoUpdated;
+}
+
+/// @nodoc
+abstract class _$$NoneCopyWith<$Res> {
+  factory _$$NoneCopyWith(_$None value, $Res Function(_$None) then) =
+      __$$NoneCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$NoneCopyWithImpl<$Res> extends _$SuccessCopyWithImpl<$Res>
+    implements _$$NoneCopyWith<$Res> {
+  __$$NoneCopyWithImpl(_$None _value, $Res Function(_$None) _then)
+      : super(_value, (v) => _then(v as _$None));
+
+  @override
+  _$None get _value => super._value as _$None;
+}
+
+/// @nodoc
+
+class _$None implements None {
+  const _$None();
+
+  @override
+  String toString() {
+    return 'Success.none()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$None);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? uploadFileID) videoUploaded,
+    required TResult Function() videoReplaced,
+    required TResult Function() videoDeleted,
+    required TResult Function() videoInfoUpdated,
+    required TResult Function() none,
+  }) {
+    return none();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? uploadFileID)? videoUploaded,
+    TResult Function()? videoReplaced,
+    TResult Function()? videoDeleted,
+    TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
+  }) {
+    return none?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? uploadFileID)? videoUploaded,
+    TResult Function()? videoReplaced,
+    TResult Function()? videoDeleted,
+    TResult Function()? videoInfoUpdated,
+    TResult Function()? none,
+    required TResult orElse(),
+  }) {
+    if (none != null) {
+      return none();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(VideoUploaded value) videoUploaded,
+    required TResult Function(VideoReplaced value) videoReplaced,
+    required TResult Function(VideoDeleted value) videoDeleted,
+    required TResult Function(VideoInfoUpdated value) videoInfoUpdated,
+    required TResult Function(None value) none,
+  }) {
+    return none(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(VideoUploaded value)? videoUploaded,
+    TResult Function(VideoReplaced value)? videoReplaced,
+    TResult Function(VideoDeleted value)? videoDeleted,
+    TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
+  }) {
+    return none?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(VideoUploaded value)? videoUploaded,
+    TResult Function(VideoReplaced value)? videoReplaced,
+    TResult Function(VideoDeleted value)? videoDeleted,
+    TResult Function(VideoInfoUpdated value)? videoInfoUpdated,
+    TResult Function(None value)? none,
+    required TResult orElse(),
+  }) {
+    if (none != null) {
+      return none(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class None implements Success {
+  const factory None() = _$None;
 }

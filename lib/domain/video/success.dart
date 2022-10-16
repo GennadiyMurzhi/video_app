@@ -6,7 +6,7 @@ part 'success.freezed.dart';
 @freezed
 abstract class Success with _$Success {
   ///is used to indicate the successful uploading of the video to the server
-  const factory Success.videoUploaded() = VideoUploaded;
+  const factory Success.videoUploaded(String? uploadFileID) = VideoUploaded;
 
   ///used to indicate that the video was replaced on the server successfully
   const factory Success.videoReplaced() = VideoReplaced;
@@ -16,4 +16,7 @@ abstract class Success with _$Success {
 
   ///used to indicate that the video information has been successfully updated on the server
   const factory Success.videoInfoUpdated() = VideoInfoUpdated;
+
+  ///used to indicate that the video information has been successfully updated on the server
+  const factory Success.none() = None;
 }

@@ -38,7 +38,7 @@ class VideoDescription extends ValueObject<AddVideoValueFailure<String>, String>
   final Either<AddVideoValueFailure<String>, String> value;
 }
 
-///Value object contains string comment and validate him
+///Value object contains filepicker result and check him contains on null
 @immutable
 class VideoFilePickerResult extends ValueObject<AddVideoValueFailure<FilePickerResult?>, FilePickerResult?> {
   ///receives input and validate him

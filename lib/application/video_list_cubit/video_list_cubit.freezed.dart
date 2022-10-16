@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$VideoListState {
+  String? get appUserId => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   Option<VideoEvent> get event => throw _privateConstructorUsedError;
   Option<Either<Failure, VideoDataList>> get videoListFailureOrSuccessOption =>
@@ -32,7 +33,8 @@ abstract class $VideoListStateCopyWith<$Res> {
           VideoListState value, $Res Function(VideoListState) then) =
       _$VideoListStateCopyWithImpl<$Res>;
   $Res call(
-      {bool loading,
+      {String? appUserId,
+      bool loading,
       Option<VideoEvent> event,
       Option<Either<Failure, VideoDataList>> videoListFailureOrSuccessOption});
 }
@@ -48,11 +50,16 @@ class _$VideoListStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? appUserId = freezed,
     Object? loading = freezed,
     Object? event = freezed,
     Object? videoListFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
+      appUserId: appUserId == freezed
+          ? _value.appUserId
+          : appUserId // ignore: cast_nullable_to_non_nullable
+              as String?,
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -78,7 +85,8 @@ abstract class _$$_VideoListStateCopyWith<$Res>
       __$$_VideoListStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {bool loading,
+      {String? appUserId,
+      bool loading,
       Option<VideoEvent> event,
       Option<Either<Failure, VideoDataList>> videoListFailureOrSuccessOption});
 }
@@ -96,11 +104,16 @@ class __$$_VideoListStateCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? appUserId = freezed,
     Object? loading = freezed,
     Object? event = freezed,
     Object? videoListFailureOrSuccessOption = freezed,
   }) {
     return _then(_$_VideoListState(
+      appUserId: appUserId == freezed
+          ? _value.appUserId
+          : appUserId // ignore: cast_nullable_to_non_nullable
+              as String?,
       loading: loading == freezed
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
@@ -122,10 +135,13 @@ class __$$_VideoListStateCopyWithImpl<$Res>
 
 class _$_VideoListState implements _VideoListState {
   const _$_VideoListState(
-      {required this.loading,
+      {required this.appUserId,
+      required this.loading,
       required this.event,
       required this.videoListFailureOrSuccessOption});
 
+  @override
+  final String? appUserId;
   @override
   final bool loading;
   @override
@@ -135,7 +151,7 @@ class _$_VideoListState implements _VideoListState {
 
   @override
   String toString() {
-    return 'VideoListState(loading: $loading, event: $event, videoListFailureOrSuccessOption: $videoListFailureOrSuccessOption)';
+    return 'VideoListState(appUserId: $appUserId, loading: $loading, event: $event, videoListFailureOrSuccessOption: $videoListFailureOrSuccessOption)';
   }
 
   @override
@@ -143,6 +159,7 @@ class _$_VideoListState implements _VideoListState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_VideoListState &&
+            const DeepCollectionEquality().equals(other.appUserId, appUserId) &&
             const DeepCollectionEquality().equals(other.loading, loading) &&
             const DeepCollectionEquality().equals(other.event, event) &&
             const DeepCollectionEquality().equals(
@@ -153,6 +170,7 @@ class _$_VideoListState implements _VideoListState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(appUserId),
       const DeepCollectionEquality().hash(loading),
       const DeepCollectionEquality().hash(event),
       const DeepCollectionEquality().hash(videoListFailureOrSuccessOption));
@@ -165,11 +183,14 @@ class _$_VideoListState implements _VideoListState {
 
 abstract class _VideoListState implements VideoListState {
   const factory _VideoListState(
-      {required final bool loading,
+      {required final String? appUserId,
+      required final bool loading,
       required final Option<VideoEvent> event,
       required final Option<Either<Failure, VideoDataList>>
           videoListFailureOrSuccessOption}) = _$_VideoListState;
 
+  @override
+  String? get appUserId;
   @override
   bool get loading;
   @override

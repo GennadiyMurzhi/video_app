@@ -33,8 +33,8 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
   }
 
   ///method for close sub comments widget
-  Future<void> onClose(Future<void> loadComments) async {
-    await loadComments;
+  Future<void> onClose(Future<void> Function() loadComments) async {
+    await loadComments();
     emit(
       state.copyWith(
         isOpen: false,
@@ -74,6 +74,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
 
     _subscription!.stream.listen(
       (RealtimeMessage response) async {
+        print('realtim subcomments');
         if (state.isOpen) {
           await updateSubComments();
         }
@@ -83,6 +84,7 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
 
   ///method for update sub comment
   Future<void> updateSubComments() async {
+    print('updateSubComments subcomments cubit');
     final Either<CommentsFailure, SubComments> subCommentsOrFailure =
         await _commentsRepository.getSubComments(state.subCommentsCollectionId);
     subCommentsOrFailure.fold(

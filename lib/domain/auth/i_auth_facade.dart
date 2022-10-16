@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:video_app/domain/auth/auth_failure.dart';
-import 'package:video_app/domain/auth/user.dart';
+import 'package:video_app/domain/user/user.dart';
 import 'package:video_app/domain/auth/value_objects.dart';
 
 ///contract to create an authorization class

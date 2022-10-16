@@ -1,9 +1,12 @@
+import 'dart:typed_data';
+
 import 'package:appwrite/appwrite.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
+import 'package:video_app/domain/photo/i_photo_repository.dart';
 import 'package:video_app/domain/video/comments/comments.dart';
 import 'package:video_app/domain/video/comments/comments_failure.dart';
 import 'package:video_app/domain/video/comments/i_comments_repository.dart';
@@ -19,9 +22,10 @@ part 'comments_state.dart';
 @Injectable()
 class CommentsCubit extends Cubit<CommentsState> {
   ///pass the comments repository to use the comment management functionality
-  CommentsCubit(this._commentRepository) : super(CommentsState.initial());
+  CommentsCubit(this._commentRepository, this._photoRepository) : super(CommentsState.initial());
 
   final ICommentsRepository _commentRepository;
+  final IPhotoRepository _photoRepository;
   RealtimeSubscription? _subscription;
 
   ///method for editing the new comment of the input time
@@ -49,9 +53,7 @@ class CommentsCubit extends Cubit<CommentsState> {
         getIt<Realtime>().subscribe(<String>['databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents']);
     _subscription!.stream.listen(
       (RealtimeMessage response) async {
-        if (response.events.contains('databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents.*.update')) {
-          await loadCommentsOnCommentsPage();
-        }
+        loadCommentsOnCommentsPage();
       },
     );
   }
@@ -104,6 +106,7 @@ class CommentsCubit extends Cubit<CommentsState> {
 
   ///method for loading all comments for video when the comments page opens
   Future<void> loadCommentsOnCommentsPage() async {
+    print('comments cubit loadCommentsOnCommentsPage');
     emit(
       state.copyWith(loading: true),
     );
@@ -127,5 +130,17 @@ class CommentsCubit extends Cubit<CommentsState> {
         );
       },
     );
+  }
+
+  ///method to get user photo
+  Future<Uint8List?> getUserPhoto(String userId) async {
+    final Option<Uint8List> resultOrPhoto = await _photoRepository.getUserPhoto(userId);
+    resultOrPhoto.fold(
+      () => null,
+      (Uint8List photo) {
+        return photo;
+      },
+    );
+    return null;
   }
 }

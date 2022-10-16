@@ -3,13 +3,19 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:video_app/application/pick_file.dart';
-import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/application/user_cubit/user_cubit.dart';
+import 'package:video_app/application/video_list_cubit/video_list_cubit.dart';
+import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
 import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/domain/video/value_objects.dart';
+import 'package:video_app/injectable.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 part 'add_video_cubit.freezed.dart';
+
 part 'add_video_state.dart';
 
 ///cubit manage the uploading video with name and description
@@ -59,8 +65,15 @@ class AddVideoCubit extends Cubit<AddVideoState> {
         ),
       );
 
+      final String? thumb = await VideoThumbnail.thumbnailFile(
+        video: state.filePickerResult.getOrCrash()!.paths[0]!,
+        thumbnailPath: (await getTemporaryDirectory()).path,
+        quality: 100,
+      );
+
       final Either<Failure, Success> resultOrFailure = await _videoRepository.uploadVideoOnServer(
         filePickerResult: state.filePickerResult.getOrCrash()!,
+        previewPath: thumb!,
         userId: userId,
         name: state.name.getOrCrash(),
         description: state.description.getOrCrash(),

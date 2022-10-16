@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:video_app/application/video/add_video_cubit/add_video_cubit.dart';
-import 'package:video_app/domain/video/failures.dart';
+import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
 import 'package:video_app/domain/video/success.dart';
 import 'package:video_app/domain/video/value_objects.dart';
@@ -35,7 +35,6 @@ class EditVideoCubit extends AddVideoCubit {
 
   ///method to so start edit Video Name
   void startEditName() {
-    print('startEditName');
     emit(
       state.copyWith(
         editingVideoName: true,
@@ -45,7 +44,6 @@ class EditVideoCubit extends AddVideoCubit {
 
   ///method to so start edit Video Description
   void startEditingDescription() {
-    print('startEditingDescription');
     emit(
       state.copyWith(editingVideoDescription: true),
     );
@@ -69,7 +67,6 @@ class EditVideoCubit extends AddVideoCubit {
 
   ///method to update video information
   Future<void> updateInformation(String videoId) async {
-    print('updateInformation video');
     emit(
       state.copyWith(
         loading: true,
