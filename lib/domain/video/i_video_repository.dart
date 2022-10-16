@@ -4,12 +4,16 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/success.dart';
+import 'package:video_app/domain/video/uploaded_video.dart';
 import 'package:video_app/domain/video/video.dart';
 
 ///Interface for the video repository
 abstract class IVideoRepository {
   ///A method to get a list of all videos
-  Future<Either<Failure, VideoDataList>> getVideoList({String? appUserId});
+  Future<Either<Failure, VideoDataList>> getVideoList();
+
+  ///A method to get a list of uploaded videos of a particular user
+  Future<Either<Failure, UploadedVideoDataList>> getUploadedVideoList(String userId);
 
   ///A method to get a video data
   Future<Either<Failure, VideoData>> getDataForVideo(String videoDataDocumentId);

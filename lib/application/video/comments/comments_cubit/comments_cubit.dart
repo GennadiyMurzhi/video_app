@@ -49,11 +49,17 @@ class CommentsCubit extends Cubit<CommentsState> {
   ///method to update comments for video
   void _subscriptionOnUpdateComments() {
     final String commentCollectionId = commentsCollectionId(state.videoFileId);
-    _subscription =
-        getIt<Realtime>().subscribe(<String>['databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents']);
+    _subscription = getIt<Realtime>()
+        .subscribe(<String>['databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents']);
     _subscription!.stream.listen(
       (RealtimeMessage response) async {
-        loadCommentsOnCommentsPage();
+        if (response.events
+                .contains('databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents.*.create') ||
+            response.events
+                .contains('databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents.*.delete') || response.events
+            .contains('databases.631960756fdf55a5c9c3.collections.$commentCollectionId.documents.*.update')) {
+          loadCommentsOnCommentsPage();
+        }
       },
     );
   }
@@ -106,7 +112,6 @@ class CommentsCubit extends Cubit<CommentsState> {
 
   ///method for loading all comments for video when the comments page opens
   Future<void> loadCommentsOnCommentsPage() async {
-    print('comments cubit loadCommentsOnCommentsPage');
     emit(
       state.copyWith(loading: true),
     );

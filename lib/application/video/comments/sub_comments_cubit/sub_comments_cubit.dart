@@ -33,8 +33,8 @@ class SubCommentsCubit extends Cubit<SubCommentsState> {
   }
 
   ///method for close sub comments widget
-  Future<void> onClose(Future<void> Function() loadComments) async {
-    await loadComments();
+  Future<void> onClose({Future<void> Function()? loadComments}) async {
+    //await loadComments();
     emit(
       state.copyWith(
         isOpen: false,

@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
 import 'package:video_app/domain/video/success.dart';
+import 'package:video_app/domain/video/uploaded_video.dart';
 import 'package:video_app/domain/video/video.dart';
 
 ///video bucket
@@ -28,32 +29,45 @@ class VideoRepository implements IVideoRepository {
       _client,
       databaseId: '62e3faba8623b7647567',
     );
+    _uploadedDatabase = Databases(
+      _client,
+      databaseId: '634b7fb186e7065ec5a2',
+    );
     _functions = Functions(_client);
   }
 
   late final Functions _functions;
   late final Databases _database;
+  late final Databases _uploadedDatabase;
   final Client _client;
   final Storage _videosStorage;
 
   @override
-  Future<Either<Failure, VideoDataList>> getVideoList({String? appUserId}) async {
+  Future<Either<Failure, VideoDataList>> getVideoList() async {
     try {
-      List<dynamic>? queries;
-      if(appUserId != null) {
-        final dynamic query = Query.equal('user_id', appUserId);
-        queries = <dynamic>[query];
-      }
-
       final DocumentList documentList = await _database.listDocuments(
-        queries: queries,
         collectionId: '631b4f2663f40f701b38',
         orderAttributes: ['\$createdAt'],
         orderTypes: ['DESC'],
       );
       return right(VideoDataList.fromDocumentList(documentList.documents));
     } catch (e) {
-      print(e);
+      return left(const Failure.serverError());
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, UploadedVideoDataList>> getUploadedVideoList(String userId) async {
+    try {
+      final DocumentList documentList = await _uploadedDatabase.listDocuments(
+        collectionId: 'upload_$userId',
+        orderAttributes: ['\$createdAt'],
+        orderTypes: ['DESC'],
+      );
+      return right(UploadedVideoDataList.fromDocumentList(documentList.documents));
+    } catch (e) {
+      print(e.toString());
       return left(const Failure.serverError());
     }
   }

@@ -41,20 +41,20 @@ class CommentsPageWidget extends StatelessWidget {
         print('CommentsPageWidget BlocBuilder<CommentsCubit');
         return BlocBuilder<SubCommentsCubit, SubCommentsState>(
           builder: (BuildContext context, SubCommentsState subCommentsState) {
-            return Stack(
-              children: <Widget>[
-                if (commentsState.loading)
-                  const Center(
-                    child: SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                else
-                  BlocBuilder<EditOldCommentCubit, EditOldCommentState>(
-                    builder: (BuildContext context, EditOldCommentState editCommentState) {
-                      return StreamBuilder<Comments>(
+            return BlocBuilder<EditOldCommentCubit, EditOldCommentState>(
+              builder: (BuildContext context, EditOldCommentState editCommentState) {
+                return Stack(
+                  children: <Widget>[
+                    if (commentsState.loading)
+                      const Center(
+                        child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    else
+                      StreamBuilder<Comments>(
                         stream: getIt<DataListReceiver<Comments>>().dataListStream,
                         builder: (BuildContext context, AsyncSnapshot<Comments> snapshot) {
                           print('StreamBuilder<Comments>');
@@ -70,8 +70,9 @@ class CommentsPageWidget extends StatelessWidget {
                                     padding: const EdgeInsets.only(top: 10, bottom: 15),
                                     child: Form(
                                       key: _formKey,
-                                      autovalidateMode:
-                                          commentsState.showErrorMessage ? AutovalidateMode.always : AutovalidateMode.disabled,
+                                      autovalidateMode: commentsState.showErrorMessage
+                                          ? AutovalidateMode.always
+                                          : AutovalidateMode.disabled,
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: <Widget>[
@@ -138,9 +139,10 @@ class CommentsPageWidget extends StatelessWidget {
                                         comment: comment.comment,
                                         commentDate: DateTime.fromMillisecondsSinceEpoch(comment.date),
                                         subCommentCount: comment.subCommentCount,
-                                        onPressedOnSubCommentCount: () =>
-                                            BlocProvider.of<SubCommentsCubit>(context).onOpenSubComments(comment.commentId),
-                                        isEdit: BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
+                                        onPressedOnSubCommentCount: () => BlocProvider.of<SubCommentsCubit>(context)
+                                            .onOpenSubComments(comment.commentId),
+                                        isEdit:
+                                            BlocProvider.of<EditOldCommentCubit>(context).isEditableIndex(index - 1),
                                         startEdit: () => BlocProvider.of<EditOldCommentCubit>(context).startEditComment(
                                           commentCollectionId: commentsCollectionId(videoParams.id),
                                           oldComment: comment.comment,
@@ -167,15 +169,15 @@ class CommentsPageWidget extends StatelessWidget {
                             );
                           }
                         },
-                      );
-                    },
-                  ),
-                if (subCommentsState.isOpen)
-                  SubCommentsWidget(
-                    loadComments: () => BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
-                    videoParams: videoParams,
-                  ),
-              ],
+                      ),
+                    if (subCommentsState.isOpen)
+                      SubCommentsWidget(
+                        //loadComments: () => BlocProvider.of<CommentsCubit>(context).loadCommentsOnCommentsPage(),
+                        videoParams: videoParams,
+                      ),
+                  ],
+                );
+              },
             );
           },
         );

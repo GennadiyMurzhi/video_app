@@ -13,7 +13,7 @@ class UploadVideoListItemWidget extends StatelessWidget {
   const UploadVideoListItemWidget({
     super.key,
     required this.videoName,
-    required this.videoId,
+    required this.videoId, required this.commentsCount, required this.likesCount,
   });
 
   /// to display video name
@@ -21,6 +21,12 @@ class UploadVideoListItemWidget extends StatelessWidget {
 
   ///for getting video preview
   final String videoId;
+
+  ///comment counts for video
+  final int commentsCount;
+
+  ///like counts for video
+  final int likesCount;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +44,10 @@ class UploadVideoListItemWidget extends StatelessWidget {
               future: BlocProvider.of<VideoListCubit>(context).getVideoPreview(videoId),
               builder: (BuildContext context, AsyncSnapshot<Uint8List?> snapshot) {
                 if (snapshot.data != null && snapshot.hasData) {
-                  return Image.memory(snapshot.data!,fit: BoxFit.cover,);
+                  return Image.memory(
+                    snapshot.data!,
+                    fit: BoxFit.cover,
+                  );
                 } else {
                   return Container();
                 }
@@ -48,13 +57,59 @@ class UploadVideoListItemWidget extends StatelessWidget {
           const SizedBox(width: 15),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(videoName, style: Theme.of(context).textTheme.bodyLarge),
               const SizedBox(height: 5),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  _IconWithCount(size: 16, iconData: Icons.message, count: commentsCount),
+                  const SizedBox(width: 30),
+                  _IconWithCount(
+                    size: 10,
+                    iconData: const IconData(0xf164, fontFamily: 'Like_icons'),
+                    count: likesCount,
+                  ),
+                ],
+              ),
             ],
           ),
         ],
       ),
+    );
+  }
+}
+
+class _IconWithCount extends StatelessWidget {
+  const _IconWithCount({
+    super.key,
+    required this.count,
+    required this.iconData,
+    required this.size,
+  });
+
+  final int count;
+  final IconData iconData;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Icon(
+              iconData,
+              size: size,
+              color: const Color(0xFF655E5E),
+            ),
+            const SizedBox(width: 5),
+            Text(count.toString()),
+          ],
+        ),
+      ],
     );
   }
 }

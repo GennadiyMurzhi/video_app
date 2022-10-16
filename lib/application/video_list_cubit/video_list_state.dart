@@ -5,15 +5,13 @@ part of 'video_list_cubit.dart';
 abstract class VideoListState with _$VideoListState {
   ///loading variable is used to display the load
   const factory VideoListState({
-    required String? appUserId,
     required bool loading,
     required Option<VideoEvent> event,
-    required Option<Either<Failure, VideoDataList>> videoListFailureOrSuccessOption,
+    required Option<Either<Failure, Unit>> videoListFailureOrSuccessOption,
   }) = _VideoListState;
 
   ///this state is used when needed to display that a video data list is being loaded from the server
   factory VideoListState.loading() => VideoListState(
-        appUserId: null,
         loading: true,
         event: none(),
         videoListFailureOrSuccessOption: none(),
@@ -21,7 +19,6 @@ abstract class VideoListState with _$VideoListState {
 
   ///this state is used when needed to display a video data list
   factory VideoListState.listDisplayed() => VideoListState(
-        appUserId: null,
         loading: false,
         event: none(),
         videoListFailureOrSuccessOption: none(),

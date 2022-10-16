@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video_list_cubit/video_list_cubit.dart';
 import 'package:video_app/domain/core/failures.dart';
-import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/domain/video/video_event.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/layout.dart';
@@ -29,7 +28,7 @@ class VideoListScreen extends StatelessWidget {
             listener: (BuildContext context, VideoListState state) {
               state.videoListFailureOrSuccessOption.fold(
                 () => null,
-                (Either<Failure, VideoDataList> either) {
+                (Either<Failure, Unit> either) {
                   either.fold(
                     (Failure failure) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -41,7 +40,7 @@ class VideoListScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    (VideoDataList r) => null,
+                    (Unit r) => null,
                   );
                 },
               );

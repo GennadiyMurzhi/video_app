@@ -10,7 +10,7 @@ part 'auth_cubit.freezed.dart';
 part 'auth_state.dart';
 
 ///cubit to store and determine the state of the user on the server
-@Injectable()
+@LazySingleton()
 class AuthCubit extends Cubit<AuthState> {
   ///pass a facade to use the server's authorization functionality
   AuthCubit(this._authFacade) : super(const AuthState.initial());

@@ -23,7 +23,6 @@ class UploadVideoListScreen extends StatelessWidget {
           return Layout(
             title: 'Uploaded video',
             functionOnPop: () {
-              BlocProvider.of<VideoListCubit>(context).initialUploadList();
               Navigator.of(context).pop();
             },
             functionFab: (_) => Navigator.of(context).pushNamed('/add_video_screen'),
@@ -33,7 +32,7 @@ class UploadVideoListScreen extends StatelessWidget {
         listener: (BuildContext context, VideoListState state) {
           state.videoListFailureOrSuccessOption.fold(
             () => null,
-            (Either<Failure, VideoDataList> either) {
+            (Either<Failure, Unit> either) {
               either.fold(
                 (Failure failure) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -45,7 +44,7 @@ class UploadVideoListScreen extends StatelessWidget {
                     ),
                   );
                 },
-                (VideoDataList r) => null,
+                (Unit r) => null,
               );
             },
           );

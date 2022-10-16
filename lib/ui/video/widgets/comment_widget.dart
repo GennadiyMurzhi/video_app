@@ -121,7 +121,10 @@ class CommentWidget extends StatelessWidget {
             if (editable)
               if (!isEdit!)
                 TextButton(
-                  onPressed: () => startEdit!(),
+                  onPressed: () {
+                        startEdit!();
+                        print('startEdit!();');
+                  },
                   child: const Text('start edit'),
                 )
               else

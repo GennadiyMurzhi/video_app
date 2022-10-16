@@ -21,12 +21,12 @@ class SubCommentsWidget extends StatelessWidget {
   ///pass the future to lading sub comments
   const SubCommentsWidget({
     super.key,
-    required this.loadComments,
+    //required this.loadComments,
     required this.videoParams,
   });
 
   ///future to lading sub comments
-  final Future<void> Function() loadComments;
+  //final Future<void> Function() loadComments;
 
   ///video params
   final VideoParams videoParams;
@@ -78,7 +78,7 @@ class SubCommentsWidget extends StatelessWidget {
                                 Row(
                                   children: <Widget>[
                                     IconButton(
-                                      onPressed: () => BlocProvider.of<SubCommentsCubit>(context).onClose(loadComments),
+                                      onPressed: () => BlocProvider.of<SubCommentsCubit>(context).onClose(),
                                       icon: const Icon(Icons.arrow_back_rounded),
                                     ),
                                     Expanded(

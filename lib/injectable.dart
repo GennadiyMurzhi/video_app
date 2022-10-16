@@ -6,6 +6,7 @@ import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/likes/like.dart';
 import 'package:video_app/domain/subscriptions/subscription.dart';
 import 'package:video_app/domain/video/comments/comments.dart';
+import 'package:video_app/domain/video/uploaded_video.dart';
 import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/injectable.config.dart';
 
@@ -49,4 +50,5 @@ Future<void> configureInjection(String env) async {
   getIt.registerLazySingleton<DataListReceiver<SubComments>>(() => DataListReceiver<SubComments>(SubComments.empty()));
   getIt.registerLazySingleton<DataListReceiver<Likes>>(() => DataListReceiver<Likes>(Likes.empty()));
   getIt.registerLazySingleton<DataListReceiver<Subscriptions>>(() => DataListReceiver<Subscriptions>(Subscriptions.empty()));
+  getIt.registerLazySingleton<DataListReceiver<UploadedVideoDataList>>(() => DataListReceiver<UploadedVideoDataList>(UploadedVideoDataList.empty()));
 }

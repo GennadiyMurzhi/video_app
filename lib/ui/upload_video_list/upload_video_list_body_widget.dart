@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/application/video_list_cubit/video_list_cubit.dart';
+import 'package:video_app/domain/video/uploaded_video.dart';
 import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/injectable.dart';
 import 'package:video_app/ui/core/widgets/base_loading_widget.dart';
@@ -16,9 +17,9 @@ class UploadedVideoListBodyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.of<VideoListCubit>(context).state.loading
         ? BaseLoadingWidget()
-        : StreamBuilder<VideoDataList>(
-            stream: getIt<VideoDataListReceiver>().videoDataListStream,
-            builder: (BuildContext context, AsyncSnapshot<VideoDataList> snapshot) {
+        : StreamBuilder<UploadedVideoDataList>(
+            stream: getIt<DataListReceiver<UploadedVideoDataList>>().dataListStream,
+            builder: (BuildContext context, AsyncSnapshot<UploadedVideoDataList> snapshot) {
               if (snapshot.data != null) {
                 return ListView(
                   padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
@@ -28,9 +29,9 @@ class UploadedVideoListBodyWidget extends StatelessWidget {
                       child: Text(
                         'Upload videos',
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: const Color(0xFF3F3FA2),
-                          fontWeight: FontWeight.bold,
-                        ),
+                              color: const Color(0xFF3F3FA2),
+                              fontWeight: FontWeight.bold,
+                            ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -47,6 +48,8 @@ class UploadedVideoListBodyWidget extends StatelessWidget {
                         child: UploadVideoListItemWidget(
                           videoName: snapshot.data!.documents[index].name,
                           videoId: snapshot.data!.documents[index].videoId,
+                          likesCount: snapshot.data!.documents[index].likesCount,
+                          commentsCount: snapshot.data!.documents[index].commentsCount,
                         ),
                       ),
                     ),

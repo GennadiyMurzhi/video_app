@@ -13,7 +13,7 @@ part 'edit_old_comment_cubit.freezed.dart';
 part 'edit_old_comment_state.dart';
 
 ///cubit for manage the editing of old comments
-@lazySingleton
+@Injectable()
 class EditOldCommentCubit extends Cubit<EditOldCommentState> {
   ///pass the comments repository to use the comment management functionality
   EditOldCommentCubit(this._commentsRepository) : super(EditOldCommentState.none());
@@ -28,15 +28,17 @@ class EditOldCommentCubit extends Cubit<EditOldCommentState> {
     required String commentId,
     required CommentType commentType,
   }) {
-    emit(
-      EditOldCommentState.initial(
-        commentCollectionId,
-        oldComment,
-        commentIndex,
-        commentId,
-        commentType,
-      ),
-    );
+    if (!isClosed) {
+      emit(
+        EditOldCommentState.initial(
+          commentCollectionId,
+          oldComment,
+          commentIndex,
+          commentId,
+          commentType,
+        ),
+      );
+    }
   }
 
   ///method for editing the old comment of the input time

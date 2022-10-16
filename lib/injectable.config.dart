@@ -91,21 +91,22 @@ _i1.GetIt $initGetIt(
         get<_i8.ILikeRepository>(),
         get<_i12.ISubscriptionRepository>(),
       ));
-  gh.lazySingleton<_i23.VideoListCubit>(() => _i23.VideoListCubit(
+  gh.factory<_i23.VideoListCubit>(() => _i23.VideoListCubit(
         get<_i16.IVideoRepository>(),
         get<_i24.VideoDataListReceiver>(),
         get<_i5.Realtime>(),
       ));
   gh.factory<_i25.AddVideoCubit>(
       () => _i25.AddVideoCubit(get<_i16.IVideoRepository>()));
-  gh.factory<_i26.AuthCubit>(() => _i26.AuthCubit(get<_i3.IAuthFacade>()));
+  gh.lazySingleton<_i26.AuthCubit>(
+      () => _i26.AuthCubit(get<_i3.IAuthFacade>()));
   gh.factory<_i27.AuthFormCubit>(
       () => _i27.AuthFormCubit(get<_i3.IAuthFacade>()));
   gh.factory<_i28.CommentsCubit>(() => _i28.CommentsCubit(
         get<_i6.ICommentsRepository>(),
         get<_i10.IPhotoRepository>(),
       ));
-  gh.lazySingleton<_i29.EditOldCommentCubit>(
+  gh.factory<_i29.EditOldCommentCubit>(
       () => _i29.EditOldCommentCubit(get<_i6.ICommentsRepository>()));
   gh.factory<_i30.EditVideoCubit>(
       () => _i30.EditVideoCubit(get<_i16.IVideoRepository>()));

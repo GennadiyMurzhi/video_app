@@ -9,6 +9,7 @@ import 'package:video_app/application/user_cubit/user_cubit.dart';
 import 'package:video_app/application/video_data_list_receiver.dart';
 import 'package:video_app/domain/core/failures.dart';
 import 'package:video_app/domain/video/i_video_repository.dart';
+import 'package:video_app/domain/video/uploaded_video.dart';
 import 'package:video_app/domain/video/video.dart';
 import 'package:video_app/domain/video/video_event.dart';
 import 'package:video_app/injectable.dart';
@@ -18,30 +19,26 @@ part 'video_list_cubit.freezed.dart';
 part 'video_list_state.dart';
 
 ///VideoListCubit is needed to control the VideoListScreen view
-@LazySingleton()
+@Injectable()
 class VideoListCubit extends Cubit<VideoListState> {
   ///When VideoListScreen starts to display, VideoListCubit takes a loading state to inform the user that the Video List is about
   /// to be loaded
   VideoListCubit(this._repository, this._videoDataListReceiver, this._realtime) : super(VideoListState.loading());
 
-  RealtimeSubscription? _subscription;
+  late RealtimeSubscription _subscription;
+  late RealtimeSubscription _subscriptionOnUploadedVideo;
   final Realtime _realtime;
   final IVideoRepository _repository;
   final VideoDataListReceiver _videoDataListReceiver;
 
   ///method for subscription on video event file
   void subscriptionOnVideoEvent() {
-    closeSubscription();
     _subscription = _realtime.subscribe(<String>[
       'databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents',
       'buckets.633c5933bd7ce6a7f5cb.files'
     ]);
-    _subscription!.stream.listen(
+    _subscription.stream.listen(
       (RealtimeMessage response) {
-        print('state.appUserId: ${state.appUserId}');
-        if (response.events.contains('buckets.633c5933bd7ce6a7f5cb.files.*')) {
-          getVideoListFromTheServer(appUserId: state.appUserId);
-        }
         if (response.events
             .contains('databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents.*.create')) {
           emit(
@@ -50,7 +47,6 @@ class VideoListCubit extends Cubit<VideoListState> {
               videoListFailureOrSuccessOption: none(),
             ),
           );
-          getVideoListFromTheServer(appUserId: state.appUserId);
         }
 
         if (response.events
@@ -61,7 +57,6 @@ class VideoListCubit extends Cubit<VideoListState> {
               videoListFailureOrSuccessOption: none(),
             ),
           );
-          getVideoListFromTheServer(appUserId: state.appUserId);
         }
 
         if (response.events
@@ -72,33 +67,22 @@ class VideoListCubit extends Cubit<VideoListState> {
               videoListFailureOrSuccessOption: none(),
             ),
           );
-          getVideoListFromTheServer(appUserId: state.appUserId);
         }
+        _getVideoListFromTheServer();
       },
     );
   }
 
-  ///method to close subscription
-  void closeSubscription() {
-    if (_subscription != null) {
-      _subscription!.close();
-    }
-  }
+  ///method for subscription on video event file
+  Future<void> subscriptionOnUploadedVideoEvent() async {
+    final String appUserId = getIt<UserCubit>().userId;
 
-  ///method for subscription on upload video event file
-  void _subscriptionOnUploadVideoEvent(String appUserId) {
-    List<String> subscribeList;
-    final List<VideoData> videoData = getIt<VideoDataListReceiver>().videoDataListStream.value.documents;
-    subscribeList = List<String>.generate(
-      videoData.length,
-      (int index) =>
-          'databases.62e3faba8623b7647567.collections.631b4f2663f40f701b38.documents.${videoData[index].videoDataId}',
-    );
-    _subscription = _realtime.subscribe(subscribeList);
-
-    _subscription!.stream.listen(
+    _subscriptionOnUploadedVideo = _realtime.subscribe(<String>[
+      'databases.634b7fb186e7065ec5a2.collections.upload_$appUserId.documents',
+    ]);
+    _subscriptionOnUploadedVideo.stream.listen(
       (RealtimeMessage response) {
-        getVideoListFromTheServer(appUserId: appUserId);
+        getUploadedVideoListForUser(appUserId: appUserId);
       },
     );
   }
@@ -106,44 +90,20 @@ class VideoListCubit extends Cubit<VideoListState> {
   ///Used when VideoListScreen starts to display
   Future<void> initialList() async {
     emit(VideoListState.loading());
-    closeSubscription();
-
-    emit(state.copyWith(appUserId: null));
     subscriptionOnVideoEvent();
-    getVideoListFromTheServer();
+    await _getVideoListFromTheServer();
   }
 
   ///Used when VideoListScreen starts to display
-  void initialUploadList() {
-    if (!isClosed) {
-      emit(VideoListState.loading());
-    }
-    closeSubscription();
-    final String appUserId = getIt<UserCubit>().userId;
-    if (!isClosed) {
-      emit(state.copyWith(appUserId: appUserId));
-    }
-    getVideoListFromTheServer(appUserId: appUserId);
-    _subscriptionOnUploadVideoEvent(appUserId);
-  }
-
-  ///Used when needed update video list
-  Future<void> updateList() async {
+  Future<void> initialUploadList() async {
     emit(VideoListState.loading());
-    await getVideoListFromTheServer();
+    print('\n\n\nobject');
+    subscriptionOnUploadedVideoEvent();
+    await getUploadedVideoListForUser();
   }
 
-  ///Used when needed update video list
-  Future<void> updateUploadList() async {
-    final String appUserId = getIt<UserCubit>().userId;
-
-    emit(VideoListState.loading());
-
-    await getVideoListFromTheServer(appUserId: appUserId);
-  }
-
-  Future<Either<Failure, VideoDataList>> downloadVideoList({String? appUserId}) async {
-    final Either<Failure, VideoDataList> videoListOrFailure = await _repository.getVideoList(appUserId: appUserId);
+  Future<Either<Failure, VideoDataList>> _downloadVideoList() async {
+    final Either<Failure, VideoDataList> videoListOrFailure = await _repository.getVideoList();
     VideoDataList? videoDataList;
     videoListOrFailure.fold(
       (Failure l) => null,
@@ -158,20 +118,43 @@ class VideoListCubit extends Cubit<VideoListState> {
     return videoListOrFailure;
   }
 
-  Future<void> getVideoListFromTheServer({String? appUserId}) async {
-    final Either<Failure, VideoDataList> videoListOrFailure = await downloadVideoList(appUserId: appUserId);
+  Future<void> _getVideoListFromTheServer() async {
+    final Either<Failure, VideoDataList> videoListOrFailure = await _downloadVideoList();
     if (!isClosed) {
       emit(VideoListState.listDisplayed());
     }
-    if(!isClosed) {
+    if (!isClosed) {
       emit(
         state.copyWith(
           loading: false,
           event: none(),
-          videoListFailureOrSuccessOption: optionOf(videoListOrFailure),
+          videoListFailureOrSuccessOption: optionOf(
+            videoListOrFailure.replace(unit),
+          ),
         ),
       );
     }
+  }
+
+  ///method to get uploaded video list
+  Future<void> getUploadedVideoListForUser({String? appUserId}) async {
+    final String appUserId = getIt<UserCubit>().userId;
+    final Either<Failure, UploadedVideoDataList> resultOrFailure = await _repository.getUploadedVideoList(appUserId);
+    resultOrFailure.fold(
+      (Failure l) => null,
+      (UploadedVideoDataList uploadedVideoDataList) {
+        getIt<DataListReceiver<UploadedVideoDataList>>().getDataList(uploadedVideoDataList);
+      },
+    );
+
+    emit(
+      state.copyWith(
+        loading: false,
+        videoListFailureOrSuccessOption: optionOf(
+          resultOrFailure.replace(unit),
+        ),
+      ),
+    );
   }
 
   ///method to get file preview

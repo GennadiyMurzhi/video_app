@@ -50,9 +50,6 @@ class SubscriptionRepository extends ISubscriptionRepository with CheckDocumentM
     required String subscribeUserName,
   }) async {
     try {
-      print(appUserID);
-      print(subscribeUserId);
-      print(_userSubscriptionsCollectionId(appUserID));
       await _subscriptionDatabase.createDocument(
         collectionId: _userSubscriptionsCollectionId(appUserID),
         documentId: subscribeUserId,
@@ -72,9 +69,6 @@ class SubscriptionRepository extends ISubscriptionRepository with CheckDocumentM
     required String appUserID,
     required String subscribeUserId,
   }) async {
-    print(appUserID);
-    print(subscribeUserId);
-    print(_userSubscriptionsCollectionId(appUserID));
     try {
       await _subscriptionDatabase.deleteDocument(
         collectionId: _userSubscriptionsCollectionId(appUserID),
