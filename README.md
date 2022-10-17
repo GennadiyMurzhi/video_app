@@ -2,7 +2,7 @@
 
 A new Flutter project for test and training my skills
 
-video demontration
+Video demonstration
 https://youtu.be/jOOgaFvV8k8
 
 An application for uploading and watching videos by users.
